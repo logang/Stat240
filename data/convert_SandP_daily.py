@@ -58,5 +58,5 @@ FF_returns = [1,4,7,10,13,16]
 np.savetxt("SandP500_returns.csv", SandP500_returns, delimiter=",")
 np.savetxt("FF_returns.csv", np.array(FF_data)[1:,FF_returns].astype(float), delimiter=",")
 np.savetxt("dates.csv", FF_data[1:,0].astype(int), delimiter=",")
-1/0
+
 print "Done."
