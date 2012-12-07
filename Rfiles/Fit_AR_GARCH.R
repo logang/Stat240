@@ -24,6 +24,7 @@ FF = FF[1:(n-1),]
 dates = dates[1:(n-1)]
 # Fit AR(1) model
 ar_fits = FF_garch_fits = FF_garch_std_fits = list()
+ar_coefs = matrix(0,m,2)
 covmat = matrix(0,m,m)
 std_innovations = matrix(0,n-2,m)
 coefmat = matrix(0,m,4)
@@ -32,25 +33,30 @@ for(i in 1:m)
   # generate times
   FF_ts = timeSeries(FF[,i],as.character(dates))
   
-  # fit AR(1) model and get residuals
+  # fit AR(1) model and get coefficients and residuals
   ar_fits[[i]] = arma(FF[,i],order=c(1,0))
+  ar_coefs[i,] = ar_fits[[i]]$coef
   resids_ts = na.omit(timeSeries(ar_fits[[i]]$resid,as.character(dates)))
   
   # Fit standard and studentized GARCH models to residuals of AR(1) model
   FF_garch_fits[[i]] = garchFit(. ~ garch(1,1), data=resids_ts,trace=F)
   FF_garch_std_fits[[i]] = garchFit(formula = ~ garch(1,1), data=resids_ts, cond.dist="std",trace=F)
 
-  # Construct covariance matrix 
+  # Gather coefficents, volatilities, and residuals  
   coefs = coef(FF_garch_fits[[i]])
   coefmat[i,] = coefs
   resids = residuals(FF_garch_fits[[i]])
   vols = volatility(FF_garch_fits[[i]])
+  
+  # Construct covariance matrix diagonal
   covmat[i,i] = coefs[2] + coefs[4]*vols[n-2]^2 + coefs[3]*resids[n-2]^2
+  
+  # Calculate standardized innovations
   std_innovations[,i]=resids/vols
 }
 
 # Estimate mean 
-mu_pred = coefs[,1] + sum(coefs[,2:3].*[u(winsize)*ones(nStocks,1), Xtrain(winsize,:)'],2);
+mean_pred = ar_coefs[,2] + diag(ar_coefs[,1])%*%FF[n-1,]
 
 # Generate off-diagonal covariance matrix entries
 for(i in 2:m)
