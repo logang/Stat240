@@ -45,8 +45,7 @@ end
 [PredictedMean, PredictedCov, Error, GARCHCoeffs, ARCoeffs, Innos] = Fit_AR_GARCH(X_rets, m);
 
 
-% Part (d): NPEB approach
-% Run Lai/Xing/Chen code
+% Part (d): NPEB approach: run Lai/Xing/Chen code on Fama-French portfolios
 
 % calculates market capitalization of each portfolio and stores in a matrix
 % (used by both (d) and B-L optimization)
@@ -134,12 +133,21 @@ realized_returns = X_rets(t+1, :);
 
 % Step (3): Black-Litterman Master Formula: plot cumulative returns over
 % time
-% Step (4): Track 
+% Step (4): Track turnover rate
+% NOTE: this should loop through starting at t = 2 and not t = 1
 
 
 % NOTE: incorporate this into step (2) so as to not duplicate code.
+%  more specifically, step (2) does t=1 and step (3)/(4) does t > 1
+%  OR be more careful about indexing/ saving turnover rate and have the
+%  same loop work for all values of t
 
-excess_returns = zeros(m - t, 1); % keeps track of CUMULATIVE excess returns over time
+excess_returns = zeros(m - t, 1); % keeps track of CUMULATIVE excess returns over time (for B-L)
+
+% Insert here: track turnover rate for both methods
+% Insert here: track total and excess returns for Markowitz plug-in
+% frontier
+
 total = 0; % keeps track of total excess returns
 iteration = 1; % keeps track of iterations
 
@@ -184,8 +192,12 @@ while ( t < m-1 )
     realized_returns = X_rets(t+1,:); % actual returns observed in subsequent period
     omega = eye(n) + diag(abs(realized_returns' - q)); % defines uncertainty of (next) mean based on performance
     
-    % now, perform M-V portfolio optimization
-    [w_p, return_p, excess_p, stdev_p] = OptimizePortfolio(mu_BL, sigma_BL, 0, bench_mu, bench_t, realized_returns);
+    % now, perform M-V portfolio optimization with Black-Litterman sigma
+    % and mu
+    [w_p, return_p, excess_p, stdev_p] = OptimizePortfolio(mu_BL, sigma_BL, -0.3, bench_mu, bench_t, realized_returns);
+    
+    % perform M-V portfolio optimization with plug-in (Markowitz) sigma and mu
+    [w_m, return_m, excess_m, stdev_m] = OptimizePortfolio(hist_mean', sigma, -0.3, bench_mu, bench_t, realized_returns);
     
     total = total + excess_p; % updates total
     excess_returns(iteration) = total; % saves cumulative excess return at time t
