@@ -2,26 +2,39 @@
 %%% The return data used here are raw returns.
 
 warning off;        MAXFUNEVAL = 100;
-%%% Compute the market value weight portfolio (i.e., index)
-winsize=120;        portsize=50;
-allmonth=load('../0_Rawdata_done/list_month.txt');
-prefix2='../0_RawData_done/Stocks_Use_Value/stock_use_Value_';
-indexweight=load('stock_Value_based_index_weight.txt');
 
-%%% allmonth(241)=19940131, allmonth(253)=19950131, 
+%%% Compute the market value weight portfolio (i.e., index)
+%winsize=120;        portsize=50;
+%allmonth=load('../0_Rawdata_done/list_month.txt');
+%prefix2='../0_RawData_done/Stocks_Use_Value/stock_use_Value_';
+%indexweight=load('stock_Value_based_index_weight.txt');
+
+winsize=120; % Number of time points considered per fit
+portsize=6; % Size of portfolio
+
+% load dates, portfolio data, and market cap weights
+dates=load('../data/dates.csv');
+FF_data=load('../data/FF6Portfolios.txt');
+indexweight=load('../data/NPEB_wts.mat');
+
+% starting time point
 startmonth=252;
+
+% Grid over which to search for best eta
 eta=1.0:0.5:10;
+
+% Number of bootstrap replicates
 B = 100;
 
-nPeriod=length(allmonth)-startmonth;
+nPeriod=length(FF_data)-startmonth;
 sharpe_train=zeros(nPeriod, 1);
 ret_Value_npeb_iid = zeros(nPeriod, 1);
 
 format long;
 lambda = 1.4;
 
-for j = 1 : (length(allmonth)-startmonth)
-    filename = strcat(prefix2, int2str(allmonth(j+startmonth)), '.txt');
+for j = 1 : (length(FF_data)-startmonth)
+    filename = strcat(prefix2, int2str(FF_data(j+startmonth)), '.txt');
     data = load(filename);
     Xtrain = data(1:winsize, :);
     Xtest = data(1+winsize, :);
