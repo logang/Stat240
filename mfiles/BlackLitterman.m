@@ -105,7 +105,7 @@ tau = 1/t; % scalar indicating uncertainty of prior
 sigma_pi = tau*sigma; % prior covariance matrix
 
 
-q = zeros(n,1); % REPLACE WITH OUTPUT (mean) FROM FORECAST MODEL
+q = ForecastReturns(returns);
 omega = eye(n); % NOTE: THIS MAY BE OK
 
 
@@ -120,39 +120,42 @@ sigma_BL = S + sigma;
 bench_mu = 0.006;
 bench_t = 0.01;
 
-% NOTE: REPLACE RETURNS ABOVE WITH A MORE GENERALIZED MATRIX AND DEFINE
-% THIS AS THE WINDOW+1ST ROW OF THAT MATRIX.
-%realized_returns = [FF(window+1,2) FF(window+1,5) FF(window+1,8) FF(window+1,11) FF(window+1,14) FF(window+1,17)];
+% Realized returns
 realized_returns = X_rets(t+1, :);
 
-% now, perform M-V portfolio optimization
+% now, perform M-V portfolio optimization (B-L)
 [w_p, return_p, excess_p, stdev_p] = OptimizePortfolio(mu_BL, sigma_BL, -0.3, bench_mu, bench_t, realized_returns);
 
+% Markowitz for comparison
+[w_m, return_m, excess_m, stdev_m] = OptimizePortfolio(hist_mean', sigma, -0.3, bench_mu, bench_t, realized_returns);
+
+% Saves old weights for tracking turnover rate in the next step
+w_p_old = w_p;
+w_m_old = w_m;
 
 
 
 % Step (3): Black-Litterman Master Formula: plot cumulative returns over
 % time
 % Step (4): Track turnover rate
-% NOTE: this should loop through starting at t = 2 and not t = 1
 
 
-% NOTE: incorporate this into step (2) so as to not duplicate code.
-%  more specifically, step (2) does t=1 and step (3)/(4) does t > 1
-%  OR be more careful about indexing/ saving turnover rate and have the
-%  same loop work for all values of t
+excess_returns_BL = zeros(m - t - 2, 1);  % keeps track of CUMULATIVE excess returns over time (for B-L)
+excess_returns_M = zeros(m - t - 2, 1); 
+turnover_BL = zeros(m - t - 2, 1);  % tracks turnover rate of B-L over time
+turnover_M = zeros(m - t - 2, 1); % tracks turnover rate of Markowitz over time
 
-excess_returns = zeros(m - t, 1); % keeps track of CUMULATIVE excess returns over time (for B-L)
 
-% Insert here: track turnover rate for both methods
-% Insert here: track total and excess returns for Markowitz plug-in
-% frontier
+total_BL = excess_p; % keeps track of total excess returns for B-L
+total_M = excess_m; % keeps track of total excess returns for Markowitz
 
-total = 0; % keeps track of total excess returns
+
 iteration = 1; % keeps track of iterations
+t = t + 1; % the following loop tracks optimization results for t > 1.
 
 % while the end of the FF data has not yet been reached, re-applies
-% Black-Litterman and keeps track of cumulative returns.
+% Black-Litterman and keeps track of cumulative returns and turnover rate.
+% Also tracks Markowitz for comparison.
 while ( t < m-1 )
      
     
@@ -171,7 +174,7 @@ while ( t < m-1 )
     % Note that Omega is a function of the errors from the previous
     % prediction, and is therefore defined at the end of this loop to form
     % Omega(t+1).
-    q = zeros(n,1); % REPLACE WITH ACTUAL OUTPUT FROM FORECAST MODEL
+    q = ForecastReturns(returns);
 
     
     % Apply Black-Litterman master formula
@@ -180,7 +183,7 @@ while ( t < m-1 )
 
     % Values of mu and sigma used in Black-Litterman portfolio optimization
     mu_BL = M;
-    sigma_BL = S + sigma_pi; % NOTE: NOT SURE WHETHER TO USE SIGMA OR SIGMA_PI HERE
+    sigma_BL = S + sigma; 
 
     
     % CHECK S&P DATA: maybe use t-1, t instead of t, t+1.
@@ -192,15 +195,29 @@ while ( t < m-1 )
     realized_returns = X_rets(t+1,:); % actual returns observed in subsequent period
     omega = eye(n) + diag(abs(realized_returns' - q)); % defines uncertainty of (next) mean based on performance
     
-    % now, perform M-V portfolio optimization with Black-Litterman sigma
-    % and mu
+    
+    % BLACK-LITTERMAN PORTFOLIO OPTIMIZATION
     [w_p, return_p, excess_p, stdev_p] = OptimizePortfolio(mu_BL, sigma_BL, -0.3, bench_mu, bench_t, realized_returns);
     
-    % perform M-V portfolio optimization with plug-in (Markowitz) sigma and mu
-    [w_m, return_m, excess_m, stdev_m] = OptimizePortfolio(hist_mean', sigma, -0.3, bench_mu, bench_t, realized_returns);
+    total_BL = total_BL + excess_p; % updates total for B-L
+    excess_returns_BL(iteration) = total_BL; % saves cumulative excess return at time t for B-L
+    turnover_BL(iteration) = GetTurnoverRate(w_p, w_p_old); % tracks B-L turnover rate
+    w_p_old = w_p; % saves previous result for next iteration
     
-    total = total + excess_p; % updates total
-    excess_returns(iteration) = total; % saves cumulative excess return at time t
+   
+    
+    % MARKOWITZ PLUG-IN PORTFOLIO OPTIMIZATION
+    [w_m, return_m, excess_m, stdev_m] = OptimizePortfolio(hist_mean', sigma, -0.3, bench_mu, bench_t, realized_returns);
+    disp('EXCESS MARKOWITZ RETURNS:');
+    disp(excess_m);
+    
+    total_M = total_M + excess_m; % updates total for Markowitz
+    disp(total_M);
+    excess_returns_M(iteration) = total_M; % saves cumulative excess return at time t for B-L
+    turnover_M(iteration) = GetTurnoverRate(w_m, w_m_old); % tracks Markowitz turnover rate
+    w_m_old = w_m; % saves previous result for next iteration
+     
+    
     
     % updates time and iteration #
     t = t + 1;
@@ -208,15 +225,28 @@ while ( t < m-1 )
     
 end
 
+
 % Plots cumulative returns
 figure
-plot(excess_returns);
+plot(excess_returns_M(1:end-2), ':');
+hold on
+plot(excess_returns_BL(1:end-2));
+legend('Markowitz', 'Black-Litterman');
+title ('Cumulative Excess Returns Over Time');
+xlabel('Time in months');
+ylabel('Excess returns over S&P 500 index');
 
 
 
 % Step (4): Plot and compare turnover rates
-
-
+figure
+plot(turnover_M, ':');
+hold on
+plot(turnover_BL);
+legend('Markowitz', 'Black-Litterman');
+title ('Portfolio Turnover Rate Over Time');
+xlabel('Time in months');
+ylabel('Portfolio turnover rate');
 
 
 
