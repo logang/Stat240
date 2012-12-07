@@ -1,4 +1,4 @@
-import time 
+import time,os 
 
 #----------------------------------------------------------------------------------------
 
@@ -69,6 +69,7 @@ if __name__ == '__main__':
         for r in result:
             print r
 
+    1/0
 # EOF
 
 # Notes: the below works for calling a MATLAB function from the command line.

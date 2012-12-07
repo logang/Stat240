@@ -3,17 +3,11 @@
 
 warning off;        MAXFUNEVAL = 100;
 
-%%% Compute the market value weight portfolio (i.e., index)
-%winsize=120;        portsize=50;
-%allmonth=load('../0_Rawdata_done/list_month.txt');
-%prefix2='../0_RawData_done/Stocks_Use_Value/stock_use_Value_';
-%indexweight=load('stock_Value_based_index_weight.txt');
-
 winsize=120; % Number of time points considered per fit
 portsize=6; % Size of portfolio
 
 % load dates, portfolio data, and market cap weights
-dates=load('../data/dates.csv');
+FF_dates=load('../data/dates.csv');
 FF_data=load('../data/FF6Portfolios.txt');
 indexweight=load('../data/NPEB_wts.mat');
 
@@ -26,25 +20,30 @@ eta=1.0:0.5:10;
 % Number of bootstrap replicates
 B = 100;
 
-nPeriod=length(FF_data)-startmonth;
+% Define length of period
+nPeriod=length(FF_dates)-winsize;
+
+% initialize output containers
 sharpe_train=zeros(nPeriod, 1);
 ret_Value_npeb_iid = zeros(nPeriod, 1);
 
 format long;
 lambda = 1.4;
 
-for j = 1 : (length(FF_data)-startmonth)
-    filename = strcat(prefix2, int2str(FF_data(j+startmonth)), '.txt');
-    data = load(filename);
-    Xtrain = data(1:winsize, :);
-    Xtest = data(1+winsize, :);
+for j = 1 : (length(FF_dates)-winsize)
+    % Setup training data and held out test data point
+    Xtrain = FF_data(1:(winsize+j), :);
+    Xtest = FF_data(1+(winsize+j), :);
+
+    % Set lower and upper bounds on weights
     lb = - indexweight(j,:)';
     ub = ones(portsize, 1)*0.10 - indexweight(j,:)';
 
     bi = randint(B, winsize-1, [1, winsize-1]);
     %%% Use iid model for each series
     for b=1:B
-        tmpret=Xtrain(bi(b,:), :);    tmpMu=mean(tmpret);
+        tmpret=Xtrain(bi(b,:), :);    
+        tmpMu=mean(tmpret);
         tmpV=covcorr(tmpret)+tmpMu*tmpMu';
         for k=1:length(eta)           
             tmpwt = getOptWt_Quadprog(tmpMu',tmpV,lambda/eta(k),lb,ub);
@@ -63,3 +62,8 @@ for j = 1 : (length(FF_data)-startmonth)
     
     ret_Value_npeb_iid(j) = Xtest*wts;
 end
+
+
+disp('NPEB IID returns were:')
+disp(ret_Value_npeb_iid)
+save('NPEB_iid_test_returns.mat',ret_Value_npeb_iid)
