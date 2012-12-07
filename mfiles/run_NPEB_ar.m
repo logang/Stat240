@@ -13,11 +13,11 @@ indexweight=load('../data/NPEB_wts.mat');
 indexweight = indexweight.NPEB_wts;
 
 % Grid over which to search for best eta
-%eta=1.0:0.5:10;
-eta = 1:10;
+eta=1.0:0.5:10;
+%eta = 1:10;
 
 % Number of bootstrap replicates
-B = 2;
+B = 100;
 
 % Define length of period
 nPeriod=length(FF_dates)-start_winsize;
@@ -26,20 +26,10 @@ nPeriod=length(FF_dates)-start_winsize;
 sharpe_train=zeros(nPeriod, 1);
 ret_Value_npeb_iid = zeros(nPeriod, 1);
 
-format long;
-lambda = 3.4;
+% set grid of lambdas
+lambdas=2.^( (-3):1:11 );
 
-%lambdas=2.^( (-3):1:11 );
-lambdas = 2.0;
-
-% etas
-eta=1:2:5
-%eta=1.0:0.5:10;
-
-% Number of bootstrap replicates
-B = 100;
-
-% Constraints
+%% Constraints
 lb= ones(nStocks, 1)*(-0.05);
 ub=ones(nStocks, 1);
 
@@ -106,6 +96,6 @@ disp(ret_Value_npeb_ar)
 % Clumsily ham-fist the data into a file
 lam = num2str(lambda);
 lam_split = regexp(lam,'\.','split');
-savefile = [strcat('NPEB_iid_returns_lambda_',lam_split(1),'_',lam_split(2))];
+savefile = [strcat('NPEB_ar_returns_lambda_',lam_split(1),'_',lam_split(2))];
 save(savefile{1}, 'ret_Value_npeb_iid'); % I hate you MATLAB
 
