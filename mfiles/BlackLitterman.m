@@ -104,9 +104,12 @@ tau = 1/t; % scalar indicating uncertainty of prior
 
 sigma_pi = tau*sigma; % prior covariance matrix
 
-
+% forecasted returns for next month
 q = ForecastReturns(returns);
-omega = eye(n); % NOTE: THIS MAY BE OK
+
+% initializes omega. Since it is defined as a function of the forecast
+% errors from the previous forecast, it is initialized
+omega = eye(n);
 
 
 S = ( sigma_pi\eye(n) + P'*(omega\eye(n))*P )\eye(n); % defines posterior covariance matrix
