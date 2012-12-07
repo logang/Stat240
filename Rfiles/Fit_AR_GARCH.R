@@ -4,6 +4,8 @@ library(tseries)
 library(fGarch)
 library(xtable)
 
+#------------------------------ SETUP ------------------------------------
+
 # Setup top directory
 setwd("/Users/logang/Documents/Code/python/Stat240")
 
@@ -16,6 +18,8 @@ colnames(FF) = c('smlo_ret', 'smme_ret', 'smhi_ret', 'bilo_ret', 'bime_ret', 'bi
 # get number of observations and stocks
 n = dim(FF)[1]
 m = dim(FF)[2] 
+
+#---------------------------- PROBLEM 1A ----------------------------------
 
 # Regress Fama-French returns on SandP500
 confidence_intervals = matrix(0,m,2)
@@ -31,12 +35,13 @@ for(i in 1:m)
   dev.off()
   
   # Get 95% intervals for the parameters
-  confidence_intervals[i,]=confint(fit)
+  confidence_intervals[i,]=confint(fit)[2,]
 }
 
 # Print 95% confidence intervals to LaTeX
 print(xtable(confidence_intervals), type="latex", file="figures/tables/Problem1a_CIs.tex")
 
+#---------------------------- PROBLEM 1B & C --------------------------------
 # -- Fit AR(1)-GARCH(1,1)
 # Leave the last point out for prediction
 FF_test = FF[n,]
@@ -52,12 +57,12 @@ dev.off()
 # Initialize containers for AR(1) model results
 ar_fits = FF_garch_fits = FF_garch_std_fits = list()
 ar_coefs = matrix(0,m,2)
-covmat = matrix(0,m,m)
+cov_pred = matrix(0,m,m)
 residmat = matrix(0,n-2,m)
 std_innovations = matrix(0,n-2,m)
 coefmat = matrix(0,m,4)
 
-# Fit AR(1) models for the Fama French portfolio returns
+# Fit AR(1)-GARCH(1,1) models to the Fama French portfolio returns
 for(i in 1:m)
 {
   # generate times
@@ -96,21 +101,24 @@ for(i in 1:m)
   resids = residuals(FF_garch_fits[[i]])
   vols = volatility(FF_garch_fits[[i]])
   
-  # Construct covariance matrix diagonal
-  covmat[i,i] = coefs[2] + coefs[4]*vols[n-2]^2 + coefs[3]*resids[n-2]^2
+  # Construct one-step-ahead covariance matrix diagonal
+  cov_pred[i,i] = coefs[2] + coefs[4]*vols[n-2]^2 + coefs[3]*resids[n-2]^2
   
   # Calculate standardized innovations
   std_innovations[,i]=resids/vols
 }
 
 # Plot AR(1) fit residuals
+residmat = timeSeries(residmat)
+colnames(residmat) = colnames(FF)
 pdf("figures/Problem1b_AR1_fit_residuals.pdf")
-plot(timeSeries(residmat),col="black")
+plot(residmat,col="black",main="Residuals from AR(1) fits to Fama French portfolios")
+dev.off()
 
-# Estimate mean 
+# Estimate one-step-ahead mean 
 mean_pred = ar_coefs[,2] + diag(ar_coefs[,1])%*%FF[n-1,]
 
-# Generate off-diagonal covariance matrix entries
+# Generate off-diagonal one-step-ahead covariance matrix entries
 for(i in 2:m)
 {
   for(j in 1:(i-1))
@@ -119,3 +127,11 @@ for(i in 2:m)
     cov_pred[j,i]=cov_pred[i,j]
   }
 }
+
+# Print predicted mean and covariance to LaTeX
+print(xtable(mean_pred), type="latex", file="figures/tables/Problem1c_mean_pred.tex")
+print(xtable(cov_pred), type="latex", file="figures/tables/Problem1c_cov_pred.tex")
+
+#---------------------------- PROBLEM 1D ----------------------------------
+# MATLAB
+
