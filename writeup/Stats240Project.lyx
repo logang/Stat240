@@ -112,6 +112,18 @@ Time Series
 
 \end_layout
 
+\begin_layout Itemize
+give estimates and confidence intervals
+\end_layout
+
+\begin_layout Itemize
+show diagnostic plots
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
 \begin_layout Standard
 \begin_inset VSpace medskip
 \end_inset
@@ -124,17 +136,18 @@ Time Series
 \begin_inset Formula $AR(1)-GARCH(1,1)$
 \end_inset
 
- model to the residuals 
-\begin_inset Formula $e_{it}$
-\end_inset
-
- in (a).
+ model to the Fama-French portfolio returns.
+ 
 \end_layout
 
 \begin_layout Standard
 \begin_inset VSpace medskip
 \end_inset
 
+
+\end_layout
+
+\begin_layout Itemize
 
 \end_layout
 
