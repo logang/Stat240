@@ -1,31 +1,60 @@
 
 warning off;
 MAXFUNEVAL = 100;
-winsize=120;
 
-allmonth=load('../0_Rawdata_done/list_month.txt');
-prefix2='../0_RawData_done/Stocks_Use_Value/stock_use_Value_';
-%%% allmonth(241)=19940131, allmonth(253)=19950131, 
-startmonth=252;
+start_winsize=120; % Number of time points considered per fit
+nStocks=6;  % Size of portfolio
 
-lambdas=2.^( (-3):1:11 );
-eta=1.0:0.5:10;
+% load dates, portfolio data, and market cap weights
+FF_dates=csvread('../data/dates.csv');
+FF_data=importdata('../data/FF6Portfolios.txt', ' ', 3);
+FF_data=FF_data.data;
+indexweight=load('../data/NPEB_wts.mat');
+indexweight = indexweight.NPEB_wts;
+
+% Grid over which to search for best eta
+%eta=1.0:0.5:10;
+eta = 1:10;
+
+% Number of bootstrap replicates
+B = 2;
+
+% Define length of period
+nPeriod=length(FF_dates)-start_winsize;
+
+% initialize output containers
+sharpe_train=zeros(nPeriod, 1);
+ret_Value_npeb_iid = zeros(nPeriod, 1);
+
+format long;
+lambda = 3.4;
+
+%lambdas=2.^( (-3):1:11 );
+lambdas = 2.0;
+
+% etas
+eta=1:2:5
+%eta=1.0:0.5:10;
+
+% Number of bootstrap replicates
 B = 100;
-nStocks=50;
-lb= ones(nStocks, 1)*(-0.05);		ub=ones(nStocks, 1);
 
-nPeriod=length(allmonth)-startmonth;
+% Constraints
+lb= ones(nStocks, 1)*(-0.05);
+ub=ones(nStocks, 1);
+
+% initialize output containers
 sharpe_train=zeros(nPeriod, 1);
 res_sharpe=zeros(nPeriod, length(lambdas));
 res_rets=zeros(nPeriod, length(lambdas));
 ret_Value_npeb_ar = zeros(nPeriod, 2);
 
-for j = 1 : (length(allmonth)-startmonth)
-    filename = strcat(prefix2, int2str(allmonth(j+startmonth)), '.txt');
-    data = load(filename);
-    Xtrain = data(1:winsize, :);
-    Xtest = data(1+winsize, :);
-    
+for j = 1 : (length(FF_dates)-start_winsize)
+    % Setup training data and held out test data point
+    winsize = start_winsize + j - 1;
+    Xtrain = FF_data(1:(start_winsize+j), :);
+    Xtest = FF_data(1+(start_winsize+j), :);
+
     for lam=1:length(lambdas)
         lambda = lambdas(lam);
         bi = randint(B, winsize-1, [1, winsize-1]);
@@ -71,5 +100,12 @@ for j = 1 : (length(allmonth)-startmonth)
     ret_Value_npeb_ar(j,:) = [maxsharpe, rets_maxsharpe];
 end
 
+disp('NPEB AR returns were:')
+disp(ret_Value_npeb_ar)
 
+% Clumsily ham-fist the data into a file
+lam = num2str(lambda);
+lam_split = regexp(lam,'\.','split');
+savefile = [strcat('NPEB_iid_returns_lambda_',lam_split(1),'_',lam_split(2))];
+save(savefile{1}, 'ret_Value_npeb_iid'); % I hate you MATLAB
 
