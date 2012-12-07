@@ -18,32 +18,27 @@ m = length(smlo_ret); % number of observations
 n = 6; % number of stocks
 
 % Part (a): single-factor model (S&P)
-SPDates = flipud(SandP(:,1));
-SPPrices = flipud(SandP(:,5));
+SPDates = SandPDates;
+SPRets = SandPRets;
+SP = [SPDates(1:end-1) SPRets];
 
-% Converts S&P prices to returns
-SPRets = PricesToReturns(SPPrices);
-
-% Note: the S&P dates are on average 28 days lagged rather than a month
-% lagged: look-ahead bias?
-% To completely remove look-ahead bias, use 1:(end-1) instead of 2:end and
-% regress on what is essentially 
-SP = [SPDates(2:end) SPRets];
-
-regress_mat = [ones(m,1) SP(:,2)]; % regression matrix: S&P returns and ones
+% regression matrix: S&P returns and ones
+regress_mat = [ones(1:end-1,1) SP(:,2)];
 
 % creates empty matrices to save regression coefficients, fitted returns, and
 % errors
 LS_coeffs = zeros(2,n);
-single_factor_fit = zeros(m,n);
-regress_err = zeros(m,n);
+single_factor_fit = zeros(m-1,n);
+regress_err = zeros(m-1,n);
 
 % Performs regression and saves coefficients, fitted returns, and errors
-% for each FF portfolio
+% for each FF portfolio.
+% Note that the returns are regressed on the previous month's S&P returns
+% rather than the current month's S&P returns.
 for i = 1:n
-    LS_coeffs(:,i) = regress(X_rets(:,i), regress_mat);
+    LS_coeffs(:,i) = regress(X_rets(2:end,i), regress_mat);
     single_factor_fit(:,i) = regress_mat*LS_coeffs(:,i);
-    regress_err(:,i) = X_rets(:,i) - single_factor_fit(:,i);
+    regress_err(:,i) = X_rets(2:end,i) - single_factor_fit(:,i);
 end
 
 
