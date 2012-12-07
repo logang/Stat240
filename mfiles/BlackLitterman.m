@@ -1,4 +1,3 @@
-
 % PART I: single-factor time-series forecasting
 % ------
 
@@ -135,6 +134,7 @@ realized_returns = X_rets(t+1, :);
 
 % Step (3): Black-Litterman Master Formula: plot cumulative returns over
 % time
+% Step (4): Track 
 
 
 % NOTE: incorporate this into step (2) so as to not duplicate code.
@@ -145,14 +145,15 @@ iteration = 1; % keeps track of iterations
 
 % while the end of the FF data has not yet been reached, re-applies
 % Black-Litterman and keeps track of cumulative returns.
-while ( t < m )
+while ( t < m-1 )
      
     
     % Redefine prior based on expanding window and current
     % market-capitalization weights
-    weights = MktCap(t,:)./sum(MktCap(t,:));
+    weights = Mkt_cap(t,:)./sum(Mkt_cap(t,:));
     returns = X_rets(1:t,:);
-    sigma = cov(returns);
+    sigma = cov(returns); % historical covariance matrix (plug-in estimate)
+    hist_mean = mean(returns, 1); % historical mean returns (plug-in estimate)
     pi = gamma*sigma*weights';
     tau = 1/t;
     sigma_pi = tau*sigma;
@@ -165,10 +166,7 @@ while ( t < m )
     q = zeros(n,1); % REPLACE WITH ACTUAL OUTPUT FROM FORECAST MODEL
 
     
-    % NOTE: I THINK WE WILL WANT TO RE-COMPUTE PRIOR EQUILIBRIUM WEIGHTS ON
-    % EVERY ITERATION, WITH AN EXPANDING WINDOW.
-    % pi, sigma = ...
-
+    % Apply Black-Litterman master formula
     S = ( sigma_pi\eye(n) + P'*(omega\eye(n))*P )\eye(n); % defines posterior covariance matrix
     M = S*( (sigma_pi\eye(n))*pi + P'*(omega\eye(n))*q ); % defines posterior mean
 
@@ -184,7 +182,7 @@ while ( t < m )
 
 
     realized_returns = X_rets(t+1,:); % actual returns observed in subsequent period
-    omega = eye(n) + abs(realized_returns - q); % defines uncertainty of (next) mean based on performance
+    omega = eye(n) + diag(abs(realized_returns' - q)); % defines uncertainty of (next) mean based on performance
     
     % now, perform M-V portfolio optimization
     [w_p, return_p, excess_p, stdev_p] = OptimizePortfolio(mu_BL, sigma_BL, 0, bench_mu, bench_t, realized_returns);
@@ -205,6 +203,12 @@ plot(excess_returns);
 
 
 % Step (4): Plot and compare turnover rates
+
+
+
+
+
+
 
 
 
