@@ -59,6 +59,7 @@ function [PredMean, PredCov, Error, CoeffGARCH, CoeffAR, Innos] = Fit_AR_GARCH(r
 
     % for each asset, fits a GARCH(1,1) model and stores coefficients, sigmas,
     % and innovations in their respective pre-initialized matrices
+    % QUESTION: include C?
     for i = 1:n
         [co, err, LLF, Innos(:,i), Sigmas(:,i), summary] = garchfit(spec, X_resid(:,i));
         CoeffGARCH(i,:) = [co.C, co.K, co.GARCH, co.ARCH];

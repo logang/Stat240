@@ -125,6 +125,22 @@ show diagnostic plots
 \end_layout
 
 \begin_layout Standard
+To do:
+\end_layout
+
+\begin_layout Standard
+- Change to regress on 
+\begin_inset Formula $t$
+\end_inset
+
+ versus 
+\begin_inset Formula $t-1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset VSpace medskip
 \end_inset
 
@@ -197,6 +213,15 @@ show diagnostic plots
 \end_layout
 
 \begin_layout Standard
+- Use existing Matlab code; it will take a while to run.
+\end_layout
+
+\begin_layout Standard
+- Modify code to (a) change paths for data; (b) get rid of S&P regression;
+ (c) change window to expanding from rolling (or was it vice-versa)?
+\end_layout
+
+\begin_layout Standard
 \begin_inset VSpace medskip
 \end_inset
 
@@ -231,6 +256,11 @@ Black-Litterman
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+- Calculate equilibrium risk prima using either most recent weight or an
+ average; it is OK to use same weights for entire time period
 \end_layout
 
 \begin_layout Standard
@@ -300,6 +330,18 @@ nts as random states.
 \end_layout
 
 \begin_layout Standard
+- Let 
+\begin_inset Formula $\Omega_{t}=I_{n}+E_{t-1}$
+\end_inset
+
+ (1 + errors of last prediction (tracking error): penalizes bad predictions)
+\end_layout
+
+\begin_layout Standard
+- Kalman filter may perform worse than AR-GARCH
+\end_layout
+
+\begin_layout Standard
 \begin_inset VSpace medskip
 \end_inset
 
@@ -342,6 +384,16 @@ nts as random states.
 \end_layout
 
 \begin_layout Standard
+- Recalculate iteratively; don't use posterior as new prior, etc.
+ (thus same prior each time? check.)
+\end_layout
+
+\begin_layout Standard
+- Sharpe ratio: use CRSP LIBOR; may be better to predict excess returns
+ rather than returns themselves
+\end_layout
+
+\begin_layout Standard
 \begin_inset VSpace medskip
 \end_inset
 
@@ -377,7 +429,7 @@ th Fama-French portfolio in period
 \end_inset
 
 .
- Plot and compare the turnover rats for your B-L allocation and the traditional
+ Plot and compare the turnover rates for your B-L allocation and the traditional
  M-V portfolio that uses plug-in estimates.
  Bonus points: How would you lower your average turnover rate while not
  losing too much on the Sharpe ratio?

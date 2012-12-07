@@ -23,7 +23,7 @@ SPRets = SandPRets;
 SP = [SPDates(1:end-1) SPRets];
 
 % regression matrix: S&P returns and ones
-regress_mat = [ones(1:end-1,1) SP(:,2)];
+regress_mat = [ones(m-1,1) SP(:,2)];
 
 % creates empty matrices to save regression coefficients, fitted returns, and
 % errors
@@ -36,9 +36,9 @@ regress_err = zeros(m-1,n);
 % Note that the returns are regressed on the previous month's S&P returns
 % rather than the current month's S&P returns.
 for i = 1:n
-    LS_coeffs(:,i) = regress(X_rets(2:end,i), regress_mat);
+    LS_coeffs(:,i) = regress(X_rets(1:end-1,i), regress_mat);
     single_factor_fit(:,i) = regress_mat*LS_coeffs(:,i);
-    regress_err(:,i) = X_rets(2:end,i) - single_factor_fit(:,i);
+    regress_err(:,i) = X_rets(1:end-1,i) - single_factor_fit(:,i);
 end
 
 
@@ -47,9 +47,21 @@ end
 
 
 % Part (d): NPEB approach
+% Run Lai/Xing/Chen code
 
+% calculates market capitalization of each portfolio and stores in a matrix
+% (used by both (d) and B-L optimization)
+smlo_w = diag(FF(:,3))*FF(:,4);
+smme_w = diag(FF(:,6))*FF(:,7);
+smhi_w = diag(FF(:,9))*FF(:,10);
+bilo_w = diag(FF(:,12))*FF(:,13);
+bime_w = diag(FF(:,15))*FF(:,16);
+bihi_w = diag(FF(:,18))*FF(:,19);
+Mkt_cap = [smlo_w smme_w smhi_w bilo_w bime_w bihi_w];
 
-
+% window size and weights for NPEB code
+NPEB_window = 120;
+NPEB_wts = Mkt_cap(NPEB_window,:)./sum(Mkt_cap(NPEB_window,:));
 
 
 
@@ -65,28 +77,18 @@ gamma = 2.5;
 % window = 5 years of monthly returns
 window = 12*5;
 
-% calculates market capitalization of each portfolio
-smlo_w = diag(FF(1:window,3))*FF(1:window,4);
-smme_w = diag(FF(1:window,6))*FF(1:window,7);
-smhi_w = diag(FF(1:window,9))*FF(1:window,10);
-bilo_w = diag(FF(1:window,12))*FF(1:window,13);
-bime_w = diag(FF(1:window,15))*FF(1:window,16);
-bihi_w = diag(FF(1:window,18))*FF(1:window,19);
-
-% calculates market-capitalization weights by calculating the mean size of
-% each portfolio, then normalizing
-weights = [mean(smlo_w); mean(smme_w); mean(smhi_w); mean(bilo_w); mean(bime_w); mean(bihi_w)];
-weights = weights/sum(weights);
+% calculates market-capitalization weights by normalizing mkt cap at
+% current month (end of window)
+weights = Mkt_cap(window,:)./sum(Mkt_cap(window,:));
 
 % asset return for each portfolio
-%returns = [ FF(1:window,2) FF(1:window,5) FF(1:window,8) FF(1:window,11) FF(1:window,14) FF(1:window,17)];
 returns = X_rets(1:window,:);
 
 % covariance matrix for returns (taken as known by BL)
 sigma = cov(returns);
 
 % equilibrium risk prima = prior mean
-pi = gamma*sigma*weights;
+pi = gamma*sigma*weights';
 
 % historical risk prima
 hist_mean = mean(returns, 1);
@@ -98,15 +100,15 @@ hist_mean = mean(returns, 1);
 
 P = eye(n); % projection matrix
 
-tau = 1/window; % scalar indicating uncertainty of prior
-
 t = window; % current end index
+
+tau = 1/t; % scalar indicating uncertainty of prior
 
 sigma_pi = tau*sigma; % prior covariance matrix
 
 
 q = zeros(n,1); % REPLACE WITH OUTPUT (mean) FROM FORECAST MODEL
-omega = eye(n); % REPLACE WITH OUTPUT (covariance of errors from model)
+omega = eye(n); % NOTE: THIS MAY BE OK
 
 
 S = ( sigma_pi\eye(n) + P'*(omega\eye(n))*P )\eye(n); % defines posterior covariance matrix
@@ -126,7 +128,7 @@ bench_t = 0.01;
 realized_returns = X_rets(t+1, :);
 
 % now, perform M-V portfolio optimization
-[w_p, return_p, excess_p, stdev_p] = OptimizePortfolio(mu_BL, sigma_BL, 0, bench_mu, bench_t, realized_returns);
+[w_p, return_p, excess_p, stdev_p] = OptimizePortfolio(mu_BL, sigma_BL, -0.3, bench_mu, bench_t, realized_returns);
 
 
 
@@ -145,28 +147,45 @@ iteration = 1; % keeps track of iterations
 % Black-Litterman and keeps track of cumulative returns.
 while ( t < m )
      
+    
+    % Redefine prior based on expanding window and current
+    % market-capitalization weights
+    weights = MktCap(t,:)./sum(MktCap(t,:));
+    returns = X_rets(1:t,:);
+    sigma = cov(returns);
+    pi = gamma*sigma*weights';
+    tau = 1/t;
+    sigma_pi = tau*sigma;
+    
+    
+    % Redefine posterior.
+    % Note that Omega is a function of the errors from the previous
+    % prediction, and is therefore defined at the end of this loop to form
+    % Omega(t+1).
     q = zeros(n,1); % REPLACE WITH ACTUAL OUTPUT FROM FORECAST MODEL
-    omega = eye(n); % REPLACE WITH ACTUAL OUTPUT FROM FORECAST MODEL
+
     
     % NOTE: I THINK WE WILL WANT TO RE-COMPUTE PRIOR EQUILIBRIUM WEIGHTS ON
     % EVERY ITERATION, WITH AN EXPANDING WINDOW.
-    % pi = ...
+    % pi, sigma = ...
 
     S = ( sigma_pi\eye(n) + P'*(omega\eye(n))*P )\eye(n); % defines posterior covariance matrix
     M = S*( (sigma_pi\eye(n))*pi + P'*(omega\eye(n))*q ); % defines posterior mean
 
     % Values of mu and sigma used in Black-Litterman portfolio optimization
     mu_BL = M;
-    sigma_BL = S + sigma;
+    sigma_BL = S + sigma_pi; % NOTE: NOT SURE WHETHER TO USE SIGMA OR SIGMA_PI HERE
 
     
     % CHECK S&P DATA: maybe use t-1, t instead of t, t+1.
+    % Use Sharpe instead of S&P?
     bench_mu = mean(SPRets(1:t));
     bench_t = SPRets(t+1);
 
-    % Realized return
-    realized_returns = X_rets(t+1, :);
 
+    realized_returns = X_rets(t+1,:); % actual returns observed in subsequent period
+    omega = eye(n) + abs(realized_returns - q); % defines uncertainty of (next) mean based on performance
+    
     % now, perform M-V portfolio optimization
     [w_p, return_p, excess_p, stdev_p] = OptimizePortfolio(mu_BL, sigma_BL, 0, bench_mu, bench_t, realized_returns);
     
@@ -176,6 +195,7 @@ while ( t < m )
     % updates time and iteration #
     t = t + 1;
     iteration = iteration + 1;
+    
 end
 
 % Plots cumulative returns
