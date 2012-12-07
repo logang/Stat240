@@ -82,19 +82,23 @@ FF_data = np.array(FF_data)[FF_indices,:]
 
 # Get indices of daily Libor returns that appear in Fama-French data
 libor_indices = [idx for idx, l in zip(range(len(libor_dates)), libor_dates) if l in FF_dates]
-Libor_matched_dates = np.asarray(libor_dates)[libor_indices,:]
-Libor_matched = np.asarray(Libor_returns)[libor_indices,:]
-FF_data = np.array(FF_data)[FF_indices,:]
-
+Libor_matched = np.zeros(len(indices),)
+Libor_matched_dates = np.array(libor_dates)[libor_indices]
 matches = [item for item in Libor_matched_dates if item in FF_dates]
 misses = [item for item in FF_dates if item not in matches]
-approx = []
-for m in misses:
-    min_diff = np.min(np.abs(float(m) - np.array(FF_dates).astype(float)))
-    Approx_idx = np.where(np.abs(float(m) - np.array(FF_dates).astype(float))==min_diff)[0]
-    approx.append(Libor_returns[approx_idx])
-    print Libor_dates[approx_idx], FF_dates[approx_idx]
-1/0
+FF_data = np.array(FF_data)[FF_indices,:]
+
+# Find and replace missing dates with the previous date's data
+j = 0
+Libor_matched_dates = Libor_matched.copy()
+for i in xrange(len(FF_dates)):
+    if FF_dates[i] not in misses:
+        Libor_matched[i] = Libor_returns[libor_indices[j]]
+        Libor_matched_dates[i] = libor_dates[libor_indices[j]]
+        j += 1
+    else:
+        Libor_matched[i] = Libor_returns[libor_indices[j]]
+        Libor_matched_dates[i] = libor_dates[libor_indices[j]]
 
 # Convert relevant assets to returns
 print "Converting column", SandP500_header, "From S&P 500."
@@ -104,6 +108,7 @@ SandP500_returns = prices_to_returns(SandP500_matched[:,4])
 print "Saving data"
 FF_returns = [1,4,7,10,13,16]
 np.savetxt("SandP500_returns.csv", SandP500_returns, delimiter=",")
+np.savetxt("Libor_returns.csv", Libor_matched, delimiter=",")
 np.savetxt("FF_returns.csv", np.array(FF_data)[1:,FF_returns].astype(float), delimiter=",")
 np.savetxt("dates.csv", FF_data[1:,0].astype(int), delimiter=",")
 
