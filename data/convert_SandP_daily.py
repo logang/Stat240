@@ -15,18 +15,39 @@ def prices_to_returns(p):
         r[i] = (p[i+1]-p[i])/p[i]
     return r
 
-# load S&P500 and Fama-French data
-SandP500csv = open('SandP500_daily.csv', 'r')
-SandP = []
-for row in SandP500csv:
-    SandP.append(row.strip().split(','))
-SandP500 = SandP[1:] # strip header
+# function to load csv and txt data
+def load_text(csvfile, sep=",", num_headerlines=0, header_return=None):
+    loaded_csv = open(csvfile, 'r')
+    out = []
+    for row in loaded_csv:
+        if sep is not None:
+            out.append(row.strip().split(sep))
+        else:
+            out.append(row.strip().split())
+    if header_return is not None:
+        header = out[header_return]
+    else:
+        header = False
+    out = out[num_headerlines:] # strip header
+    return header, out
 
-FFcsv = open('FF6Portfolios.txt', 'r')
-FF = []
-for row in FFcsv:
-    FF.append(row.strip().split())
-FF_data = FF[3:] # strip header
+# Load S&P500, Fama-French and Libor data
+SandP500_header, SandP500 = load_text('SandP500_daily.csv', sep=',',num_headerlines=1,header_return=0)
+FF_header, FF_data = load_text('FF6Portfolios.txt', sep=None, num_headerlines=3,header_return=1)
+Libor_header, Libor = load_text('LiborRates.csv', sep=",", num_headerlines=1,header_return=0)
+
+# SandP500csv = open('SandP500_daily.csv', 'r')
+# SandP = []
+# for row in SandP500csv:
+#     SandP.append(row.strip().split(','))
+# SandP500 = SandP[1:] # strip header
+
+# FFcsv = open('FF6Portfolios.txt', 'r')
+# FF = []
+# for row in FFcsv:
+#     FF.append(row.strip().split())
+# FF_data = FF[3:] # strip header
+
 
 # Remove hyphens from S&P500 dates and reorder them
 SandP_dates = [s[0] for s in SandP500]
@@ -39,6 +60,17 @@ for s in SandP_dates:
     sp_dates.append(whole)
 sp_dates = sp_dates[::-1]
 
+# Remove hyphens from Libor data and reorder them
+Libor_dates = [l[0].split("\t")[0][1:11] for l in Libor]
+Libor_returns = [l[0].split("\t")[1] for l in Libor]
+libor_dates = []
+for l in Libor_dates:
+    l_all = l.split('-')
+    whole = ''
+    for part in l_all:
+        whole += part
+    libor_dates.append(whole)
+
 # Get Fama-French dates 
 FF_dates = [ff[0] for ff in FF_data]
 
@@ -48,8 +80,24 @@ FF_indices = [ff_idx for ff_idx, ff in zip(range(len(FF_dates)), FF_dates) if ff
 SandP500_matched = np.asarray(SandP500)[indices,:]
 FF_data = np.array(FF_data)[FF_indices,:]
 
+# Get indices of daily Libor returns that appear in Fama-French data
+libor_indices = [idx for idx, l in zip(range(len(libor_dates)), libor_dates) if l in FF_dates]
+Libor_matched_dates = np.asarray(libor_dates)[libor_indices,:]
+Libor_matched = np.asarray(Libor_returns)[libor_indices,:]
+FF_data = np.array(FF_data)[FF_indices,:]
+
+matches = [item for item in Libor_matched_dates if item in FF_dates]
+misses = [item for item in FF_dates if item not in matches]
+approx = []
+for m in misses:
+    min_diff = np.min(np.abs(float(m) - np.array(FF_dates).astype(float)))
+    Approx_idx = np.where(np.abs(float(m) - np.array(FF_dates).astype(float))==min_diff)[0]
+    approx.append(Libor_returns[approx_idx])
+    print Libor_dates[approx_idx], FF_dates[approx_idx]
+1/0
+
 # Convert relevant assets to returns
-print "Converting column", SandP[0][4], "From S&P 500."
+print "Converting column", SandP500_header, "From S&P 500."
 SandP500_returns = prices_to_returns(SandP500_matched[:,4])
 
 # write returns and dates to CSV files
