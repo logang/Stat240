@@ -22,7 +22,6 @@ indexweight = indexweight.NPEB_wts;
 
 % Grid over which to search for best eta
 eta=1.0:0.5:10;
-%eta = 1:10;
 
 % Number of bootstrap replicates
 B = 100;

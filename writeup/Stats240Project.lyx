@@ -2459,7 +2459,7 @@ To obtain the equilibrium risk prima from
 \begin_layout Subsubsection*
 (b) Note that Black-Litterman allocation itself is not an alpha-generating
  process.
- To beat the market we eed to specify expert views or build models that
+ To beat the market we need to specify expert views or build models that
  forecast expected returns well.
  For simplicity assume the projection matrix is 
 \begin_inset Formula $P=I_{6}$

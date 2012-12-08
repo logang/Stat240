@@ -34,10 +34,6 @@ nPeriod=length(FF_dates)-start_winsize;
 % set grid of lambdas
 lambdas=2.^( (-3):1:11 );
 
-% set lambda
-%format long;
-%lambda = 0.001;
-
 % initialize output containers
 sharpe_train=zeros(nPeriod, 1);
 ret_Value_npeb_iid = zeros(nPeriod, 2);
@@ -47,7 +43,6 @@ for j = 1 :(length(FF_dates)-start_winsize)
     winsize = start_winsize + j - 1;
     Xtrain = FF_data(1:(start_winsize+j), :);
     Xtest = FF_data(1+(start_winsize+j), :);
-
     
     for lam=1:length(lambdas)
       lambda = lambdas(lam)
@@ -95,8 +90,5 @@ end
 disp('NPEB IID returns were:')
 disp(ret_Value_npeb_iid)
 
-% Clumsily ham-fist the data into a file, MATLAB style!
-lam = num2str(lambda);
-lam_split = regexp(lam,'\.','split');
-savefile = [strcat('../results/NPEB_iid_returns_lambda_',lam_split(1),'_',lam_split(2))];
-save(savefile{1}, 'ret_Value_npeb_iid'); % I hate you MATLAB
+% save the results
+save('../results/NPEB_iid_returns', 'ret_Value_npeb_iid'); 
