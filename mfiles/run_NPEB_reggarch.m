@@ -20,11 +20,13 @@ indexweight=load('../data/NPEB_wts.mat');
 indexweight = indexweight.NPEB_wts;
 
 % Grid over which to search for best eta
-eta=1.0:0.5:10;
+%eta=1.0:0.5:10;
 %eta = 1:10;
+eta = 3:7;
 
 % Number of bootstrap replicates
-B = 100;
+%B = 100;
+B = 3;
 
 % Define length of period
 nPeriod=length(FF_dates)-start_winsize;
@@ -34,7 +36,8 @@ sharpe_train=zeros(nPeriod, 1);
 ret_Value_npeb_iid = zeros(nPeriod, 1);
 
 % Set grid of lambdas
-lambdas=2.^( (-3):1:11 );
+%lambdas=2.^( (-3):1:11 );
+lambdas = 1:5;
 
 %% Constraints
 lb= ones(nStocks, 1)*(-0.05);
