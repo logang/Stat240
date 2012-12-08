@@ -85,10 +85,10 @@ returns = X_rets(1:window,:);
 % covariance matrix for returns (taken as known by BL)
 sigma = cov(returns);
 
-% equilibrium risk prima = prior mean
+% mean returns implied by market equilibrium
 pi = gamma*sigma*weights';
 
-% historical risk prima
+% historical mean returns
 hist_mean = mean(returns, 1);
 
 
@@ -105,7 +105,7 @@ tau = 1/t; % scalar indicating uncertainty of prior
 sigma_pi = tau*sigma; % prior covariance matrix
 
 % forecasted returns for next month
-q = ForecastReturns(returns);
+q = ForecastReturns(returns, Libor);
 
 % initializes omega. Since it is defined as a function of the forecast
 % errors from the previous forecast, it is initialized
@@ -120,17 +120,16 @@ mu_BL = M;
 sigma_BL = S + sigma;
 
 % Replace this with the actual benchmarks from S&P data.
-bench_mu = 0.006;
-bench_t = 0.01;
+bench_t = SPRets(t+1);
 
 % Realized returns
 realized_returns = X_rets(t+1, :);
 
 % now, perform M-V portfolio optimization (B-L)
-[w_p, return_p, excess_p, stdev_p] = OptimizePortfolio(mu_BL, sigma_BL, -0.3, bench_mu, bench_t, realized_returns);
+[w_p, return_p, excess_p, stdev_p, sharpe_p] = OptimizePortfolio(mu_BL, sigma_BL, -0.3, bench_t, realized_returns, Libor(t));
 
 % Markowitz for comparison
-[w_m, return_m, excess_m, stdev_m] = OptimizePortfolio(hist_mean', sigma, -0.3, bench_mu, bench_t, realized_returns);
+[w_m, return_m, excess_m, stdev_m, sharpe_m] = OptimizePortfolio(hist_mean', sigma, -0.3, bench_t, realized_returns, Libor(t));
 
 % Saves old weights for tracking turnover rate in the next step
 w_p_old = w_p;
@@ -143,10 +142,12 @@ w_m_old = w_m;
 % Step (4): Track turnover rate
 
 
-excess_returns_BL = zeros(m - t - 2, 1);  % keeps track of CUMULATIVE excess returns over time (for B-L)
+excess_returns_BL = zeros(m - t - 2, 1);  % keeps track of CUMULATIVE excess returns over time
 excess_returns_M = zeros(m - t - 2, 1); 
-turnover_BL = zeros(m - t - 2, 1);  % tracks turnover rate of B-L over time
-turnover_M = zeros(m - t - 2, 1); % tracks turnover rate of Markowitz over time
+turnover_BL = zeros(m - t - 2, 1);  % tracks turnover rate
+turnover_M = zeros(m - t - 2, 1); 
+sharpe_BL = zeros(m - t - 2, 1);  % tracks Sharpe ratios
+sharpe_M = zeros(m - t - 2, 1); 
 
 
 total_BL = excess_p; % keeps track of total excess returns for B-L
@@ -177,7 +178,7 @@ while ( t < m-1 )
     % Note that Omega is a function of the errors from the previous
     % prediction, and is therefore defined at the end of this loop to form
     % Omega(t+1).
-    q = ForecastReturns(returns);
+    q = ForecastReturns(returns, Libor);
 
     
     % Apply Black-Litterman master formula
@@ -189,34 +190,33 @@ while ( t < m-1 )
     sigma_BL = S + sigma; 
 
     
-    % CHECK S&P DATA: maybe use t-1, t instead of t, t+1.
-    % Use Sharpe instead of S&P?
-    bench_mu = mean(SPRets(1:t));
     bench_t = SPRets(t+1);
 
 
     realized_returns = X_rets(t+1,:); % actual returns observed in subsequent period
-    omega = eye(n) + diag(abs(realized_returns' - q)); % defines uncertainty of (next) mean based on performance
+    omega = 100*diag(abs(realized_returns' - q)); % defines uncertainty of (next) mean based on performance
     
     
     % BLACK-LITTERMAN PORTFOLIO OPTIMIZATION
-    [w_p, return_p, excess_p, stdev_p] = OptimizePortfolio(mu_BL, sigma_BL, -0.3, bench_mu, bench_t, realized_returns);
+    [w_p, return_p, excess_p, stdev_p, sharpe_p] = OptimizePortfolio(mu_BL, sigma_BL, -0.3, bench_t, realized_returns, Libor(t));
     
     total_BL = total_BL + excess_p; % updates total for B-L
     excess_returns_BL(iteration) = total_BL; % saves cumulative excess return at time t for B-L
+    sharpe_BL(iteration) = sharpe_p;
     turnover_BL(iteration) = GetTurnoverRate(w_p, w_p_old); % tracks B-L turnover rate
     w_p_old = w_p; % saves previous result for next iteration
     
    
     
     % MARKOWITZ PLUG-IN PORTFOLIO OPTIMIZATION
-    [w_m, return_m, excess_m, stdev_m] = OptimizePortfolio(hist_mean', sigma, -0.3, bench_mu, bench_t, realized_returns);
+    [w_m, return_m, excess_m, stdev_m, sharpe_m] = OptimizePortfolio(hist_mean', sigma, -0.3, bench_t, realized_returns, Libor(t));
     disp('EXCESS MARKOWITZ RETURNS:');
     disp(excess_m);
     
     total_M = total_M + excess_m; % updates total for Markowitz
     disp(total_M);
     excess_returns_M(iteration) = total_M; % saves cumulative excess return at time t for B-L
+    sharpe_M(iteration) = sharpe_m;
     turnover_M(iteration) = GetTurnoverRate(w_m, w_m_old); % tracks Markowitz turnover rate
     w_m_old = w_m; % saves previous result for next iteration
      
@@ -231,14 +231,24 @@ end
 
 % Plots cumulative returns
 figure
-plot(excess_returns_M(1:end-2), ':');
+plot(excess_returns_M, ':');
 hold on
-plot(excess_returns_BL(1:end-2));
+plot(excess_returns_BL);
 legend('Markowitz', 'Black-Litterman');
 title ('Cumulative Excess Returns Over Time');
 xlabel('Time in months');
 ylabel('Excess returns over S&P 500 index');
 
+
+% Plots sharpe ratio
+figure
+plot(sharpe_M, ':');
+hold on
+plot(sharpe_BL);
+legend('Markowitz', 'Black-Litterman');
+title ('Sharpe Ratio Over Time');
+xlabel('Time in months');
+ylabel('Sharpe ratio');
 
 
 % Step (4): Plot and compare turnover rates
