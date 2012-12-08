@@ -34,7 +34,7 @@ nPeriod=length(FF_dates)-start_winsize;
 sharpe_train=zeros(nPeriod, 1);
 ret_Value_npeb_iid = zeros(nPeriod, 1);
 
-% set grid of lambdas
+% Set grid of lambdas
 lambdas=2.^( (-3):1:11 );
 
 %% Constraints
@@ -43,8 +43,6 @@ ub=ones(nStocks, 1);
 
 % initialize output containers
 sharpe_train=zeros(nPeriod, 1);
-res_sharpe=zeros(nPeriod, length(lambdas));
-res_rets=zeros(nPeriod, length(lambdas));
 ret_Value_npeb_ar = zeros(nPeriod, 2);
 
 for j = 1 : (length(FF_dates)-start_winsize)
