@@ -153,6 +153,8 @@ sharpe_M = zeros(m - t - 2, 1);
 total_BL = excess_p; % keeps track of total excess returns for B-L
 total_M = excess_m; % keeps track of total excess returns for Markowitz
 
+Pred_error = zeros(m-t-2, n);
+
 
 iteration = 1; % keeps track of iterations
 t = t + 1; % the following loop tracks optimization results for t > 1.
@@ -175,12 +177,12 @@ while ( t < m-1 )
     
     
     % Redefine posterior.
+    
     % Note that Omega is a function of the errors from the previous
     % prediction, and is therefore defined at the end of this loop to form
     % Omega(t+1).
     q = ForecastReturns(returns, Libor);
 
-    
     % Apply Black-Litterman master formula
     S = ( sigma_pi\eye(n) + P'*(omega\eye(n))*P )\eye(n); % defines posterior covariance matrix
     M = S*( (sigma_pi\eye(n))*pi + P'*(omega\eye(n))*q ); % defines posterior mean
@@ -190,11 +192,16 @@ while ( t < m-1 )
     sigma_BL = S + sigma; 
 
     
-    bench_t = SPRets(t+1);
+    bench_t = SPRets(t+1); % used as benchmark in computing excess returns
 
 
-    realized_returns = X_rets(t+1,:); % actual returns observed in subsequent period
-    omega = 100*diag(abs(realized_returns' - q)); % defines uncertainty of (next) mean based on performance
+
+    %realized_returns = X_rets(t+1,:); % actual returns observed in subsequent period
+    realized_returns = excess_rets(t+1,:);
+    
+    Pred_error(iteration,:) = abs((realized_returns' - q)');
+    
+    omega = 10*diag(Pred_error(iteration,:)); % defines uncertainty of (next) mean based on performance
     
     
     % BLACK-LITTERMAN PORTFOLIO OPTIMIZATION
