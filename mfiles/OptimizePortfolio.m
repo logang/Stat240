@@ -17,11 +17,11 @@
 %                  benchmark return)
 %        sd     -- estimated standard deviation of portfolio with weights w
 
-function [w, mu, ex_mu, sd, sharpe] = OptimizePortfolio(mu_hat, sigma_hat, lb, bench_t, ret_t, rf)
+function [w, mu, ex_mu, sd, sharpe] = OptimizePortfolio(mu_hat, sigma_hat, lb, bench_t, ret_t)
     
    n = length(mu_hat); % number of stocks
 
-   lambda = 1.2; % initializes lambda for grid search, which has
+   lambda = 3; % initializes lambda for grid search, which has
    %m = length(lambda); % m values
    
    % initializes mean return, standard deviation, optimal weights, and
@@ -54,7 +54,7 @@ function [w, mu, ex_mu, sd, sharpe] = OptimizePortfolio(mu_hat, sigma_hat, lb, b
       % this M-V optimizing portfolio
       mu_temp = mu_hat' * w;
       sd_temp = sqrt( w' * sigma_hat * w);
-      sharpe_ratio =  (mu_temp - rf)/sd_temp;
+      sharpe_ratio =  mu_temp/sd_temp;
       
       % if information ratio exceeds previous max, redefines max and its
       % associated mean, sd, and weights.
