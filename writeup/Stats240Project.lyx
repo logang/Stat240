@@ -2317,7 +2317,7 @@ Black-Litterman
 \end_layout
 
 \begin_layout Subsubsection*
-(a) Calculate the equilibrium risk prima.
+(a) Calculate the equilibrium risk premiums.
  
 \end_layout
 
@@ -2415,38 +2415,296 @@ We can interpret
 \begin_inset Formula $\pi_{t}$
 \end_inset
 
- as the mean returns implied by the market -- under the assumption of market
- equilibrium -- based on the information available at time 
+ as the mean 
+\shape italic
+excess
+\shape default
+ returns implied by the market -- under the assumption of market equilibrium
+ -- based on the information available at time 
 \begin_inset Formula $t.$
 \end_inset
 
- 
-\end_layout
-
-\begin_layout Standard
-To obtain the equilibrium risk prima from 
-\begin_inset Formula $\pi_{t},$
+ In other words, 
+\begin_inset Formula $\pi_{t}\approx\bar{r}_{t}-r_{f},$
 \end_inset
 
- we subtract the risk-free rate, 
+ where 
 \begin_inset Formula $r_{f}$
 \end_inset
 
- (for this project we use the monthly LIBOR rate at time 
-\begin_inset Formula $t$
+ is the risk-free rate.
+ Thus 
+\begin_inset Formula $\pi_{t}$
 \end_inset
 
-).
- To obtain the historical risk prima, we take the average of the difference
- vector 
-\begin_inset Formula $\mu-r_{f}.$
-\end_inset
-
+ is a vector of risk premiums, or the excess reward required by the market
+ to take on more risk.
  
 \end_layout
 
 \begin_layout Standard
-[ INSERT ANSWER]
+To obtain the historical risk premiums as of time 
+\begin_inset Formula $t$
+\end_inset
+
+, we compute the sample mean and let 
+\begin_inset Formula $\hat{\mu}_{it}=\frac{1}{t}\sum_{i=1}^{t}(r_{i}-r_{fi})$
+\end_inset
+
+, where 
+\begin_inset Formula $i=1$
+\end_inset
+
+ stands in for the first month of our expanding window and 
+\begin_inset Formula $r_{fi}$
+\end_inset
+
+ is the LIBOR rate at time 
+\begin_inset Formula $i$
+\end_inset
+
+.
+ We find that the vector of historical risk premiums at time 
+\begin_inset Formula $t=60$
+\end_inset
+
+ does not quite match the vector of equilibrium risk premiums, as shown
+ in the chart below.
+ The equilibrium premiums are generally lower than the historical ones,
+ with the exception of those for assets with a low book-to-market ratio,
+ where the equilibrium excess returns match or exceed the historical risk
+ premiums.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\pi$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mu$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+smlo
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0060
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0040
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+smme
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0048
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0089
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+smhi
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0050
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0103
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+bilo
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0046
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0046
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+bime
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0045
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0057
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+bihi
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0046
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0053
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -2516,7 +2774,13 @@ nts as random states.
 \end_layout
 
 \begin_layout Standard
-- Insert write-up of model here
+We attempted several approaches to forecasting 
+\begin_inset Formula $Q$
+\end_inset
+
+, using an expanding window.
+ All of these methods generated excess returns over the S&P 500 portfolio,
+ but Markowitz outperformed each of them, as will be explained in part (c).
 \end_layout
 
 \begin_layout Standard
