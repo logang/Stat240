@@ -3201,7 +3201,19 @@ th Fama-French portfolio in period
 The following plots show the portfolio turnover rates for several strategies.
  The turnover rates for traditional Markowitz portfolios are plotted alongside
  for comparison.
- 
+ (Code for calculating the portfolio-turnover rate can be found in the Appendix,
+ or at 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://github.com/logang/Stat240
+\end_layout
+
+\end_inset
+
+.)
 \end_layout
 
 \end_body
