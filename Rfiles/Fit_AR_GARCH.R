@@ -137,6 +137,7 @@ for(i in 1:m)
 }
 
 # Save coefficents to LaTeX
+print(xtable(ar_coefs,digits=4), type="latex", file="figures/tables/Problem1b_ar_coefs_results.tex")
 print(xtable(coefmat,digits=4), type="latex", file="figures/tables/Problem1b_coef_results.tex")
 print(xtable(coefmat_st,digits=4), type="latex", file="figures/tables/Problem1b_coef_studentized_results.tex")
 
@@ -175,8 +176,8 @@ for(i in 2:m)
 }
 
 # Print predicted mean and covariance to LaTeX
-print(xtable(mean_pred*100), type="latex", file="figures/tables/Problem1c_mean_pred_times100.tex")
-print(xtable(cov_pred*100), type="latex", file="figures/tables/Problem1c_cov_pred_times100.tex")
+print(xtable(mean_pred,digits=4), type="latex", file="figures/tables/Problem1c_mean_pred.tex")
+print(xtable(cov_pred,digits=4), type="latex", file="figures/tables/Problem1c_cov_pred.tex")
 
 #---------------------------- PROBLEM 1D ----------------------------------
 # MATLAB

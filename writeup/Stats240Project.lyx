@@ -731,6 +731,36 @@ Residuals for the six time series of interest in the Fama-French portfolio.
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_return_time_series.pdf
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+The six Fama-French portfolio returns.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset VSpace medskip
 \end_inset
 
@@ -808,7 +838,7 @@ such that
 <column alignment="right" valignment="top" width="0">
 <column alignment="right" valignment="top" width="0">
 <row>
-<cell alignment="right" valignment="top" topline="true" usebox="none">
+<cell alignment="right" valignment="top" topline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -829,7 +859,7 @@ AR(1)-GARCH(1,1)
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -891,7 +921,7 @@ AR(1)-GARCH(1,1)
 </cell>
 </row>
 <row>
-<cell alignment="right" valignment="top" topline="true" usebox="none">
+<cell alignment="right" valignment="top" topline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -909,7 +939,7 @@ smlo_ret
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -956,7 +986,7 @@ smlo_ret
 </cell>
 </row>
 <row>
-<cell alignment="right" valignment="top" usebox="none">
+<cell alignment="right" valignment="top" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -974,7 +1004,7 @@ smme_ret
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1021,7 +1051,7 @@ smme_ret
 </cell>
 </row>
 <row>
-<cell alignment="right" valignment="top" usebox="none">
+<cell alignment="right" valignment="top" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1039,7 +1069,7 @@ smhi_ret
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1086,7 +1116,7 @@ smhi_ret
 </cell>
 </row>
 <row>
-<cell alignment="right" valignment="top" usebox="none">
+<cell alignment="right" valignment="top" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1104,7 +1134,7 @@ bilo_ret
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1151,7 +1181,7 @@ bilo_ret
 </cell>
 </row>
 <row>
-<cell alignment="right" valignment="top" usebox="none">
+<cell alignment="right" valignment="top" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1169,7 +1199,7 @@ bime_ret
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1216,7 +1246,7 @@ bime_ret
 </cell>
 </row>
 <row>
-<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+<cell alignment="right" valignment="top" bottomline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1234,7 +1264,7 @@ bihi_ret
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+<cell alignment="center" valignment="top" bottomline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1303,7 +1333,7 @@ tive, and still others show more autocorrelation in their residuals than
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -1312,15 +1342,76 @@ status open
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ bihi_ret .pdf
-	scale 50
+	scale 45
 
 \end_inset
 
 
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ bilo_ret .pdf
+	scale 45
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ bime_ret .pdf
+	scale 45
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ smhi_ret .pdf
+	scale 45
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ smlo_ret .pdf
+	scale 45
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ smme_ret .pdf
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
 \begin_inset Caption
 
 \begin_layout Plain Layout
-ACF and PACF for bihi returns and their residuals.
+ACF and PACF plots for the six Fama-French portfolio returns and their residuals.
 \end_layout
 
 \end_inset
@@ -1338,147 +1429,9 @@ ACF and PACF for bihi returns and their residuals.
 \end_layout
 
 \begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ bilo_ret .pdf
-
-\end_inset
-
-
-\begin_inset Caption
-
-\begin_layout Plain Layout
-ACF and PACF for bilo returns and their residuals.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
 \begin_inset Formula 
 \[
 \]
-
-\end_inset
-
-
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ bime_ret .pdf
-	scale 70
-
-\end_inset
-
-
-\begin_inset Caption
-
-\begin_layout Plain Layout
-ACF and PACF for bime returns and their residuals.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula 
-\[
-\]
-
-\end_inset
-
-
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ smhi_ret .pdf
-
-\end_inset
-
-
-\begin_inset Caption
-
-\begin_layout Plain Layout
-ACF and PACF for smhi returns and their residuals.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ smlo_ret .pdf
-
-\end_inset
-
-
-\begin_inset Caption
-
-\begin_layout Plain Layout
-ACF and PACF for smlo returns and their residuals.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ smme_ret .pdf
-
-\end_inset
-
-
-\begin_inset Caption
-
-\begin_layout Plain Layout
-ACF and PACF for smme returns and their residuals.
-\end_layout
-
-\end_inset
-
-
-\end_layout
 
 \end_inset
 
@@ -1504,7 +1457,105 @@ Examining the residuals from the
 \begin_inset Formula $GARCH(1,1)$
 \end_inset
 
- model, we see that GARCH is succ
+ model, we see that GARCH is reducing the heteroskedasticity as we would
+ expect.
+ Figure 5 shows the residuals resulting from the 
+\begin_inset Formula $AR(1)$
+\end_inset
+
+ model given above.
+ Figure 6 shows the residuals and studentized residuals resulting from fitting
+ a 
+\begin_inset Formula $GARCH(1,1)$
+\end_inset
+
+ model to the residuals of the 
+\begin_inset Formula $AR(1)$
+\end_inset
+
+ model.
+ They are visibly more stationary, particulary near the end of the series.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_AR1_fit_residuals.pdf
+	scale 70
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Plots of the residuals after fitting an AR(1) model to the Fama-French portfolio
+ returns.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_GARCH1_1_fit_std_innovations.pdf
+	scale 45
+
+\end_inset
+
+
+\begin_inset space \quad{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_GARCH1_1_fit_std_innovations_studentized.pdf
+	scale 45
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection*
@@ -1586,251 +1637,21 @@ where
 \begin_inset Formula $m$
 \end_inset
 
-th) month, we obtain the following predictions.
- Note that each mean or covariance is multiplied by 100 to fit in the table.
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-% latex table generated in R 2.13.2 by xtable 1.6-0 package
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
+th) month, we obtain the following one-step-ahead predictions 
+\begin_inset Formula $\widehat{r}_{t+1}$
 \end_inset
 
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-% Fri Dec  7 13:11:01 2012
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Float table
-placement ht
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="7" columns="2">
-<features tabularvalignment="middle">
-<column alignment="right" valignment="top" width="0">
-<column alignment="right" valignment="top" width="0">
-<row>
-<cell alignment="right" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-r
-\begin_inset Formula $\times100$
-\end_inset
-
- 
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="right" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-smlo_ret 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.56 
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-smme_ret 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.10 
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-smhi_ret 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.23 
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-bilo_ret 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.69 
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-bime_ret 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.02 
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="right" valignment="top" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-bihi_ret 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.90 
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
+, along with their 95% confidence interval and sample covariance matrax:
+\begin_inset VSpace medskip
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-% latex table generated in R 2.13.2 by xtable 1.6-0 package
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-% Fri Dec  7 13:11:01 2012
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Float table
-placement ht
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="7" columns="7">
+<lyxtabular version="3" rows="7" columns="10">
 <features tabularvalignment="middle">
 <column alignment="right" valignment="top" width="0">
 <column alignment="right" valignment="top" width="0">
@@ -1839,520 +1660,6 @@ status open
 <column alignment="right" valignment="top" width="0">
 <column alignment="right" valignment="top" width="0">
 <column alignment="right" valignment="top" width="0">
-<row>
-<cell alignment="right" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-2 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-3 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-4 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-5 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-6 
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="right" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-smlo_ret 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.57 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.55 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.48 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.28 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.31 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.28 
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-smme_ret 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.55 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.59 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.53 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.27 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.36 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.33 
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-smhi_ret 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.48 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.53 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.51 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.25 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.34 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.32 
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-bilo_ret 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.28 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.27 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.25 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.23 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.24 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.22 
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-bime_ret 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.31 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.36 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.34 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.24 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.39 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.34 
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="right" valignment="top" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-bihi_ret 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.28 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.33 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.32 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.22 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.34 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="right" valignment="top" bottomline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.37 
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The 95% confidence intervals for the mean -- here not multiplied by 100
- -- are
-\end_layout
-
-\begin_layout Standard
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-% latex table generated in R 2.13.2 by xtable 1.6-0 package
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-% Fri Dec  7 13:10:58 2012
-\end_layout
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
-
-\begin_inset Float table
-placement ht
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="7" columns="3">
-<features tabularvalignment="middle">
 <column alignment="right" valignment="top" width="0">
 <column alignment="right" valignment="top" width="0">
 <column alignment="right" valignment="top" width="0">
@@ -2366,7 +1673,19 @@ status open
 
 \end_inset
 </cell>
-<cell alignment="right" valignment="top" topline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\widehat{r}_{t+1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2375,7 +1694,7 @@ status open
 
 \end_inset
 </cell>
-<cell alignment="right" valignment="top" topline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2384,18 +1703,81 @@ status open
 
 \end_inset
 </cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+smlo_ret 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+smme_ret 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+smhi_ret 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+bilo_ret 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+bime_ret 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+bihi_ret 
+\end_layout
+
+\end_inset
+</cell>
 </row>
 <row>
 <cell alignment="right" valignment="top" topline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-1 
+smlo_ret 
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="right" valignment="top" topline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.56 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2404,7 +1786,7 @@ status open
 
 \end_inset
 </cell>
-<cell alignment="right" valignment="top" topline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2413,18 +1795,81 @@ status open
 
 \end_inset
 </cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0057 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0055 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0048 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0029 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0032 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0028 
+\end_layout
+
+\end_inset
+</cell>
 </row>
 <row>
 <cell alignment="right" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-2 
+smme_ret 
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="right" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.10 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2433,7 +1878,7 @@ status open
 
 \end_inset
 </cell>
-<cell alignment="right" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2442,18 +1887,81 @@ status open
 
 \end_inset
 </cell>
+<cell alignment="right" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0055 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0060 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0054 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0028 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0037 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0033 
+\end_layout
+
+\end_inset
+</cell>
 </row>
 <row>
 <cell alignment="right" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-3 
+smhi_ret 
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="right" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.23 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2462,7 +1970,7 @@ status open
 
 \end_inset
 </cell>
-<cell alignment="right" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2471,18 +1979,81 @@ status open
 
 \end_inset
 </cell>
+<cell alignment="right" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0048 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0054 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0052 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0025 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0034 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0032 
+\end_layout
+
+\end_inset
+</cell>
 </row>
 <row>
 <cell alignment="right" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-4 
+bilo_ret 
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="right" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.69 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2491,7 +2062,7 @@ status open
 
 \end_inset
 </cell>
-<cell alignment="right" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2500,18 +2071,81 @@ status open
 
 \end_inset
 </cell>
+<cell alignment="right" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0029 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0028 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0025 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0023 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0025 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0022 
+\end_layout
+
+\end_inset
+</cell>
 </row>
 <row>
 <cell alignment="right" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-5 
+bime_ret 
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="right" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.02 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2520,11 +2154,65 @@ status open
 
 \end_inset
 </cell>
-<cell alignment="right" valignment="top" usebox="none">
+<cell alignment="center" valignment="top" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 0.15 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0032 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0037 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0034 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0025 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0039 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0034 
 \end_layout
 
 \end_inset
@@ -2535,12 +2223,21 @@ status open
 \begin_inset Text
 
 \begin_layout Plain Layout
-6 
+bihi_ret 
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.90 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2549,7 +2246,7 @@ status open
 
 \end_inset
 </cell>
-<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+<cell alignment="center" valignment="top" bottomline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2558,13 +2255,62 @@ status open
 
 \end_inset
 </cell>
-</row>
-</lyxtabular>
+<cell alignment="right" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0028 
+\end_layout
 
 \end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
 
-
+\begin_layout Plain Layout
+0.0033 
 \end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0032 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0022 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0034 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0037 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
 
 \end_inset
 
