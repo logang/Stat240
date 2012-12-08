@@ -1,31 +1,55 @@
 warning off;
 MAXFUNEVAL = 100;
-winsize=120;
 
-allmonth=load('../0_Rawdata_done/list_month.txt');
-sp=load('../0_Rawdata_done/sp500_month_ret.txt');
-prefix2='../0_RawData_done/Stocks_Use_Value/stock_use_Value_';
-%%% allmonth(241)=19940131, allmonth(253)=19950131, 
-startmonth=252;
+start_winsize=120; % Number of time points considered per fit
+nStocks=6;  % Size of portfolio
 
-lambdas=2.^( (-3):1:11 );
+% load dates, portfolio data, and market cap weights
+% load dates, portfolio data, and market cap weights
+FF_dates=csvread('../data/dates.csv');
+FF_data=importdata('../data/FF6Portfolios.txt', ' ', 3);
+FF=FF_data.data;
+smlo_ret = FF(:,2);
+smme_ret = FF(:,5);
+smhi_ret = FF(:,8);
+bilo_ret = FF(:,11);
+bime_ret = FF(:,14);
+bihi_ret = FF(:,17);
+FF_data = [smlo_ret smme_ret smhi_ret bilo_ret bime_ret bihi_ret]; % matrix of returns
+indexweight=load('../data/NPEB_wts.mat');
+indexweight = indexweight.NPEB_wts;
+
+% Grid over which to search for best eta
 eta=1.0:0.5:10;
-B = 100;
-nStocks=50;
-lb= ones(nStocks, 1)*(-0.05);		ub=ones(nStocks, 1);
+%eta = 1:10;
 
-nPeriod=length(allmonth)-startmonth;
+% Number of bootstrap replicates
+B = 100;
+
+% Define length of period
+nPeriod=length(FF_dates)-start_winsize;
+
+% initialize output containers
 sharpe_train=zeros(nPeriod, 1);
-res_sharpe=zeros(nPeriod, length(lambdas));
-res_rets=zeros(nPeriod, length(lambdas));
+ret_Value_npeb_iid = zeros(nPeriod, 1);
+
+% Set grid of lambdas
+lambdas=2.^( (-3):1:11 );
+
+%% Constraints
+lb= ones(nStocks, 1)*(-0.05);
+ub=ones(nStocks, 1);
+
+% initialize output containers
+sharpe_train=zeros(nPeriod, 1);
 ret_Value_npeb_srgar = zeros(nPeriod, 3);
 
 for j = 1 : (length(allmonth)-startmonth)
-    filename = strcat(prefix2, int2str(allmonth(j+startmonth)), '.txt');
-    data = load(filename);
-    Xtrain = data(1:winsize, :);
-    Xtest = data(1+winsize, :);
-    cursp = sp((j+startmonth-winsize):(j+startmonth),2);
+    % Setup training data and held out test data point
+    winsize = start_winsize + j - 1;
+    Xtrain = data(1:start_winsize, :);
+    Xtest = data(1+start_winsize, :);
+    cursp = sp((j-start_winsize):j,2);
     
     for lam=1:length(lambdas)
         lambda = lambdas(lam);
@@ -74,3 +98,8 @@ for j = 1 : (length(allmonth)-startmonth)
     ret_Value_npeb_srgar(j,:) = [lam, maxsharpe, rets_maxsharpe];
 end
 
+disp('NPEB GARCH returns were:')
+disp(ret_Value_npeb_srgar)
+
+% Save results
+save('../results/NPEB_garch_returns_grid', 'ret_Value_npeb_srgar');
