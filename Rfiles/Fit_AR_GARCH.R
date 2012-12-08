@@ -75,12 +75,14 @@ plot(FF_ts,col="black",main="Fama French Portfolio Returns")
 dev.off()
 
 # Initialize containers for AR(1) model results
-ar_fits = FF_garch_fits = FF_garch_std_fits = list()
+ar_fits = FF_garch_fits = FF_garch_st_fits = list()
 ar_coefs = matrix(0,m,2)
 cov_pred = matrix(0,m,m)
 residmat = matrix(0,n-2,m)
-std_innovations = matrix(0,n-2,m)
-coefmat = matrix(0,m,4)
+std_innovations = std_innovations_st = matrix(0,n-2,m)
+coefmat = coefmat_st = matrix(0,m,4)
+ar_residmat = matrix(0,n-2,m)
+
 # Fit AR(1)-GARCH(1,1) models to the Fama French portfolio returns
 for(i in 1:m)
 {
@@ -95,7 +97,7 @@ for(i in 1:m)
   ar_fits[[i]] = arma(FF[,i],order=c(1,0))
   ar_coefs[i,] = ar_fits[[i]]$coef
   resids_ts = na.omit(timeSeries(ar_fits[[i]]$resid,as.character(dates)))
-  residmat[,i] = resids_ts
+  ar_residmat[,i] = resids_ts
   
   # Get ACF and PACF of residuals
   FF_acf_resids = acf(resids_ts)
@@ -112,26 +114,51 @@ for(i in 1:m)
     
   # Fit standard and studentized GARCH models to residuals of AR(1) model
   FF_garch_fits[[i]] = garchFit(. ~ garch(1,1), data=resids_ts,trace=F)
-  FF_garch_std_fits[[i]] = garchFit(formula = ~ garch(1,1), data=resids_ts, cond.dist="std",trace=F)
+  FF_garch_st_fits[[i]] = garchFit(formula = ~ garch(1,1), data=resids_ts, cond.dist="std",trace=F)
 
   # Gather coefficents, volatilities, and residuals  
   coefs = coef(FF_garch_fits[[i]])
   coefmat[i,] = coefs
-  resids = residuals(FF_garch_fits[[i]])
+  garch_resids = residuals(FF_garch_fits[[i]])
   vols = volatility(FF_garch_fits[[i]])
+  
+  # Gather coefficents, volatilities, and residuals for Studentized GARCH fit
+  coefs_st = coef(FF_garch_st_fits[[i]])
+  coefmat_st[i,] = coefs_st[1:4]
+  garch_resids_st = residuals(FF_garch_st_fits[[i]])
+  vols_st = volatility(FF_garch_st_fits[[i]])
   
   # Construct one-step-ahead covariance matrix diagonal
   cov_pred[i,i] = coefs[2] + coefs[4]*vols[n-2]^2 + coefs[3]*resids[n-2]^2
   
   # Calculate standardized innovations
-  std_innovations[,i]=resids/vols
+  std_innovations[,i]=garch_resids/vols
+  std_innovations_st[,i]=garch_resids_st/vols_st
 }
 
+# Save coefficents to LaTeX
+print(xtable(coefmat,digits=4), type="latex", file="figures/tables/Problem1b_coef_results.tex")
+print(xtable(coefmat_st,digits=4), type="latex", file="figures/tables/Problem1b_coef_studentized_results.tex")
+
 # Plot AR(1) fit residuals
-residmat = timeSeries(residmat)
-colnames(residmat) = colnames(FF)
+ar_residmat = timeSeries(ar_residmat)
+colnames(ar_residmat) = colnames(FF)
 pdf("figures/Problem1b_AR1_fit_residuals.pdf")
-plot(residmat,col="black",main="Residuals from AR(1) fits to Fama French portfolios")
+plot(ar_residmat,col="black",main="Residuals from AR(1) fits to Fama French portfolios")
+dev.off()
+
+# Plot GARCH(1,1) fit standard innovations
+garch_inno = timeSeries(std_innovations)
+colnames(garch_inno) = colnames(FF)
+pdf("figures/Problem1b_GARCH1_1_fit_std_innovations.pdf")
+plot(garch_inno,col="black",main="Innovations from GARCH(1,1) fits to F-F portfolios")
+dev.off()
+
+# Plot GARCH(1,1) fit standard innovations
+garch_inno_st = timeSeries(std_innovations_st)
+colnames(garch_inno_st) = colnames(FF)
+pdf("figures/Problem1b_GARCH1_1_fit_std_innovations_studentized.pdf")
+plot(garch_inno_st,col="black",main="Innovations from GARCH(1,1) studentized fits to F-F portfolios")
 dev.off()
 
 # Estimate one-step-ahead mean 
