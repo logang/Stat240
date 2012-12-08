@@ -1541,7 +1541,9 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-
+Standardized innovations for the AR(1)-GARCH(1,1) fit and its studentized
+ version.
+ 
 \end_layout
 
 \end_inset
@@ -2326,6 +2328,12 @@ bihi_ret
 
 \begin_layout Subsubsection*
 (d) Carry out the NPEB approach proposed by Lai, Xing, and Chen 2001.
+\end_layout
+
+\begin_layout Standard
+To carry out the non-parametric empirical Bayes approach proposed by Lai,
+ Xing, and Chen (2001), we adapted the MATLAB code from the paper's website.
+ 
 \end_layout
 
 \begin_layout Standard
