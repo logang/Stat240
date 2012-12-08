@@ -25,8 +25,8 @@ function PredMean = ForecastReturns(r, SP)
         
         %Coeff(:,i) = reg_mat\X(:,i); % solves for coeffs mu and phi
         
-        Coeff(i,:) = regmat\X(:,i);
-        X_fit(:,i) = reg_mat*Coeff(:,i); % fitted returns
+        Coeff(i,:) = reg_mat\X(:,i);
+        X_fit(:,i) = reg_mat*Coeff(i,:)'; % fitted returns
         X_resid(:,i) = X(:,i) - X_fit(:,i); % residuals
     end
  
