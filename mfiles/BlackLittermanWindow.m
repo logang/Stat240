@@ -101,16 +101,20 @@ P = eye(n); % projection matrix
 
 t = window; % current end index
 
+returns = excess_rets(1:t,:);
+
 tau = 1/t; % scalar indicating uncertainty of prior
 
 sigma_pi = tau*sigma; % prior covariance matrix
 
 % forecasted returns for next month
-q = ForecastReturns(excess_rets, Libor);
+q = ForecastReturns(returns, SPRets - Libor(1:end-1));
+
+delta = 10;
 
 % initializes omega. Since it is defined as a function of the forecast
 % errors from the previous forecast, it is initialized
-omega = 0.01*eye(n);
+omega = delta*eye(n);
 
 
 S = ( sigma_pi\eye(n) + P'*(omega\eye(n))*P )\eye(n); % defines posterior covariance matrix
@@ -205,7 +209,7 @@ while ( t < m-1 )
     
     Pred_error(iteration,:) = abs((realized_returns' - q)');
     
-    omega = 100*diag(Pred_error(iteration,:)); % defines uncertainty of (next) mean based on performance
+    omega = delta*diag(Pred_error(iteration,:)); % defines uncertainty of (next) mean based on performance
     
     
     % BLACK-LITTERMAN PORTFOLIO OPTIMIZATION
@@ -244,9 +248,9 @@ plot(excess_returns_M, ':');
 hold on
 plot(excess_returns_BL);
 legend('Markowitz', 'Black-Litterman');
-title ('Cumulative Excess Returns Over Time');
-xlabel('Time in months');
-ylabel('Excess returns over S&P 500 index');
+title ('Cumulative Excess Returns, Two-Factor w/ 1-year Window', 'FontSize', 14);
+xlabel('Time in months', 'FontSize', 12);
+ylabel('Excess returns over S&P 500 index', 'FontSize', 12);
 
 
 % Plots sharpe ratio
@@ -255,9 +259,9 @@ plot(sharpe_M, ':');
 hold on
 plot(sharpe_BL);
 legend('Markowitz', 'Black-Litterman');
-title ('Sharpe Ratio Over Time');
-xlabel('Time in months');
-ylabel('Sharpe ratio');
+title ('Sharpe Ratio Over Time, Two-Factor w/ 1-year Window', 'FontSize', 14);
+xlabel('Time in months', 'FontSize', 12);
+ylabel('Sharpe ratio', 'FontSize', 12);
 
 
 % Step (4): Plot and compare turnover rates
@@ -266,6 +270,6 @@ plot(turnover_M, ':');
 hold on
 plot(turnover_BL);
 legend('Markowitz', 'Black-Litterman');
-title ('Portfolio Turnover Rate Over Time');
-xlabel('Time in months');
-ylabel('Portfolio turnover rate');
+title ('Portfolio Turnover Rate, Two-Factor w/ 1-year Window', 'FontSize', 14);
+xlabel('Time in months', 'FontSize', 12);
+ylabel('Portfolio turnover rate', 'FontSize', 12);

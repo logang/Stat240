@@ -99,6 +99,7 @@ hist_mean = mean(excess_rets, 1);
 
 
 
+
 % Step (2): Specify views based on a "momentum-based factor model" 
 
 P = eye(n); % projection matrix
@@ -109,9 +110,12 @@ tau = 1/t; % scalar indicating uncertainty of prior
 
 sigma_pi = tau*sigma; % prior covariance matrix
 
+returns = excess_rets(1:t,:);
+
 % forecasted returns for next month
-%q = ForecastReturns(excess_rets, Libor);
-q = Forecast_AR1(excess_rets);
+%q = ForecastReturns_OneFactor(returns, SPRets - Libor(1:end-1));
+%q = Forecast_AR1(excess_rets);
+q = ForecastReturns(returns, SPRets - Libor(1:end-1));
 
 % initializes omega. Since it is defined as a function of the forecast
 % errors from the previous forecast, it is initialized
@@ -164,7 +168,7 @@ total_M = excess_m; % keeps track of total excess returns for Markowitz
 iteration = 1; % keeps track of iterations
 t = t + 1; % the following loop tracks optimization results for t > 1.
 
-delta = 10; % scaling parameter for Omega
+delta = 0.01; % scaling parameter for Omega
 
 
 % while the end of the FF data has not yet been reached, re-applies
@@ -191,8 +195,9 @@ while ( t < m-1 )
     % Note that Omega is a function of the errors from the previous
     % prediction, and is therefore defined at the end of this loop to form
     % Omega(t+1).
-    %q = ForecastReturns(returns, SPRets - Libor(1:end-1));
-    q = Forecast_AR1(returns);
+    q = ForecastReturns(returns, SPRets - Libor(1:end-1));
+    %q = Forecast_AR1(returns);
+    %q = ForecastReturns_OneFactor(returns, SPRets - Libor(1:end-1));
 
     
     % Apply Black-Litterman master formula
@@ -249,7 +254,7 @@ plot(excess_returns_M, ':');
 hold on
 plot(excess_returns_BL);
 legend('Markowitz', 'Black-Litterman');
-title ('Cumulative Excess Returns: AR(1)', 'FontSize', 14);
+title ('Cumulative Excess Returns: Two-Factor Model, delta = 0.1', 'FontSize', 14);
 xlabel('Time in months', 'FontSize', 12);
 ylabel('Excess returns over S&P 500 index', 'FontSize', 12);
 
@@ -260,7 +265,7 @@ plot(sharpe_M, ':');
 hold on
 plot(sharpe_BL);
 legend('Markowitz', 'Black-Litterman');
-title ('Sharpe Ratio Over Time: AR(1)', 'FontSize', 14);
+title ('Sharpe Ratio Over Time: Two-Factor Model, delta = 100', 'FontSize', 14);
 xlabel('Time in months', 'FontSize', 12);
 ylabel('Sharpe ratio', 'FontSize', 12);
 
@@ -271,7 +276,7 @@ plot(turnover_M, ':');
 hold on
 plot(turnover_BL);
 legend('Markowitz', 'Black-Litterman');
-title ('Portfolio Turnover Rate, AR(1)', 'FontSize', 14);
+title ('Portfolio Turnover Rate: Two-Factor Model, delta = 100', 'FontSize', 14);
 xlabel('Time in months', 'FontSize', 12);
 ylabel('Portfolio turnover rate', 'FontSize', 12);
 
