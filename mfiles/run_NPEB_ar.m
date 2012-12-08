@@ -93,9 +93,6 @@ end
 disp('NPEB AR returns were:')
 disp(ret_Value_npeb_ar)
 
-% Clumsily ham-fist the data into a file
-lam = num2str(lambda);
-lam_split = regexp(lam,'\.','split');
-savefile = [strcat('NPEB_ar_returns_lambda_',lam_split(1),'_',lam_split(2))];
-save(savefile{1}, 'ret_Value_npeb_iid'); % I hate you MATLAB
+% Save results
+save('NPEB_ar_returns_grid', 'ret_Value_npeb_ar');
 
