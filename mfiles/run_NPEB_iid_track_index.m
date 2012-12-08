@@ -5,13 +5,16 @@ warning off;
 clear all;
 MAXFUNEVAL = 100;
 
+format long;
+lambda = 0.001;
+
 start_winsize=120; % Number of time points considered per fit
 portsize=6; % Size of portfolio
 
 % load dates, portfolio data, and market cap weights
 FF_dates=csvread('../data/dates.csv');
 FF_data=importdata('../data/FF6Portfolios.txt', ' ', 3);
-FF_data=FF_data.data;
+FF=FF_data.data;
 smlo_ret = FF(:,2);
 smme_ret = FF(:,5);
 smhi_ret = FF(:,8);
@@ -25,6 +28,7 @@ indexweight = indexweight.NPEB_wts;
 % Grid over which to search for best eta
 eta=1.0:0.5:10;
 
+
 % Number of bootstrap replicates
 B = 100;
 
@@ -34,9 +38,6 @@ nPeriod=length(FF_dates)-start_winsize;
 % initialize output containers
 sharpe_train=zeros(nPeriod, 1);
 ret_Value_npeb_iid = zeros(nPeriod, 1);
-
-format long;
-lambda = 3.5;
 
 for j = 1 :(length(FF_dates)-start_winsize)
     % Setup training data and held out test data point
@@ -80,5 +81,5 @@ disp(ret_Value_npeb_iid)
 % Clumsily ham-fist the data into a file, MATLAB style!
 lam = num2str(lambda);
 lam_split = regexp(lam,'\.','split');
-savefile = [strcat('NPEB_iid_returns_lambda_',lam_split(1),'_',lam_split(2))];
+savefile = [strcat('../results/NPEB_iid_returns_lambda_',lam_split(1),'_',lam_split(2))];
 save(savefile{1}, 'ret_Value_npeb_iid'); % I hate you MATLAB
