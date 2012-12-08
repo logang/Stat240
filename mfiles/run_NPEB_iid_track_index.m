@@ -5,9 +5,6 @@ warning off;
 clear all;
 MAXFUNEVAL = 100;
 
-format long;
-lambda = 0.001;
-
 start_winsize=120; % Number of time points considered per fit
 portsize=6; % Size of portfolio
 
@@ -37,6 +34,10 @@ nPeriod=length(FF_dates)-start_winsize;
 % initialize output containers
 sharpe_train=zeros(nPeriod, 1);
 ret_Value_npeb_iid = zeros(nPeriod, 1);
+
+% set lambda
+format long;
+lambda = 0.001;
 
 for j = 1 :(length(FF_dates)-start_winsize)
     % Setup training data and held out test data point

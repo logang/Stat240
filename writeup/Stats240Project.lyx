@@ -696,7 +696,8 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-Residuals for the six time series of interest in the Fama-French portfolio.
+Residuals for un-lagged, single factor linear model of the six time series
+ of interest in the Fama-French portfolio.
  It appears that the variance of all six is rather nonstationary over time.
 \end_layout
 
@@ -728,36 +729,6 @@ Residuals for the six time series of interest in the Fama-French portfolio.
 
  model to the Fama-French portfolio returns.
  
-\end_layout
-
-\begin_layout Standard
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\align center
-\begin_inset Graphics
-	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_return_time_series.pdf
-
-\end_inset
-
-
-\begin_inset Caption
-
-\begin_layout Plain Layout
-The six Fama-French portfolio returns.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -1333,16 +1304,13 @@ tive, and still others show more autocorrelation in their residuals than
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ bihi_ret .pdf
-	scale 45
+	scale 40
 
 \end_inset
 
@@ -1353,7 +1321,7 @@ status collapsed
 
 \begin_inset Graphics
 	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ bilo_ret .pdf
-	scale 45
+	scale 40
 
 \end_inset
 
@@ -1364,7 +1332,7 @@ status collapsed
 
 \begin_inset Graphics
 	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ bime_ret .pdf
-	scale 45
+	scale 40
 
 \end_inset
 
@@ -1375,7 +1343,7 @@ status collapsed
 
 \begin_inset Graphics
 	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ smhi_ret .pdf
-	scale 45
+	scale 40
 
 \end_inset
 
@@ -1387,9 +1355,10 @@ status collapsed
 \end_layout
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ smlo_ret .pdf
-	scale 45
+	scale 40
 
 \end_inset
 
@@ -1400,7 +1369,7 @@ status collapsed
 
 \begin_inset Graphics
 	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ smme_ret .pdf
-	scale 45
+	scale 40
 
 \end_inset
 
@@ -1459,7 +1428,7 @@ Examining the residuals from the
 
  model, we see that GARCH is reducing the heteroskedasticity as we would
  expect.
- Figure 5 shows the residuals resulting from the 
+ Figure 4 shows the residuals resulting from the 
 \begin_inset Formula $AR(1)$
 \end_inset
 
