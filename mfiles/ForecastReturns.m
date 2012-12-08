@@ -23,12 +23,13 @@ function PredMean = ForecastReturns(r, SP)
         %reg_mat = [ones(m-1,1) X_lag(:,i) SP_lag]; % regression matrix (includes y-intercept term)
         reg_mat = [ones(m-1,1) SP_lag X_lag];
         
-        Coeff(:,i) = reg_mat\X(:,i); % solves for coeffs mu and phi
+        %Coeff(:,i) = reg_mat\X(:,i); % solves for coeffs mu and phi
+        
+        Coeff(i,:) = regmat\X(:,i);
         X_fit(:,i) = reg_mat*Coeff(:,i); % fitted returns
         X_resid(:,i) = X(:,i) - X_fit(:,i); % residuals
     end
  
     %PredMean = (Coeff(1,:))' +  diag(r(m,:))*(Coeff(2,:)') + SP(m)*ones(n)*(Coeff(3,:)');
-    PredMean = Coeff(1,:)' + SP(m)*eye(n)*(Coeff(2,:)') + Coeff(3:end,:)*r(m,:);
-    
+    PredMean = Coeff* [1; SP(m); r(m,:)'];
 end
