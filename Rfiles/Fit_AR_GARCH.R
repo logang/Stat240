@@ -81,7 +81,6 @@ cov_pred = matrix(0,m,m)
 residmat = matrix(0,n-2,m)
 std_innovations = matrix(0,n-2,m)
 coefmat = matrix(0,m,4)
-
 # Fit AR(1)-GARCH(1,1) models to the Fama French portfolio returns
 for(i in 1:m)
 {

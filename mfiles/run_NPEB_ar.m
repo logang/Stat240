@@ -6,9 +6,17 @@ start_winsize=120; % Number of time points considered per fit
 nStocks=6;  % Size of portfolio
 
 % load dates, portfolio data, and market cap weights
+% load dates, portfolio data, and market cap weights
 FF_dates=csvread('../data/dates.csv');
 FF_data=importdata('../data/FF6Portfolios.txt', ' ', 3);
 FF_data=FF_data.data;
+smlo_ret = FF(:,2);
+smme_ret = FF(:,5);
+smhi_ret = FF(:,8);
+bilo_ret = FF(:,11);
+bime_ret = FF(:,14);
+bihi_ret = FF(:,17);
+FF_data = [smlo_ret smme_ret smhi_ret bilo_ret bime_ret bihi_ret]; % matrix of returns
 indexweight=load('../data/NPEB_wts.mat');
 indexweight = indexweight.NPEB_wts;
 

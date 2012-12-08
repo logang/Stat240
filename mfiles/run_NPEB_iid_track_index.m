@@ -12,6 +12,13 @@ portsize=6; % Size of portfolio
 FF_dates=csvread('../data/dates.csv');
 FF_data=importdata('../data/FF6Portfolios.txt', ' ', 3);
 FF_data=FF_data.data;
+smlo_ret = FF(:,2);
+smme_ret = FF(:,5);
+smhi_ret = FF(:,8);
+bilo_ret = FF(:,11);
+bime_ret = FF(:,14);
+bihi_ret = FF(:,17);
+FF_data = [smlo_ret smme_ret smhi_ret bilo_ret bime_ret bihi_ret]; % matrix of returns
 indexweight=load('../data/NPEB_wts.mat');
 indexweight = indexweight.NPEB_wts;
 
@@ -66,7 +73,6 @@ for j = 1 :(length(FF_dates)-start_winsize)
     
     ret_Value_npeb_iid(j) = Xtest*wts;
 end
-
 
 disp('NPEB IID returns were:')
 disp(ret_Value_npeb_iid)
