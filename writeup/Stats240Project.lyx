@@ -2781,6 +2781,88 @@ We attempted several approaches to forecasting
 , using an expanding window.
  All of these methods generated excess returns over the S&P 500 portfolio,
  but Markowitz outperformed each of them, as will be explained in part (c).
+ 
+\end_layout
+
+\begin_layout Enumerate
+A simple 
+\begin_inset Formula $AR(1)$
+\end_inset
+
+ model, 
+\begin_inset Formula $ $
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\hat{r}_{t+1}=\mu+\phi r_{t}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+One-factor models of the form 
+\begin_inset Formula $\hat{r}_{t+1}=\mu+\beta f_{t}$
+\end_inset
+
+.
+ As our factor 
+\begin_inset Formula $f_{t},$
+\end_inset
+
+ we attempted both 
+\begin_inset Formula $r_{ft}$
+\end_inset
+
+ (the LIBOR rate at time 
+\begin_inset Formula $t$
+\end_inset
+
+) and 
+\begin_inset Formula $r_{mt}-r_{ft},$
+\end_inset
+
+ where 
+\begin_inset Formula $r_{mt}$
+\end_inset
+
+ is the S&P return observed at time 
+\begin_inset Formula $t$
+\end_inset
+
+, as obtained from Yahoo! Finance.
+\end_layout
+
+\begin_layout Enumerate
+Two-factor models of the form 
+\begin_inset Formula $\hat{r}_{t+1}=\mu+\phi r_{t}+\beta f_{t},$
+\end_inset
+
+ where 
+\begin_inset Formula $f_{t}$
+\end_inset
+
+ is either 
+\begin_inset Formula $r_{ft}$
+\end_inset
+
+ or 
+\begin_inset Formula $r_{mt}-r_{ft}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -2826,13 +2908,251 @@ We attempted several approaches to forecasting
 \end_layout
 
 \begin_layout Standard
-- Recalculate iteratively; don't use posterior as new prior, etc.
- (thus same prior each time? check.)
+Following the Black-Litterman master formula, and using 
+\begin_inset Formula $\gamma=2.5$
+\end_inset
+
+ and a window size of 60 months (and therefore 
+\begin_inset Formula $\tau=\frac{1}{60}$
+\end_inset
+
+), we assume the prior distribution of the mean returns follow 
+\begin_inset Formula $\mu\sim N(\pi,\tau\Sigma),$
+\end_inset
+
+ where 
+\begin_inset Formula $\pi$
+\end_inset
+
+ is as described in part (a) and 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ is the covariance matrix calculated from the previous 60 months of excess
+ returns.
+ Let 
+\begin_inset Formula $\tau\Sigma=\Sigma_{\pi}.$
+\end_inset
+
+ Since we have assumed that the projection matrix 
+\begin_inset Formula $P$
+\end_inset
+
+ is 
+\begin_inset Formula $I_{6}$
+\end_inset
+
+ (meaning that we are specifying only absolute, not relative views), we
+ let
+\begin_inset Formula 
+\[
+Q=\mu+\epsilon_{v},\,\,\,\epsilon_{v}\sim N(0,\Omega).
+\]
+
+\end_inset
+
+Here, 
+\begin_inset Formula $Q$
+\end_inset
+
+ is the output of our one-step-ahead prediction model and 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ is a diagonal matrix specifying the uncertainty about those views.
+ For our model, we tested a few different measures of the uncertainty terms
+ 
+\begin_inset Formula $\omega_{i}$
+\end_inset
+
+, including the variances of the errors from previous predictions, as well
+ as the variances of the last 
+\begin_inset Formula $p$
+\end_inset
+
+ predictions, using different values of 
+\begin_inset Formula $p.$
+\end_inset
+
+ We also tried scaling these error terms -- multiplying by 
+\begin_inset Formula $0.1,$
+\end_inset
+
+ 10, or 100 -- and adding a scalar offset.
+ The differences between these methods were subtle, affecting portfolio
+ turnover rates (see part (d)) far more than cumulative excess returns.
+ By increasing 
+\begin_inset Formula $\Omega,$
+\end_inset
+
+ we obtain lower portfolio turnover but do not perceptably change performance.
 \end_layout
 
 \begin_layout Standard
-- Sharpe ratio: use CRSP LIBOR; may be better to predict excess returns
- rather than returns themselves
+In our final implementation, we set 
+\begin_inset Formula $\omega_{i}=\delta|r_{ti}-Q_{ti}|,$
+\end_inset
+
+ or a scaled multiple of the error term from the previous prediction.
+ After some experimentation, we set 
+\begin_inset Formula $\delta=10.$
+\end_inset
+
+ This approach was just as good as the one previously described, and has
+ the advantage of simplicity.
+\end_layout
+
+\begin_layout Standard
+Next, we compute the posterior density of the mean returns, 
+\begin_inset Formula $\mu|Q\sim N(m,S),$
+\end_inset
+
+ where expressions for 
+\begin_inset Formula $m$
+\end_inset
+
+ and 
+\begin_inset Formula $S$
+\end_inset
+
+ are
+\begin_inset Formula 
+\begin{eqnarray*}
+S & = & \left(\Sigma_{\pi}^{-1}+P^{T}\Omega^{-1}P\right)^{-1}\\
+m & = & S(\Sigma_{\pi}^{-1}\pi+P^{T}\Omega^{-1}Q).
+\end{eqnarray*}
+
+\end_inset
+
+The posterior estimates for the mean and covariance of the returns are therefore
+ 
+\begin_inset Formula $m$
+\end_inset
+
+ and 
+\begin_inset Formula $S+\Sigma$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+To complete the Black-Litterman asset allocation process, we simply use
+ 
+\begin_inset Formula $m$
+\end_inset
+
+ and 
+\begin_inset Formula $S+\Sigma$
+\end_inset
+
+ as inputs in the standard mean-variance optimization problem,
+\begin_inset Formula 
+\begin{eqnarray*}
+\text{maximize} &  & m^{T}w-\lambda w^{T}(S+\Sigma)w\\
+\text{subject to} &  & 1^{T}w=1\\
+ &  & w\in C,
+\end{eqnarray*}
+
+\end_inset
+
+where 
+\begin_inset Formula $C$
+\end_inset
+
+ is some constraint set -- in our implementation, we set a lower bound of
+ 
+\begin_inset Formula $-0.3$
+\end_inset
+
+ on short selling -- and 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ is a risk-aversion parameter.
+ Although we initially attempted to optimize the expected Sharpe ratio,
+ 
+\begin_inset Formula $\frac{m_{t}}{w^{T}(S+\Sigma)w},$
+\end_inset
+
+ over a grid of values for 
+\begin_inset Formula $\lambda,$
+\end_inset
+
+ we found that the grid search greatly increased computation time and complicate
+d debugging and model selection.
+ Noting that Black-Litterman tended to maximize the Sharpe ratio with 
+\begin_inset Formula $\lambda\sim10$
+\end_inset
+
+ and that Markowitz tended to maximize it with 
+\begin_inset Formula $\lambda\sim0,$
+\end_inset
+
+ we simply fixed the parameter at an intermediate value of 
+\begin_inset Formula $\lambda=4.$
+\end_inset
+
+ (See Appendix or 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://github.com/logang/Stat240
+\end_layout
+
+\end_inset
+
+ for implementation details.)
+\end_layout
+
+\begin_layout Standard
+To determine the optimal weights over time and track cumulative returns,
+ we used an expanding window and re-computed 
+\begin_inset Formula $\Sigma_{t},$
+\end_inset
+
+ 
+\begin_inset Formula $Q_{t},$
+\end_inset
+
+ 
+\begin_inset Formula $\Omega_{t},$
+\end_inset
+
+ and 
+\begin_inset Formula $\pi_{t},$
+\end_inset
+
+ as well as 
+\begin_inset Formula $\hat{\mu}_{t}$
+\end_inset
+
+ (for comparison with Markowitz), on each iteration.
+ We also implemented a rolling window, which improved absolute performance
+ (as measured by total cumulative returns at the end of the period), but
+ not relative performance of Black-Litterman over Markowitz's plug-in estimates.
+\end_layout
+
+\begin_layout Standard
+The following plots show cumulative returns over time for different one-step-ahe
+ad forecast methods, as well as for a rolling window (using a 2-factor model)
+ and 
+\begin_inset Formula $\lambda=4.$
+\end_inset
+
+ The expected Sharpe ratio for each strategy is also shown.
+ As we can see, the Sharpe ratio for Markowitz's plug-in estimates decreases
+ over time, while Black-Litterman's steadily increases.
+ Nevertheless, the Sharpe ratio for Markowitz generally exceeds that of
+ Black-Litterman.
+ This makes sense, as adding 
+\begin_inset Formula $S$
+\end_inset
+
+ to the covariance matrix necessarily makes the denominator larger.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -2875,6 +3195,13 @@ th Fama-French portfolio in period
  M-V portfolio that uses plug-in estimates.
  Bonus points: How would you lower your average turnover rate while not
  losing too much on the Sharpe ratio?
+\end_layout
+
+\begin_layout Standard
+The following plots show the portfolio turnover rates for several strategies.
+ The turnover rates for traditional Markowitz portfolios are plotted alongside
+ for comparison.
+ 
 \end_layout
 
 \end_body

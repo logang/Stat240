@@ -30,5 +30,5 @@ function PredMean = Forecast_AR1(r)
     end
  
     %PredMean = (Coeff(1,:))' +  diag(r(m,:))*(Coeff(2,:)') + SP(m)*ones(n)*(Coeff(3,:)');
-    PredMean = [Coeff(:,1) eye(n)] * [1 r(m,:)'];
+    PredMean = Coeff(:,1) + diag(Coeff(:,2))*(r(m,:)');
 end

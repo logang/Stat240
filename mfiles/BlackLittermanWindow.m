@@ -73,7 +73,7 @@ NPEB_wts = Mkt_cap(NPEB_window,:)./sum(Mkt_cap(NPEB_window,:));
 gamma = 2.5; 
 
 % window = 5 years of monthly returns
-window = 12*5;
+window = 12;
 
 % calculates market-capitalization weights by normalizing mkt cap at
 % current month (end of window)
@@ -83,11 +83,7 @@ weights = Mkt_cap(window,:)./sum(Mkt_cap(window,:));
 excess_rets = X_rets - diag(Libor)*ones(size(X_rets));
 
 
-% asset return for each portfolio
-%returns = X_rets(1:window,:);
-
-% covariance matrix for returns (taken as known by BL)
-%sigma = cov(returns);
+% covariance matrix for excess returns (taken as known by BL)
 sigma = cov(excess_rets);
 
 % mean returns implied by market equilibrium
@@ -110,8 +106,7 @@ tau = 1/t; % scalar indicating uncertainty of prior
 sigma_pi = tau*sigma; % prior covariance matrix
 
 % forecasted returns for next month
-%q = ForecastReturns(excess_rets, Libor);
-q = Forecast_AR1(excess_rets);
+q = ForecastReturns(excess_rets, Libor);
 
 % initializes omega. Since it is defined as a function of the forecast
 % errors from the previous forecast, it is initialized
@@ -160,12 +155,11 @@ sharpe_M = zeros(m - t - 2, 1);
 total_BL = excess_p; % keeps track of total excess returns for B-L
 total_M = excess_m; % keeps track of total excess returns for Markowitz
 
+Pred_error = zeros(m-t-2, n);
+
 
 iteration = 1; % keeps track of iterations
 t = t + 1; % the following loop tracks optimization results for t > 1.
-
-delta = 10; % scaling parameter for Omega
-
 
 % while the end of the FF data has not yet been reached, re-applies
 % Black-Litterman and keeps track of cumulative returns and turnover rate.
@@ -177,7 +171,7 @@ while ( t < m-1 )
     % market-capitalization weights
     weights = Mkt_cap(t,:)./sum(Mkt_cap(t,:));
     %returns = X_rets(1:t,:);
-    returns = excess_rets(1:t,:);
+    returns = excess_rets(iteration:t,:);
     
     sigma = cov(returns); % historical covariance matrix (plug-in estimate)
     
@@ -188,13 +182,12 @@ while ( t < m-1 )
     
     
     % Redefine posterior.
+    
     % Note that Omega is a function of the errors from the previous
     % prediction, and is therefore defined at the end of this loop to form
     % Omega(t+1).
-    %q = ForecastReturns(returns, SPRets - Libor(1:end-1));
-    q = Forecast_AR1(returns);
+    q = ForecastReturns(returns, SPRets(iteration:end) - Libor(iteration:end-1));
 
-    
     % Apply Black-Litterman master formula
     S = ( sigma_pi\eye(n) + P'*(omega\eye(n))*P )\eye(n); % defines posterior covariance matrix
     M = S*( (sigma_pi\eye(n))*pi + P'*(omega\eye(n))*q ); % defines posterior mean
@@ -204,13 +197,15 @@ while ( t < m-1 )
     sigma_BL = S + sigma; 
 
     
-    bench_t = SPRets(t+1);
+    bench_t = SPRets(t+1); % used as benchmark in computing excess returns
 
 
     %realized_returns = X_rets(t+1,:); % actual returns observed in subsequent period
     realized_returns = excess_rets(t+1,:);
     
-    omega = delta*diag((realized_returns' - q)); % defines uncertainty of (next) mean based on performance
+    Pred_error(iteration,:) = abs((realized_returns' - q)');
+    
+    omega = 100*diag(Pred_error(iteration,:)); % defines uncertainty of (next) mean based on performance
     
     
     % BLACK-LITTERMAN PORTFOLIO OPTIMIZATION
@@ -249,9 +244,9 @@ plot(excess_returns_M, ':');
 hold on
 plot(excess_returns_BL);
 legend('Markowitz', 'Black-Litterman');
-title ('Cumulative Excess Returns: AR(1)', 'FontSize', 14);
-xlabel('Time in months', 'FontSize', 12);
-ylabel('Excess returns over S&P 500 index', 'FontSize', 12);
+title ('Cumulative Excess Returns Over Time');
+xlabel('Time in months');
+ylabel('Excess returns over S&P 500 index');
 
 
 % Plots sharpe ratio
@@ -260,9 +255,9 @@ plot(sharpe_M, ':');
 hold on
 plot(sharpe_BL);
 legend('Markowitz', 'Black-Litterman');
-title ('Sharpe Ratio Over Time: AR(1)', 'FontSize', 14);
-xlabel('Time in months', 'FontSize', 12);
-ylabel('Sharpe ratio', 'FontSize', 12);
+title ('Sharpe Ratio Over Time');
+xlabel('Time in months');
+ylabel('Sharpe ratio');
 
 
 % Step (4): Plot and compare turnover rates
@@ -271,13 +266,6 @@ plot(turnover_M, ':');
 hold on
 plot(turnover_BL);
 legend('Markowitz', 'Black-Litterman');
-title ('Portfolio Turnover Rate, AR(1)', 'FontSize', 14);
-xlabel('Time in months', 'FontSize', 12);
-ylabel('Portfolio turnover rate', 'FontSize', 12);
-
-
-
-
-
-
-
+title ('Portfolio Turnover Rate Over Time');
+xlabel('Time in months');
+ylabel('Portfolio turnover rate');
