@@ -1,0 +1,11 @@
+function [pred] = sparseARMA(target, input_matrix, lag_vector)
+
+% sparseARMA takes a target matrix and a matrix of possible predictors,
+% lags the target and predictors by the number of lags specified in lag_vector
+% and makes a one-step-ahead prediction.
+%
+% Both target and input_matrix should have the most recent dates first. 
+
+
+% Add paths to relavant libraries 
+addpath('./glmnet_matlab')
