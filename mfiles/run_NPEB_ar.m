@@ -102,5 +102,9 @@ disp('NPEB AR returns were:')
 disp(ret_Value_npeb_ar)
 
 % Save results
+<<<<<<< Updated upstream
 save('../results/NPEB_ar_returns_grid', 'ret_Value_npeb_ar');
+=======
+save('NPEB_ar_returns_grid', 'ret_Value_npeb_ar');
+>>>>>>> Stashed changes
 
