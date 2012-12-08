@@ -106,35 +106,609 @@ Time Series
 \end_layout
 
 \begin_layout Standard
+The least-squares estimates 
+\begin_inset Formula $(\widehat{\alpha}_{i},\widehat{\beta}_{i})$
+\end_inset
+
+ for each set of returns in the Fama-French portfolio are given by 
+\begin_inset Formula 
+\[
+\widehat{\beta}_{i}=\frac{\sum_{t=1}^{n}(r_{0t}-\overline{r_{0}})r_{it}}{\sum_{t=1}^{n}(r_{0t}-\overline{r_{0}})},\ \ \ \widehat{\alpha}_{i}=\overline{r_{i}}-\overline{r_{0}}\widehat{\beta}_{i},
+\]
+
+\end_inset
+
+in the single-factor model.
+ This is easily computed using the 
+\family typewriter
+lm
+\family default
+ function in 
+\family typewriter
+R
+\family default
+.
+ The coefficient estimates and their 95% confidence intervals are:
+\end_layout
+
+\begin_layout Standard
 \begin_inset VSpace medskip
 \end_inset
 
 
 \end_layout
 
-\begin_layout Itemize
-give estimates and confidence intervals
-\end_layout
-
-\begin_layout Itemize
-show diagnostic plots
-\end_layout
-
 \begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="7">
+<features tabularvalignment="middle">
+<column alignment="right" valignment="top" width="0">
+<column alignment="right" valignment="top" width="0">
+<column alignment="right" valignment="top" width="0">
+<column alignment="right" valignment="top" width="0">
+<column alignment="right" valignment="top" width="0">
+<column alignment="right" valignment="top" width="0">
+<column alignment="right" valignment="top" width="0">
+<row>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 
 \end_layout
 
-\begin_layout Standard
-To do:
-\end_layout
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
 
-\begin_layout Standard
-- Change to regress on 
-\begin_inset Formula $t$
+\begin_layout Plain Layout
+\begin_inset Formula $\widehat{\alpha}_{i}$
 \end_inset
 
- versus 
-\begin_inset Formula $t-1$
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.5% 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+97.5% 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\widehat{\beta}_{i}$
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.5% 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+97.5% 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+smlo_ret 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0067 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.1605 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.1841 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.01 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.16 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.18 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+smme_ret 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0115 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.1598 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0981 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.03 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.16 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.10 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+smhi_ret 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0127 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.1620 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.1098 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.03 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.16 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.11 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+bilo_ret 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0079 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.0585 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.1585 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.05 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.06 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.16 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+bime_ret 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0089 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.0673 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.1520 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.04 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.07 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.15 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+bihi_ret 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0082 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.0930 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" bottomline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.1464 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.03 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.09 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.15 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Plotting the linear fits to the returns over the data (Figure 1), shows
+ that the returns are quite stable in mean over time, as we would expect.
+ This is consistent with all 12 confidence intervals for the 
+\begin_inset Formula $(\widehat{\alpha}_{i},\widehat{\beta}_{i})$
+\end_inset
+
+'s containing zero.
+ Looking at the residuals (Figure 2), we see that the variance of the returns
+ looks rather non-stationary over time.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1a_FamaFrench_linear_fit_plots.pdf
+	scale 70
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Plots of fits (red lines) to data (black lines) for the 6 factors in the
+ Fama French portfolio data, assuming a single factor model.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1a_FamaFrench_residal_plots.pdf
+	scale 90
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Residuals for the six time series of interest in the Fama-French portfolio.
+ It appears that the variance of all six is rather nonstationary over time.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
 \end_inset
 
 
@@ -233,7 +807,8 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Problem1b_ACF_and_PACFs_ bihi_ret .pdf
+	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ bihi_ret .pdf
+	scale 50
 
 \end_inset
 
@@ -241,7 +816,7 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-ACF and PACF for bihi returns and their residuals
+ACF and PACF for bihi returns and their residuals.
 \end_layout
 
 \end_inset
@@ -266,7 +841,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Problem1b_ACF_and_PACFs_ bilo_ret .pdf
+	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ bilo_ret .pdf
 
 \end_inset
 
@@ -274,7 +849,7 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-ACF and PACF for bilo returns and their residuals
+ACF and PACF for bilo returns and their residuals.
 \end_layout
 
 \end_inset
@@ -299,7 +874,8 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Problem1b_ACF_and_PACFs_ bime_ret .pdf
+	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ bime_ret .pdf
+	scale 70
 
 \end_inset
 
@@ -307,7 +883,7 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-ACF and PACF for bime returns and their residuals
+ACF and PACF for bime returns and their residuals.
 \end_layout
 
 \end_inset
@@ -332,7 +908,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Problem1b_ACF_and_PACFs_ smhi_ret .pdf
+	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ smhi_ret .pdf
 
 \end_inset
 
@@ -340,7 +916,7 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-ACF and PACF for smhi returns and their residuals
+ACF and PACF for smhi returns and their residuals.
 \end_layout
 
 \end_inset
@@ -358,7 +934,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Problem1b_ACF_and_PACFs_ smlo_ret .pdf
+	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ smlo_ret .pdf
 
 \end_inset
 
@@ -366,7 +942,7 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-ACF and PACF for smlo returns and their residuals
+ACF and PACF for smlo returns and their residuals.
 \end_layout
 
 \end_inset
@@ -384,7 +960,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Problem1b_ACF_and_PACFs_ smme_ret .pdf
+	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ smme_ret .pdf
 
 \end_inset
 
@@ -392,7 +968,7 @@ status open
 \begin_inset Caption
 
 \begin_layout Plain Layout
-ACF and PACF for smme returns and their residuals
+ACF and PACF for smme returns and their residuals.
 \end_layout
 
 \end_inset

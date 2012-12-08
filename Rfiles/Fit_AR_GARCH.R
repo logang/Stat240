@@ -22,24 +22,44 @@ m = dim(FF)[2]
 #---------------------------- PROBLEM 1A ----------------------------------
 
 # Regress Fama-French returns on SandP500
-confidence_intervals = matrix(0,m,2)
+beta_CIs = alpha_CIs = coefs = matrix(0,m,2)
+residuals = estimates = matrix(0,n,m)
 for(i in 1:m)
 {
   # Fit the linear model
   fit = lm(FF[,i]~SandP500)
-  
-  # Plot the residuals and QQ-plot as pdf
-  pdf(paste("figures/Problem1a_FamaFrench_residal_plots",colnames(FF)[i],".pdf",sep=""))
-  par(mfrow=c(2,2))
-  plot(fit)
-  dev.off()
-  
-  # Get 95% intervals for the parameters
-  confidence_intervals[i,]=confint(fit)[2,]
+  # Get parameters and 95% intervals for the parameters
+  coefs[i,]=fit$coefficients
+  residuals[,i] = fit$residuals
+  estimates[,i] = predict(fit)
+  alpha_CIs[i,]=confint(fit)[2,]
+  beta_CIs[i,]=confint(fit)[2,]
 }
 
+# Plot fits and residuals
+pdf("figures/Problem1a_FamaFrench_linear_fit_plots.pdf",height=7, width=9)
+par(mfrow=c(2,3))
+for(i in 1:m)
+{
+  FF_ts = timeSeries(FF[,i])
+  est_ts = timeSeries(estimates[,i])
+  plot(FF_ts,col="black",xlab="Time (months)",ylab=colnames(FF)[i], main=paste("Linear Fit for",colnames(FF)[i]))
+  lines(est_ts,col="red")
+}
+dev.off()
+
+# Plot fit residuals
+resids_ts = timeSeries(residuals)
+pdf("figures/Problem1a_FamaFrench_residal_plots.pdf")
+colnames(resids_ts) = colnames(FF)
+plot(resids_ts,col="black",xlab="Time (months)", main="Residuals for Fit to Fama-French returns")
+dev.off()
+
 # Print 95% confidence intervals to LaTeX
-print(xtable(confidence_intervals), type="latex", file="figures/tables/Problem1a_CIs.tex")
+alpha_results = cbind(coefs[,1], alpha_CIs)
+beta_results = cbind(coefs[,2], beta_CIs)
+print(xtable(alpha_results,digits=4), type="latex", file="figures/tables/Problem1a_alpha_results.tex")
+print(xtable(beta_results),digits=4, type="latex", file="figures/tables/Problem1a_beta_results.tex")
 
 #---------------------------- PROBLEM 1B & C --------------------------------
 # -- Fit AR(1)-GARCH(1,1)
@@ -129,8 +149,8 @@ for(i in 2:m)
 }
 
 # Print predicted mean and covariance to LaTeX
-print(xtable(mean_pred), type="latex", file="figures/tables/Problem1c_mean_pred.tex")
-print(xtable(cov_pred), type="latex", file="figures/tables/Problem1c_cov_pred.tex")
+print(xtable(mean_pred*100), type="latex", file="figures/tables/Problem1c_mean_pred_times100.tex")
+print(xtable(cov_pred*100), type="latex", file="figures/tables/Problem1c_cov_pred_times100.tex")
 
 #---------------------------- PROBLEM 1D ----------------------------------
 # MATLAB
