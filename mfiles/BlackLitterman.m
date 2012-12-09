@@ -1,6 +1,6 @@
+
 % PART I: single-factor time-series forecasting
 % ------
-
 
 % Retrieves monthly returns from data
 smlo_ret = FF(:,2);
@@ -17,6 +17,9 @@ m = length(smlo_ret); % number of observations
 n = 6; % number of stocks
 
 % Part (a): single-factor model (S&P)
+
+% Note: These vectors, as well as the FF matrix above, was accessed via
+% .mat files in my workspace.
 SPDates = SandPDates;
 SPRets = SandPRets;
 SP = [SPDates(1:end-1) SPRets];
@@ -41,7 +44,7 @@ for i = 1:n
 end
 
 
-% Parts (b) and (c)
+% Parts (b) and (c) call function Fit_AR_Garch
 [PredictedMean, PredictedCov, Error, GARCHCoeffs, ARCoeffs, Innos] = Fit_AR_GARCH(X_rets, m);
 
 
@@ -49,6 +52,7 @@ end
 
 % calculates market capitalization of each portfolio and stores in a matrix
 % (used by both (d) and B-L optimization)
+% market cap = nfirms*avg firm size
 smlo_w = diag(FF(:,3))*FF(:,4);
 smme_w = diag(FF(:,6))*FF(:,7);
 smhi_w = diag(FF(:,9))*FF(:,10);
@@ -79,22 +83,17 @@ window = 12*5;
 % current month (end of window)
 weights = Mkt_cap(window,:)./sum(Mkt_cap(window,:));
 
-
+% converts returns to excess returns (using matching LIBOR rates as
+% benchmark)
 excess_rets = X_rets - diag(Libor)*ones(size(X_rets));
 
-
-% asset return for each portfolio
-%returns = X_rets(1:window,:);
-
 % covariance matrix for returns (taken as known by BL)
-%sigma = cov(returns);
-sigma = cov(excess_rets);
+sigma = cov(excess_rets(1:window,:));
 
-% mean returns implied by market equilibrium
+% market-equilibrium risk premiums
 pi = gamma*sigma*weights';
 
-% historical mean returns
-%hist_mean = mean(returns, 1);
+% historical mean excess returns (risk premiums)
 hist_mean = mean(excess_rets, 1);
 
 
@@ -102,7 +101,7 @@ hist_mean = mean(excess_rets, 1);
 
 % Step (2): Specify views based on a "momentum-based factor model" 
 
-P = eye(n); % projection matrix
+P = eye(n); % projection matrix (absolute views only)
 
 t = window; % current end index
 
@@ -113,12 +112,15 @@ sigma_pi = tau*sigma; % prior covariance matrix
 returns = excess_rets(1:t,:);
 
 % forecasted returns for next month
+% Note: 3 different functions depending on whether we use AR(1),
+% single-factor, or 2-factor model
+
 q = ForecastReturns_OneFactor(returns, Libor(1:end-1));
 %q = Forecast_AR1(excess_rets);
 %q = ForecastReturns(returns, Libor(1:end-1));
 
 % initializes omega. Since it is defined as a function of the forecast
-% errors from the previous forecast, it is initialized
+% errors from the previous forecast, it must be initialized here
 omega = 0.01*eye(n);
 
 
@@ -132,8 +134,8 @@ sigma_BL = S + sigma;
 % Replace this with the actual benchmarks from S&P data.
 bench_t = SPRets(t+1);
 
-% Realized returns
-%realized_returns = X_rets(t+1, :);
+% Realized returns in the next period (to calculate excess returns over
+% S&P)
 realized_returns = excess_rets(t+1, :);
 
 % now, perform M-V portfolio optimization (B-L)
@@ -180,14 +182,13 @@ while ( t < m-1 )
     % Redefine prior based on expanding window and current
     % market-capitalization weights
     weights = Mkt_cap(t,:)./sum(Mkt_cap(t,:));
-    %returns = X_rets(1:t,:);
     returns = excess_rets(1:t,:);
     
     sigma = cov(returns); % historical covariance matrix (plug-in estimate)
     
     hist_mean = mean(returns, 1); % historical mean returns (plug-in estimate)
-    pi = gamma*sigma*weights';
-    tau = 1/t;
+    pi = gamma*sigma*weights'; % equilibrium risk premiums
+    tau = 1/t; % uncertainty parameter
     sigma_pi = tau*sigma;
     
     
@@ -195,6 +196,9 @@ while ( t < m-1 )
     % Note that Omega is a function of the errors from the previous
     % prediction, and is therefore defined at the end of this loop to form
     % Omega(t+1).
+    % Also note that 3 different functions can be called to forecast
+    % one-step-ahead returns.
+    
     %q = ForecastReturns(returns, Libor(1:end-1));
     %q = Forecast_AR1(returns);
     q = ForecastReturns_OneFactor(returns, SPRets - Libor(1:end-1));
@@ -209,16 +213,15 @@ while ( t < m-1 )
     sigma_BL = S + sigma; 
 
     
-    bench_t = SPRets(t+1);
+    bench_t = SPRets(t+1); % benchmark: S&P returns
 
-
-    %realized_returns = X_rets(t+1,:); % actual returns observed in subsequent period
-    realized_returns = excess_rets(t+1,:);
+    realized_returns = excess_rets(t+1,:); % returns observed in the next period (to track cumulative returns)
     
     omega = delta*diag((realized_returns' - q)); % defines uncertainty of (next) mean based on performance
     
     
     % BLACK-LITTERMAN PORTFOLIO OPTIMIZATION
+    
     [w_p, return_p, excess_p, stdev_p, sharpe_p] = OptimizePortfolio(mu_BL, sigma_BL, -0.3, bench_t - Libor(t), realized_returns);
     
     total_BL = total_BL + excess_p; % updates total for B-L
@@ -230,17 +233,16 @@ while ( t < m-1 )
    
     
     % MARKOWITZ PLUG-IN PORTFOLIO OPTIMIZATION
+    
     [w_m, return_m, excess_m, stdev_m, sharpe_m] = OptimizePortfolio(hist_mean', sigma, -0.3, bench_t - Libor(t), realized_returns);
 
-    
     total_M = total_M + excess_m; % updates total for Markowitz
     excess_returns_M(iteration) = total_M; % saves cumulative excess return at time t for B-L
     sharpe_M(iteration) = sharpe_m;
     turnover_M(iteration) = GetTurnoverRate(w_m, w_m_old); % tracks Markowitz turnover rate
     w_m_old = w_m; % saves previous result for next iteration
      
-    
-    
+     
     % updates time and iteration #
     t = t + 1;
     iteration = iteration + 1;

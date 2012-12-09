@@ -1,3 +1,8 @@
+% NOTE: This script is nearly identical to the BlackLitterman.m file, but
+% it implements a rolling window rather than an expanding window in the
+% Black-Litterman asset allocation problem.
+
+
 % PART I: single-factor time-series forecasting
 % ------
 
@@ -128,7 +133,6 @@ sigma_BL = S + sigma;
 bench_t = SPRets(t+1);
 
 % Realized returns
-%realized_returns = X_rets(t+1, :);
 realized_returns = excess_rets(t+1, :);
 
 % now, perform M-V portfolio optimization (B-L)
@@ -174,7 +178,6 @@ while ( t < m-1 )
     % Redefine prior based on expanding window and current
     % market-capitalization weights
     weights = Mkt_cap(t,:)./sum(Mkt_cap(t,:));
-    %returns = X_rets(1:t,:);
     returns = excess_rets(iteration:t,:);
     
     sigma = cov(returns); % historical covariance matrix (plug-in estimate)
@@ -204,7 +207,6 @@ while ( t < m-1 )
     bench_t = SPRets(t+1); % used as benchmark in computing excess returns
 
 
-    %realized_returns = X_rets(t+1,:); % actual returns observed in subsequent period
     realized_returns = excess_rets(t+1,:);
     
     Pred_error(iteration,:) = abs((realized_returns' - q)');
@@ -221,7 +223,6 @@ while ( t < m-1 )
     turnover_BL(iteration) = GetTurnoverRate(w_p, w_p_old); % tracks B-L turnover rate
     w_p_old = w_p; % saves previous result for next iteration
     
-   
     
     % MARKOWITZ PLUG-IN PORTFOLIO OPTIMIZATION
     [w_m, return_m, excess_m, stdev_m, sharpe_m] = OptimizePortfolio(hist_mean', sigma, -0.3, bench_t - Libor(t), realized_returns);
@@ -233,7 +234,6 @@ while ( t < m-1 )
     turnover_M(iteration) = GetTurnoverRate(w_m, w_m_old); % tracks Markowitz turnover rate
     w_m_old = w_m; % saves previous result for next iteration
      
-    
     
     % updates time and iteration #
     t = t + 1;

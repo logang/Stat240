@@ -3609,5 +3609,80 @@ Finally, we include the turnover results for the two-factor model with five-
 
 \end_layout
 
+\begin_layout Section*
+Appendix
+\end_layout
+
+\begin_layout Standard
+- Insert appendix here.
+ Explanation of how we got/processed data; copy-pasted code.
+\end_layout
+
+\begin_layout Standard
+- parsing
+\end_layout
+
+\begin_layout Standard
+- converting to returns
+\end_layout
+
+\begin_layout Standard
+- converting LIBOR to monthly rate
+\end_layout
+
+\begin_layout Standard
+- optimization using cvx
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename OptimizePortfolio1.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename OptimizePortfolio2.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Forecast_AR1.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Forecast_OneFactor.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Forecast_Returns.png
+	scale 70
+
+\end_inset
+
+
+\end_layout
+
 \end_body
 \end_document
