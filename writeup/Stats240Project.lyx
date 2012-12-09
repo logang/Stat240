@@ -3,6 +3,9 @@
 \begin_document
 \begin_header
 \textclass article
+\begin_preamble
+\date{}
+\end_preamble
 \use_default_options true
 \maintain_unincluded_children false
 \language english
@@ -2300,20 +2303,28 @@ bihi_ret
 \end_layout
 
 \begin_layout Subsubsection*
-(d) Carry out the NPEB approach proposed by Lai, Xing, and Chen 2001.
+(d) Carry out the NPEB approach proposed by Lai, Xing, and Chen 2011.
 \end_layout
 
 \begin_layout Standard
 To carry out the non-parametric empirical Bayes approach proposed by Lai,
- Xing, and Chen (2001), we adapted the MATLAB code from the paper's website.
+ Xing, and Chen (2011), we adapted the MATLAB code from the paper's website.
  The following results compare the cumulative returns over time for the
  
 \begin_inset Formula $AR$
 \end_inset
 
- and i.i.d.
+ whitened and working i.i.d.
  models.
- As we can see, the autoregressive model uniformly outperforms the i.i.d model.
+ As we can see, the autoregressive model uniformly outperforms the working
+ i.i.d model.
+ This is consistent with the discussion in section 5.3 of Lai, Xing, and
+ Chen (2011), where such modification are constidered as improvements over
+ the working i.i.d.
+ model (for which both the independent and identically distributed assumptions
+ are clearly violated by temporal correlation and nonstationarity, respectively).
+ Applying an AR, GARCH, or similar model can therefore result in more i.i.d.-like
+ residuals closer to the assumptions of the MV model.
 \end_layout
 
 \begin_layout Standard
@@ -2424,7 +2435,15 @@ In carrying out Black-Litterman allocation model, we use
 \begin_inset Formula $t$
 \end_inset
 
-), we apply reverse optimization.
+), we apply 
+\begin_inset Quotes eld
+\end_inset
+
+reverse optimization
+\begin_inset Quotes erd
+\end_inset
+
+.
  This procedure yields
 \begin_inset Formula 
 \[
@@ -2729,6 +2748,9 @@ bihi
 \end_layout
 
 \begin_layout Subsubsection*
+\begin_inset VSpace medskip
+\end_inset
+
 (b) Note that Black-Litterman allocation itself is not an alpha-generating
  process.
  To beat the market we need to specify expert views or build models that
@@ -2851,6 +2873,13 @@ Two-factor models of the form
 .
 \end_layout
 
+\begin_layout Enumerate
+A sparse Elastic Net regression model applied to lagged factors and autoregressi
+ve terms similar to those in (3), but with more factors and longer retrospective
+ time windows.
+ 
+\end_layout
+
 \begin_layout Standard
 Our implementation of all these models is included in the appendix, and
  the results are in the following two sections.
@@ -2956,7 +2985,11 @@ Here,
 \begin_inset Formula $\omega_{i}$
 \end_inset
 
-, including the variances of the errors from previous predictions, as well
+ (the diagonal elements of 
+\begin_inset Formula $\Omega$
+\end_inset
+
+), including the variances of the errors from previous predictions, as well
  as the variances of the last 
 \begin_inset Formula $p$
 \end_inset
@@ -3207,7 +3240,7 @@ We discovered that using the excess returns of the S&P 500 (lagged by one
 \begin_inset Formula $t$
 \end_inset
 
-, as shorn in part (1).
+, as shown in part (1).
  We also tried regressing on the previous month's LIBOR rate, with nearly
  identical results.
 \end_layout
@@ -3298,6 +3331,7 @@ We also tried setting
 \end_layout
 
 \begin_layout Standard
+\noindent
 \begin_inset Graphics
 	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Returns_AR1_SP_smallDelta.jpg
 	scale 45
@@ -3413,6 +3447,107 @@ ARMA Net with
 \end_layout
 
 \begin_layout Standard
+We also implemented a multi-factor model that considered time lags of 10
+ or 20 months for each factor.
+ Because considering both more time lags and factors greatly increased the
+ number of regressors, we decided to use a sparse regression model to set
+ many of the model coefficents to zero.
+ Further, as we expect strong correlations both between and within factors,
+ we used an Elastic Net (rather than a Lasso) penalty in order to allow
+ correlated variables to co-exist in the model (Zou and Hastie, 2005).
+ We regressed each of the Fama-French portfolio returns on themselves (appropria
+tely lagged), on the other Fama-French portfolios, and on seven other factors
+ (change in PHLX (Gold/Silver sector), NASDAQ, NYSE Composite returns, interest
+ rates on 5 year US Treasury bonds, interest rates on 10 year US Treasury
+ bonds, change in the VIX index, and the S&P 500 (any premiums were calculated
+ against LIBOR).
+ As this involves both autoregressive and moving average terms, and is solved
+ using Elastic Net regression, we call it ARMA Net for short.
+ In brief it solves the problem 
+\begin_inset Formula 
+\[
+\widehat{\phi},\widehat{\beta}=\underset{\phi,\beta}{\text{argmin}}\sum_{t}(r_{t}-R\phi-F\beta)^{2}+(1-\alpha)\|[\phi\ \beta]\|_{2}^{2}+\alpha\|[\phi\ \beta]\|_{1},
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $R=[Br_{t}\ B^{2}r_{t}\ \cdots\ B^{k}r_{t}]$
+\end_inset
+
+, 
+\begin_inset Formula $F=[f_{t}^{(1)}\ Bf_{t}^{(1)}\ \cdots\ \cdots B^{k}f_{t}^{(1)}\ \cdots\ f_{t}^{(n)}\ Bf_{t}^{(n)}\ \cdots\ Bf_{t}^{(n)}],$
+\end_inset
+
+ where 
+\begin_inset Formula $B$
+\end_inset
+
+ is the back-shift operator and 
+\begin_inset Formula $n$
+\end_inset
+
+ the number of factors in the multi-factor model.
+ The penalty parameter 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ trades off the 
+\begin_inset Quotes eld
+\end_inset
+
+ridge
+\begin_inset Quotes erd
+\end_inset
+
+ or Tikhonov-like and Lasso-like components of the Elastic Net penalty,
+ potentially allowing more correlated variables into the model as 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ decreases.
+ We would hope that such a model, if applied to a large design matrix of
+ temporally correlated factors and autoregressive terms, would pick just
+ a subset relevant to forcasting future returns, while still allowing useful
+ correlated variables to coexist in the model.
+ The problem above is easily solved using the glmnet package available online
+ from Stanford.
+ Code showing the procedure in detail is given in the appendix and on GitHub.
+ 
+\end_layout
+
+\begin_layout Standard
+Plots of the cumulative returns and Sharpe ratios are qualitatively different
+ that both the AR and factor approaches shown previously.
+ The Sharpe ratio in particular show an interesting pattern of impulse-like
+ activity not seen in other models.
+ The plots below show two ARMA Net models, the first of which used 
+\begin_inset Formula $\alpha=0.25$
+\end_inset
+
+ and the second 
+\begin_inset Formula $\alpha=0.9$
+\end_inset
+
+, both with 
+\begin_inset Formula $k=20$
+\end_inset
+
+.
+ This 
+\begin_inset Formula $k$
+\end_inset
+
+ led to 273 features to regress on.
+ For most windowing, this meant that the number of observations was less
+ than the number of coefficients being estimated, and consequently we would
+ expect regularization to be useful.
+ Indeed, this approch performed as well as our other Black-Litterman models
+ (although it too is beaten by Markowitz over time).
+ 
+\end_layout
+
+\begin_layout Standard
 \noindent
 \begin_inset Graphics
 	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Returns_ARMANet.jpg
@@ -3471,6 +3606,24 @@ ARMA Net with
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+The sparseness of the model coefficents makes it easy to track which factors
+ are influential over time, as shown by the plot above on the left.
+ On the right, we see this sparsity from another view.
+ The axes on plot of BIDI coefficent magnitudes by index (bottom right)
+ correspond to SMLO returns (indices 2-22), SMME returns (22-42), SMHI returns
+ (43-63), BILO returns (64-84), BIME returns (85-105), BIHI returns (105-125),
+ change in Gold/Silver (126-146), NASDAQ (147-167), NYSE Composite returns
+ (168-188), interest rates on 5 year US Treasury bonds (189, 209), interest
+ rates on 10 year US Treasury bonds (210-230), change in the VIX index (231-251)
+, and the S&P 500 (252-272).
+ Thus we see a strong but sparse relationship between BIHI and one-lagged
+ BIME (this corresponds to the largest curve in the preceeding plot) and
+ an sparse negative correlation to the NYSE, but a more clustered and interestin
+g relationship with NASDAQ.
+ 
 \end_layout
 
 \begin_layout Subsubsection*
@@ -3702,13 +3855,6 @@ ARMA Net with low values of
 \begin_inset Graphics
 	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Turnover_ARMANet.jpg
 	scale 45
-
-\end_inset
-
-
-\begin_inset Graphics
-	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Turnover_ARMANetSparse.jpg
-	scale 41
 
 \end_inset
 
@@ -4093,6 +4239,50 @@ The following python code parses data files (mostly downloaded from Yahoo!
 \end_layout
 
 \begin_layout Standard
+\begin_inset Graphics
+	filename PythonCode4.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename PythonCode5.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename PythonCode6.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename PythonCode7.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following python code allows us to run Matlab scripts from within python.
+\end_layout
+
+\begin_layout Standard
 \noindent
 \begin_inset Graphics
 	filename PythonCode1.png
@@ -4118,6 +4308,58 @@ The following python code parses data files (mostly downloaded from Yahoo!
 \noindent
 \begin_inset Graphics
 	filename PythonCode3.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+MATLAB 
+\begin_inset Quotes eld
+\end_inset
+
+ARMA Net
+\begin_inset Quotes erd
+\end_inset
+
+ code
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Matlab1.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Matlab2.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Matlab3.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Matlab4.png
 	scale 60
 
 \end_inset
