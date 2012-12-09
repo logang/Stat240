@@ -13,29 +13,40 @@ classdef OneStepPrediction
      current_y				% current windowed regression target
      current_y_idx = 1;			% target index of current targed
      current_X	     			% current windowed design matrix
-     center = 0;
-     window_type = 'expanding';
-     fit
-     pred
-     predictions
-     test_X
-     test_y
-     model_selection = 'AIC';	
-     AICs
-     BICs
-     best_AIC
-     best_BIC
-     best_idx
-     coefs
+     center = 1;			% should predictors be standardized
+     window_type = 'expanding';		% type of window
+     fit	   			% container for current fit
+     pred    				% container for current prediction
+     predictions			% predictions for all targets over all windows
+     test_X				% current held out predictors
+     test_y				% current held out
+     model_selection = 'BIC';		% criterion for model selection
+     AICs	       			% current AICs
+     BICs				% current BICs
+     best_AIC				% current best AIC
+     best_BIC				% current best BIC
+     best_idx				% current best fit index
+     coefs				% current coefs
+     num_vars_selected			% number of variables selected across fits
+     num_coefs				% current number of coefs
+     options				% options for fitting glmnet
+
    end
 
    methods
 
      % initialize class
      function obj = setup(obj)
-       addpath('/glmnet_matlab/');
+       addpath('./glmnet_matlab/');
        obj = obj.load;
        obj = obj.get_lagged_design;
+       obj.options = glmnetSet;
+       obj.options.alpha = 0.5;
+       obj.options.nlambda = 500;
+       obj.options.lambda_min = 0.0001;
+       if obj.center == 0
+          obj.options.standardize = 0;
+       end
      end
 
      % load the data
@@ -80,20 +91,18 @@ classdef OneStepPrediction
 	last = obj.active_set(end)
 	obj.test_X = obj.design_matrix(last+1,:);
 	obj.test_X(:,idx) = [];
-	disp(size(obj.test_X)); obj.test_X
 	obj.test_y = obj.design_matrix(last+1,idx);
       end
       
       % fit an elasic net regression 
       function obj = get_enet_fit(obj)
-        obj.fit = glmnet(obj.current_X, obj.current_y);
-        err =  sum((glmnetPredict(obj.fit,'response',obj.current_X) - repmat(obj.current_y,1,length(obj.fit.lambda))).^2)'.*(1/length(obj.current_y))
-	disp(err)
+        obj.fit = glmnet(obj.current_X, obj.current_y, 'gaussian',obj.options);
+        err =  sum((glmnetPredict(obj.fit,'response',obj.current_X) - repmat(obj.current_y,1,length(obj.fit.lambda))).^2)'
 	dev = obj.fit.dev;
 	df = obj.fit.df;
 	n = size(obj.current_X,1);
-	AICs = -err + 2*df; obj.AICs = AICs;
-	BICs = -err + log(size(obj.current_X,1))*df/n; obj.BICs = BICs;
+	AICs = -err + (2*df)/n; obj.AICs = AICs;
+	BICs = -err + (log(size(obj.current_X,1))*df)/n; obj.BICs = BICs;
 
 	if obj.model_selection=='AIC'
 	   [best_AIC, best_idx] = min(AICs(2:end));
@@ -104,7 +113,9 @@ classdef OneStepPrediction
 	   obj.best_BIC = best_BIC;
 	   obj.best_idx = best_idx+1; 
 	end
-        obj.coefs =  glmnetPredict(obj.fit,'coefficients','s', obj.fit.lambda(obj.best_idx));
+        obj.coefs = glmnetPredict(obj.fit,'coefficients','s', obj.fit.lambda(obj.best_idx));
+	obj.num_coefs = sum(obj.coefs ~= 0.0);
+	disp(obj.num_coefs);
         obj.pred =  glmnetPredict(obj.fit, 'response', obj.test_X, obj.fit.lambda(obj.best_idx));
       end
 
@@ -113,7 +124,10 @@ classdef OneStepPrediction
          n = size(obj.design_matrix,1);
 	 n_periods = n - window_size - 1;
 	 n_targets = size(obj.target_matrix,2);
+
+	 % containers for predictions and number of variables kept
 	 obj.predictions = zeros(n_periods,n_targets);
+	 obj.num_vars_selected = zeros(n_periods,n_targets);
 
 	 % run predictions for all periods and all targets
 	 for i = 1:n_periods
@@ -126,6 +140,7 @@ classdef OneStepPrediction
 	        obj = obj.get_current(j);
 	    	obj = obj.get_enet_fit;
 		obj.predictions(i,j) = obj.pred;
+		obj.num_vars_selected(i,j) = obj.num_coefs;
 	    end
 	 end
       end
