@@ -41,8 +41,8 @@ classdef OneStepPrediction
        obj = obj.load;
        obj = obj.get_lagged_design;
        obj.options = glmnetSet;
-       obj.options.alpha = 0.8;
-       obj.options.nlambda = 100;
+       obj.options.alpha = 0.25;
+       obj.options.nlambda = 200;
        obj.options.lambda_min = 0.001;
        if obj.center == 0
           obj.options.standardize = 0;
@@ -63,6 +63,7 @@ classdef OneStepPrediction
         n_inputs = size(obj.predictor_matrix,2);
 
 	% construct lagged design matrix of lag obj.lag
+	% AR on lagged targets
 	design_mat = [];
 	for i = 1:n_targets
 	   x = obj.target_matrix(:,i);
@@ -73,6 +74,7 @@ classdef OneStepPrediction
 	   disp(tmpmat);
     	   design_mat = [design_mat tmpmat];
 	end
+	% MA on other factors
 	for i = 1:n_inputs
 	   x = obj.predictor_matrix(:,i);
 	   tmpmat = x;
@@ -122,7 +124,7 @@ classdef OneStepPrediction
 	end
 
 	% model selection with information criteria
-        err =  sum((glmnetPredict(obj.fit,'response',obj.current_X) - repmat(obj.current_y,1,length(obj.fit.lambda))).^2)'
+        err = sum((glmnetPredict(obj.fit,'response',obj.current_X) - repmat(obj.current_y,1,length(obj.fit.lambda))).^2)';
 	df = obj.fit.df;
 	AICs = -err + (2*df)/n; obj.AICs = AICs;
 	BICs = -err + (log(size(obj.current_X,1))*df)/n; obj.BICs = BICs;
@@ -166,7 +168,6 @@ classdef OneStepPrediction
 	    end
 	 end
       end
-
    end % methods
 end % class     
 
