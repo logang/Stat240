@@ -9,7 +9,7 @@ classdef OneStepPrediction
      target				% lagged univariate target
      design_matrix			% lagged design matrix
      lag = 10;				% lag used to construct data
-     active_set = [1:120];		% window of indices on which to fit
+     active_set = [1:60];		% window of indices on which to fit
      current_y				% current windowed regression target
      current_y_idx = 1;			% target index of current targed
      current_X	     			% current windowed design matrix
