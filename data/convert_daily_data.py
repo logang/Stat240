@@ -9,6 +9,9 @@ import scipy.io as io
 
 # function to convert prices to returns
 def prices_to_returns(p):
+    """
+    Convert prices to returns.
+    """
     p = np.asarray(p)
     p = p.astype(float)
     m = len(p)
@@ -19,6 +22,10 @@ def prices_to_returns(p):
 
 # function to load csv and txt data
 def load_text(csvfile, sep=",", num_headerlines=0, header_return=None):
+    """
+    Load data from text files, skipping num_headerlines and returning the 
+    header_return line as a separate output.
+    """
     loaded_csv = open(csvfile, 'r')
     out = []
     for row in loaded_csv:
@@ -88,7 +95,7 @@ def match_data(daily_dates, daily_returns, target_dates):
             daily_matched_dates[i] = daily_dates[daily_indices[j]]
     return misses, daily_matched_dates, daily_matched_returns
 
-def match_dates_and_save(input_list, target_path, output_type="returns", order="chronological", 
+def match_dates_and_save(input_list, target_path, order="chronological", 
                          save_mat=True, input_sep=",", target_sep=None, risk_free_path=None): 
     """
     Main parsing function. Combines other functions in this file to load data, 
@@ -113,8 +120,18 @@ def match_dates_and_save(input_list, target_path, output_type="returns", order="
     print "\t--> Loading target data..."
     target_header, target_data = load_text(target_path, sep=target_sep, num_headerlines=3, header_return=1)
 
+    # Convert target data to premiums, loading and subtracting risk_free asset
+    if risk_free_path is not None:
+        RF_header, RF_data = load_text(risk_free_path, sep=input_sep, num_headerlines=0, header_return=None) 
+        target_indices = [1,4,7,10,13,16]
+        target_data_out = (np.array(target_data).astype(float) - np.asarray(RF_data).astype(float))[:,target_indices]
+
     # loop over input paths
-    for input_path in input_list:
+    for input_tuple in input_list:
+        # get path and output type
+        input_path = input_tuple[0]
+        output_type = input_tuple[1]
+
         # load the input data, assuming standard Yahoo! Finance header
         input_header, input_data = load_text(input_path, sep=input_sep, num_headerlines=1, header_return=0) 
         print "Matching data from", input_path
@@ -126,6 +143,13 @@ def match_dates_and_save(input_list, target_path, output_type="returns", order="
         # Get target dates
         target_dates = [td[0] for td in target_data]
 
+        # Set output type
+        if output_type is "returns" or "premiums":
+            print "\t--> Converting", input_path, "to returns."
+            input_data = prices_to_returns(input_data)
+        else:
+            print "\t--> Returning prices for", input_path
+
         # Match input to target dates and get matched returns
         print "\t--> Matching to target..."
         missed_target_dates, matched_input_dates, matched_input_data = match_data(input_dates, input_data, target_dates)
@@ -133,24 +157,16 @@ def match_dates_and_save(input_list, target_path, output_type="returns", order="
             print "\t--> Number of missed target dates in", target_path, "by", input_path, ":", missed_target_dates
             print "\t--> Replacing with data from closest previous date."
             
-        # Set output type
-        if output_type=="returns":
-            print "\t--> Converting", input_path, "to returns."
-            matched_input_data = prices_to_returns(matched_input_data)
-        elif output_type=="premiums":
+        # If output_type is premiums, convert to premiums using matched Libor data
+        if output_type=="premiums" and risk_free_path is not None:
             print "\t--> Converting", input_path, "to premiums."
 
-            # get returns
-            matched_input_data = prices_to_returns(matched_input_data)
-
             # load and subtract risk_free asset
-            RF_header, RF_data = load_text(risk_free_path, sep=input_sep, num_headerlines=1, header_return=0) 
-            matched_input_data = matched_input_data - np.asarray(RF_data)
-        else:
-            print "\t--> Returning prices for", input_path
+            matched_input_data = matched_input_data - np.squeeze(np.asarray(RF_data).astype(float))
 
         # Save matched returns
-        outfile = input_path.split('.')[0]+'_returns.csv' # danger, input path should have just one '.'
+        outpath = os.path.join(os.path.abspath('.'),output_type)
+        outfile = os.path.join(outpath,input_path.split('/')[-1].split('.')[0]+'_returns.csv') # danger, input path should have just one '.'
         print "\t--> Saving matched data as", outfile
         np.savetxt(outfile, matched_input_data, delimiter=",")
 
@@ -158,25 +174,18 @@ def match_dates_and_save(input_list, target_path, output_type="returns", order="
             if out_mat is None:
                 out_mat = np.array(matched_input_data)
             else:
-                out_mat = np.hstack((out_mat, np.array(matched_input_data)))
+                out_mat = np.vstack((out_mat, np.array(matched_input_data)))
 
     if save_mat:
-        mat_outpath = os.path.dirname(outfile)
-        if output_type == "returns":
-            out_dict = {'returns':out_mat}
-            io.savemat(mat_outpath+'All_variables_matched_returns.mat', out_dict)
-        if output_type == "premiums":
-            out_dict = {'premiums':out_mat}
-            io.savemat(mat_outpath+'All_variables_matched_premiums.mat', out_dict)
-        else:
-            out_dict = {'prices':out_mat}
-            io.savemat(mat_outpath+'All_variables_matched_prices.mat', out_dict)
-
+        mat_outpath = os.path.join(os.path.abspath('.'),'matfiles/')
+        out_dict = {'predictors':out_mat.T, 'targets':target_data_out}
+        io.savemat(mat_outpath+'All_variables_matched.mat', out_dict)
 
 if __name__ == '__main__':
-    input_list = ['GoldSilver.csv','Nasdaq.csv', 'NYSE_Composite.csv', 'Treasury10yr.csv', 'Treasury_5year.csv', 'VIX.csv', 'SP500_Revised.csv']
-    target_path = 'FF6Portfolios.txt'
-    match_dates_and_save(input_list, target_path, output_type="returns", order="chronological", 
-                         save_mat=True, input_sep=",", target_sep=None, risk_free_path='Libor_returns.csv')
+    input_list = [('./raw/GoldSilver.csv','returns'),('./raw/Nasdaq.csv','returns'), ('./raw/NYSE_Composite.csv','returns'), ('./raw/Treasury10yr.csv','prices'), ('./raw/Treasury_5year.csv','prices'), ('./raw/VIX.csv','returns'), ('./raw/SP500_Revised.csv','premiums')]
+    target_path = './raw/FF6Portfolios.txt'
+    match_dates_and_save(input_list, target_path, order="chronological", 
+                         save_mat=True, input_sep=",", target_sep=None, 
+                         risk_free_path='./returns/Libor_returns.csv')
 
 
