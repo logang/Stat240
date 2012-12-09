@@ -8,7 +8,7 @@ classdef OneStepPrediction
      target_matrix			% raw target variables
      target				% lagged univariate target
      design_matrix			% lagged design matrix
-     lag = 10;				% lag used to construct data
+     lag = 20;				% lag used to construct data
      active_set = [1:60];		% window of indices on which to fit
      current_y				% current windowed regression target
      current_y_idx = 1;			% target index of current targed
@@ -30,7 +30,7 @@ classdef OneStepPrediction
      num_vars_selected			% number of variables selected across fits
      num_coefs				% current number of coefs
      options				% options for fitting glmnet
-
+     all_coefs
    end
 
    methods
@@ -41,7 +41,7 @@ classdef OneStepPrediction
        obj = obj.load;
        obj = obj.get_lagged_design;
        obj.options = glmnetSet;
-       obj.options.alpha = 0.25;
+       obj.options.alpha = 0.9;
        obj.options.nlambda = 200;
        obj.options.lambda_min = 0.001;
        if obj.center == 0
@@ -131,11 +131,11 @@ classdef OneStepPrediction
 	if obj.model_selection==2 % AIC
 	   [best_AIC, best_idx] = min(AICs(2:end));
 	   obj.best_AIC = best_AIC;
-	   obj.best_lambda = obj.fit.lambdas(best_idx+1); 
+	   obj.best_lambda = obj.fit.lambda(best_idx+1); 
 	elseif obj.model_selection==3 % BIC
 	   [best_BIC, best_idx] = min(BICs(2:end));
 	   obj.best_BIC = best_BIC;
-	   obj.best_lambda = obj.fit.lambdas(best_idx+1); 
+	   obj.best_lambda = obj.fit.lambda(best_idx+1); 
 	end
         obj.coefs = glmnetPredict(obj.fit,'coefficients','s', obj.best_lambda);
 	obj.num_coefs = sum(obj.coefs ~= 0.0);
@@ -152,7 +152,7 @@ classdef OneStepPrediction
 	 % containers for predictions and number of variables kept
 	 obj.predictions = zeros(n_periods,n_targets);
 	 obj.num_vars_selected = zeros(n_periods,n_targets);
-
+	 obj.all_coefs = zeros(size(obj.current_X,2)+1,n_targets);
 	 % run predictions for all periods and all targets
 	 for i = 1:n_periods
 	    if obj.window_type == 'expanding'
@@ -165,6 +165,8 @@ classdef OneStepPrediction
 	    	obj = obj.get_enet_fit;
 		obj.predictions(i,j) = obj.pred;
 		obj.num_vars_selected(i,j) = obj.num_coefs;
+		size(obj.all_coefs)
+		obj.all_coefs(:,i) = obj.coefs
 	    end
 	 end
       end
