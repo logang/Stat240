@@ -20,12 +20,12 @@ classdef OneStepPrediction
      predictions			% predictions for all targets over all windows
      test_X				% current held out predictors
      test_y				% current held out
-     model_selection = 'BIC';		% criterion for model selection
+     model_selection = 1;		% criterion for model selection (1) CV (2) AIC (3) BIC
      AICs	       			% current AICs
      BICs				% current BICs
      best_AIC				% current best AIC
      best_BIC				% current best BIC
-     best_idx				% current best fit index
+     best_lambda			% current best lambda
      coefs				% current coefs
      num_vars_selected			% number of variables selected across fits
      num_coefs				% current number of coefs
@@ -68,19 +68,19 @@ classdef OneStepPrediction
 	   x = obj.target_matrix(:,i);
 	   tmpmat = x;
 	   for l = 1:obj.lag
-	     tmpmat = [tmpmat, l
-    	   design_mat = [design_mat lagmatrix( repmat(,obj.lag+1), obj.lag)];
+	     tmpmat = [tmpmat, lagmatrix(x,l)];
+	   end
+    	   design_mat = [design_mat tmpmat];
 	end
-	for i = 1:n_targets
-    	   design_mat = [design_mat lagmatrix( repmat(obj.target_matrix(:,i),1,obj.lag+1), obj.lag)];
+	for i = 1:n_inputs
+	   x = obj.predictor_matrix(:,i);
+	   tmpmat = x;
+	   for l = 1:obj.lag
+	     tmpmat = [tmpmat, lagmatrix(x,l)];
+	   end
+    	   design_mat = [design_mat tmpmat];
 	end
-	
-	% get lagged design matrix, optionally center and scale the columns
-	if obj.center == 1
- 	   obj.design_matrix = zscore(design_mat( (obj.lag+1):end,: ));
-	else
-	   obj.design_matrix = design_mat( (obj.lag+1):end,: );
-	end
+	obj.design_matrix = design_mat( (obj.lag+1):end,: );
       end
 
       % Get active windowed variables, specifying which target variable using 'y_idx'
@@ -100,27 +100,44 @@ classdef OneStepPrediction
       
       % fit an elasic net regression 
       function obj = get_enet_fit(obj)
-        obj.fit = glmnet(obj.current_X, obj.current_y, 'gaussian',obj.options);
-        err =  sum((glmnetPredict(obj.fit,'response',obj.current_X) - repmat(obj.current_y,1,length(obj.fit.lambda))).^2)'
-	dev = obj.fit.dev;
-	df = obj.fit.df;
+	% number of current observations
 	n = size(obj.current_X,1);
+
+	% fit full model to current
+        obj.fit = glmnet(obj.current_X, obj.current_y, 'gaussian',obj.options);
+
+	% model selection with 10-fold cross validation
+	if obj.model_selection == 1
+	  indices = crossvalind('Kfold',n,10);
+	  best_lam = zeros(10,1);
+	  for i = 1:10
+	    test = (indices == i); train = ~test;
+            train_fit = glmnet(obj.current_X(train,:), obj.current_y(train), 'gaussian', obj.options);
+	    test_err = sum((glmnetPredict(train_fit,'response',obj.current_X(test,:)) - repmat(obj.current_y(test),1,length(train_fit.lambda))).^2)'
+	    [best_err, best_ind] = min(test_err);
+	    best_lam(i) = train_fit.lambda(best_ind);
+	  end
+	  obj.best_lambda = median(best_lam);
+	end
+
+	% model selection with information criteria
+        err =  sum((glmnetPredict(obj.fit,'response',obj.current_X) - repmat(obj.current_y,1,length(obj.fit.lambda))).^2)'
+	df = obj.fit.df;
 	AICs = -err + (2*df)/n; obj.AICs = AICs;
 	BICs = -err + (log(size(obj.current_X,1))*df)/n; obj.BICs = BICs;
-
-	if obj.model_selection=='AIC'
+	if obj.model_selection==2 % AIC
 	   [best_AIC, best_idx] = min(AICs(2:end));
 	   obj.best_AIC = best_AIC;
-	   obj.best_idx = best_idx+1; 
-	elseif obj.model_selection=='BIC'
+	   obj.best_lambda = obj.fit.lambdas(best_idx+1); 
+	elseif obj.model_selection==3 % BIC
 	   [best_BIC, best_idx] = min(BICs(2:end));
 	   obj.best_BIC = best_BIC;
-	   obj.best_idx = best_idx+1; 
+	   obj.best_lambda = obj.fit.lambdas(best_idx+1); 
 	end
-        obj.coefs = glmnetPredict(obj.fit,'coefficients','s', obj.fit.lambda(obj.best_idx));
+        obj.coefs = glmnetPredict(obj.fit,'coefficients','s', obj.best_lambda);
 	obj.num_coefs = sum(obj.coefs ~= 0.0);
 	disp(obj.num_coefs);
-        obj.pred =  glmnetPredict(obj.fit, 'response', obj.test_X, obj.fit.lambda(obj.best_idx));
+        obj.pred =  glmnetPredict(obj.fit, 'response', obj.test_X, obj.best_lambda);
       end
 
       function obj = fit_full_data(obj,window_size)

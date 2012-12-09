@@ -124,7 +124,7 @@ def match_dates_and_save(input_list, target_path, order="chronological",
     if risk_free_path is not None:
         RF_header, RF_data = load_text(risk_free_path, sep=input_sep, num_headerlines=0, header_return=None) 
         target_indices = [1,4,7,10,13,16]
-        target_data_out = (np.array(target_data).astype(float) - np.asarray(RF_data).astype(float))[:,target_indices]
+        target_data_out = (np.array(target_data).astype(float) - (1./(12*100.))*np.asarray(RF_data).astype(float))[:,target_indices]
 
     # loop over input paths
     for input_tuple in input_list:
