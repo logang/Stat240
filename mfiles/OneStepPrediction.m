@@ -41,9 +41,9 @@ classdef OneStepPrediction
        obj = obj.load;
        obj = obj.get_lagged_design;
        obj.options = glmnetSet;
-       obj.options.alpha = 0.5;
-       obj.options.nlambda = 500;
-       obj.options.lambda_min = 0.0001;
+       obj.options.alpha = 0.8;
+       obj.options.nlambda = 100;
+       obj.options.lambda_min = 0.001;
        if obj.center == 0
           obj.options.standardize = 0;
        end
@@ -64,9 +64,13 @@ classdef OneStepPrediction
 
 	% construct lagged design matrix of lag obj.lag
 	design_mat = [];
-	for i = 1:n_inputs
-    	   design_mat = [design_mat lagmatrix( repmat(obj.predictor_matrix(:,i),1,obj.lag+1), obj.lag)];
-     	end
+	for i = 1:n_targets
+	   x = obj.target_matrix(:,i);
+	   tmpmat = x;
+	   for l = 1:obj.lag
+	     tmpmat = [tmpmat, l
+    	   design_mat = [design_mat lagmatrix( repmat(,obj.lag+1), obj.lag)];
+	end
 	for i = 1:n_targets
     	   design_mat = [design_mat lagmatrix( repmat(obj.target_matrix(:,i),1,obj.lag+1), obj.lag)];
 	end
