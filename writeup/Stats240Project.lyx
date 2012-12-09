@@ -3431,6 +3431,42 @@ ARMA Net with
 \end_layout
 
 \begin_layout Standard
+\noindent
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Returns_ARMANetSparse.jpg
+	scale 45
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Sharpe_ARMANetSparse.jpg
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/CoefficientEvolutionARMANet.jpg
+	scale 45
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/CoefficientMagnitudesARMA.jpg
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \begin_inset VSpace medskip
 \end_inset
 
@@ -3641,11 +3677,24 @@ Finally, we include the turnover results for the two-factor model with five-
 \end_layout
 
 \begin_layout Paragraph*
-ARMA Net with 
-\begin_inset Formula $\delta=0.01$
+ARMA Net with low values of 
+\begin_inset Formula $\delta$
 \end_inset
 
 :
+\end_layout
+
+\begin_layout Standard
+- note that 1st uses 
+\begin_inset Formula $\delta=0.01$
+\end_inset
+
+ and sparsest uses 
+\begin_inset Formula $\delta=0.01$
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -3653,6 +3702,13 @@ ARMA Net with
 \begin_inset Graphics
 	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Turnover_ARMANet.jpg
 	scale 45
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Turnover_ARMANetSparse.jpg
+	scale 41
 
 \end_inset
 
