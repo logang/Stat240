@@ -626,8 +626,8 @@ bihi_ret
 \end_layout
 
 \begin_layout Standard
-Plotting the linear fits to the returns over the data (Figure 1), shows
- that the returns are quite stable in mean over time, as we would expect.
+Plotting the linear fits to the returns over the data (Figure 1) shows that
+ the returns are quite stable in mean over time, as we would expect.
  This is consistent with all 12 confidence intervals for the 
 \begin_inset Formula $(\widehat{\alpha}_{i},\widehat{\beta}_{i})$
 \end_inset
@@ -647,7 +647,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1a_FamaFrench_linear_fit_plots.pdf
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Problem1a_FamaFrench_linear_fit_plots.pdf
 	scale 70
 
 \end_inset
@@ -687,7 +687,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1a_FamaFrench_residal_plots.pdf
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Problem1a_FamaFrench_residal_plots.pdf
 	scale 90
 
 \end_inset
@@ -1309,7 +1309,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ bihi_ret .pdf
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Problem1b_ACF_and_PACFs_ bihi_ret .pdf
 	scale 40
 
 \end_inset
@@ -1320,7 +1320,7 @@ status open
 
 
 \begin_inset Graphics
-	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ bilo_ret .pdf
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Problem1b_ACF_and_PACFs_ bilo_ret .pdf
 	scale 40
 
 \end_inset
@@ -1331,7 +1331,7 @@ status open
 
 
 \begin_inset Graphics
-	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ bime_ret .pdf
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Problem1b_ACF_and_PACFs_ bime_ret .pdf
 	scale 40
 
 \end_inset
@@ -1342,7 +1342,7 @@ status open
 
 
 \begin_inset Graphics
-	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ smhi_ret .pdf
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Problem1b_ACF_and_PACFs_ smhi_ret .pdf
 	scale 40
 
 \end_inset
@@ -1357,7 +1357,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ smlo_ret .pdf
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Problem1b_ACF_and_PACFs_ smlo_ret .pdf
 	scale 40
 
 \end_inset
@@ -1368,7 +1368,7 @@ status open
 
 
 \begin_inset Graphics
-	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_ACF_and_PACFs_ smme_ret .pdf
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Problem1b_ACF_and_PACFs_ smme_ret .pdf
 	scale 40
 
 \end_inset
@@ -1459,7 +1459,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
-	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_AR1_fit_residuals.pdf
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Problem1b_AR1_fit_residuals.pdf
 	scale 70
 
 \end_inset
@@ -1490,7 +1490,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset Graphics
-	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_GARCH1_1_fit_std_innovations.pdf
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Problem1b_GARCH1_1_fit_std_innovations.pdf
 	scale 45
 
 \end_inset
@@ -1501,7 +1501,7 @@ status open
 
 
 \begin_inset Graphics
-	filename /Users/logang/Documents/Code/python/Stat240/figures/Problem1b_GARCH1_1_fit_std_innovations_studentized.pdf
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Problem1b_GARCH1_1_fit_std_innovations_studentized.pdf
 	scale 45
 
 \end_inset
@@ -1612,7 +1612,7 @@ th) month, we obtain the following one-step-ahead predictions
 \begin_inset Formula $\widehat{r}_{t+1}$
 \end_inset
 
-, along with their 95% confidence interval and sample covariance matrax:
+, along with their 95% confidence interval and sample covariance matrix:
 \begin_inset VSpace medskip
 \end_inset
 
@@ -2302,11 +2302,29 @@ bihi_ret
 \begin_layout Standard
 To carry out the non-parametric empirical Bayes approach proposed by Lai,
  Xing, and Chen (2001), we adapted the MATLAB code from the paper's website.
+ The following results compare the cumulative returns over time for the
  
+\begin_inset Formula $AR$
+\end_inset
+
+ and i.i.d.
+ models.
+ As we can see, the autoregressive model uniformly outperforms the i.i.d model.
 \end_layout
 
 \begin_layout Standard
 \begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Problem1d_NPEB.jpg
+	scale 70
+
 \end_inset
 
 
@@ -2778,10 +2796,15 @@ We attempted several approaches to forecasting
 \begin_inset Formula $Q$
 \end_inset
 
-, using an expanding window.
- All of these methods generated excess returns over the S&P 500 portfolio,
- but Markowitz outperformed each of them, as will be explained in part (c).
+, using an expanding window (we also implemented a rolling window for comparison.
+) All of these methods generated excess returns over the S&P 500 portfolio,
+ but Markowitz outperformed each of them by the end of the investment time
+ frame, as will be explained in part (c).
  
+\end_layout
+
+\begin_layout Standard
+The following models for forecasting the mean were implemented:
 \end_layout
 
 \begin_layout Enumerate
@@ -2854,11 +2877,7 @@ Two-factor models of the form
 \begin_inset Formula $f_{t}$
 \end_inset
 
- is either 
-\begin_inset Formula $r_{ft}$
-\end_inset
-
- or 
+ is 
 \begin_inset Formula $r_{mt}-r_{ft}$
 \end_inset
 
@@ -3104,7 +3123,7 @@ https://github.com/logang/Stat240
 
 \end_inset
 
- for implementation details.)
+ for code.)
 \end_layout
 
 \begin_layout Standard
@@ -3153,6 +3172,250 @@ ad forecast methods, as well as for a rolling window (using a 2-factor model)
 
  to the covariance matrix necessarily makes the denominator larger.
  
+\end_layout
+
+\begin_layout Paragraph*
+AR(1) Model Results:
+\end_layout
+
+\begin_layout Standard
+As we can see, using an 
+\begin_inset Formula $AR(1)$
+\end_inset
+
+ model with 
+\begin_inset Formula $\delta=10$
+\end_inset
+
+ generates excess returns over the S&P 500 index but does not outperform
+ Markowitz's plug-in estimates.
+ We also attempted a value of 
+\begin_inset Formula $\delta=1$
+\end_inset
+
+, which generated slightly lower returns while having a more volatile Sharpe
+ ratio and portfolio turnover.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Returns_AR1.jpg
+	scale 45
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Sharpe_AR1.jpg
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+One-Factor Model Results (S&P 500):
+\end_layout
+
+\begin_layout Standard
+We discovered that using the excess returns of the S&P 500 (lagged by one
+ month) as the single factor in a one-factor model, as in the Capital Asset
+ Pricing model, is not appreciably different from the AR(1) model.
+ We also tried regressing on the previous month's LIBOR rate, with nearly
+ identical results.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Returns_SP.jpg
+	scale 45
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Sharpe_SP.jpg
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+Two-Factor Model Results (AR(1) combined with S&P 500):
+\end_layout
+
+\begin_layout Standard
+Not surprisingly, using a simple two-factor model -- AR(1) combined with
+ the S&P 500's excess returns -- was not an improvement over the previous
+ results.
+ It is likely that any autoregressive properties of the time series, which
+ are clearly limited based on the ACF plots shown in part 1, are systematic
+ and are therefore common to the whole market.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Returns_AR1_SP.jpg
+	scale 45
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Sharpe_AR1_SP.jpg
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+Two-Factor Model Results (AR(1) combined with S&P 500) for a small value
+ of 
+\begin_inset Formula $\delta$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+We also tried setting 
+\begin_inset Formula $\delta,$
+\end_inset
+
+ the scaling parameter for the variance of the view vector 
+\begin_inset Formula $Q$
+\end_inset
+
+, to a lower value of 
+\begin_inset Formula $\delta=0.01.$
+\end_inset
+
+ This indicates less uncertainty about the prediction of the model.
+ In fact, this setting, when applied to the two-factor AR(1), S&P 500 model,
+ produced the best results in terms of excess returns and outperformed Markowitz
+ in the first 80 months.
+ This setting also results in highly volatile Sharpe ratio and turnover
+ rates.
+ In general, the relationship between the scale of 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ and the volatility of the Sharpe ratio and turnover rates appears to be
+ very strong.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Returns_AR1_SP_smallDelta.jpg
+	scale 45
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Sharpe_AR1_SP_smallDelta.jpg
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+Two-Factor Model With 5-Year Rolling Window:
+\end_layout
+
+\begin_layout Standard
+In addition to an expanding window, we implemented Black-Litterman using
+ rolling windows of two different sizes.
+ The following plots show the excess returns and Sharpe ratios using a five-year
+ rolling window.
+ Markowitz was also implemented using a rolling window (covariances and
+ means estimated from the previous five years of data).
+ The results show slightly decreased performance for Black-Litterman, both
+ absolutely and relative to Markowitz.
+ Interestingly, the five-year rolling window appears to particularly degrade
+ Markowitz's Sharpe ratio over time while keeping Black-Litterman's remarkably
+ stable.
+\end_layout
+
+\begin_layout Standard
+Both the five-year and one-year rolling windows were implemented using 
+\begin_inset Formula $\delta=10.$
+\end_inset
+
+ A smaller 
+\begin_inset Formula $\delta$
+\end_inset
+
+ , such as 
+\begin_inset Formula $\delta=1,$
+\end_inset
+
+ resulted in worse performance and a more volatile Sharpe ratio and portfolio-tu
+rnover rate.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Returns_5yrWindow.jpg
+	scale 45
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Sharpe_5yrWindow.jpg
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+Two-Factor Model With 1-Year Rolling Window:
+\end_layout
+
+\begin_layout Standard
+Finally, we implemented the two-factor model with a one-year rolling window.
+ Interestingly, using a one-year rolling window improved Black-Litterman's
+ absolute performance, almost equalling the cumulative excess returns resulting
+ from using 
+\begin_inset Formula $\delta=0.01$
+\end_inset
+
+.
+ However, the one-year rolling window also dramatically improved Markowitz's
+ performance, creating a very large spread that is not in the favor of the
+ two-factor Black-Litterman model.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Returns_1yrWindow.jpg
+	scale 45
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Sharpe_1yrWindow.jpg
+	scale 45
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3214,6 +3477,136 @@ https://github.com/logang/Stat240
 \end_inset
 
 .)
+\end_layout
+
+\begin_layout Standard
+In general, there appears to be a strong relationship between the degree
+ of confidence we place in our prediction model (indicated by 
+\begin_inset Formula $\delta,$
+\end_inset
+
+ the scaling parameter for 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ ) and the turnover rate: more confidence leads to greater turnover.
+ This makes sense, as greater confidence will weight estimates of expected
+ returns at time 
+\begin_inset Formula $t+1$
+\end_inset
+
+ toward the model's predictions and away from the more stable equilibrium.
+ 
+\end_layout
+
+\begin_layout Paragraph
+One-Factor Model (AR(1), S&P 500): 
+\end_layout
+
+\begin_layout Standard
+The portfolio turnover rate was low relative to Markowitz in a one-factor
+ model with 
+\begin_inset Formula $\delta=10.$
+\end_inset
+
+ As we can see from the plots below, the turnover rate was hardly different
+ between the AR(1) and single-factor model using S&P excess rates as the
+ regressor.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align left
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Turnover_AR1.jpg
+	scale 45
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Turnover_SP.jpg
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+Two-Factor Model (AR(1) combined with S&P 500) for a small value of 
+\begin_inset Formula $\delta$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+Rather than including a plot of the turnover rate for the two-factor model
+ using 
+\begin_inset Formula $\delta=10,$
+\end_inset
+
+ we include the result for 
+\begin_inset Formula $\delta=0.01.$
+\end_inset
+
+ For a low value of 
+\begin_inset Formula $\delta,$
+\end_inset
+
+ indicating relatively high certainty in our views, the average turnover
+ rate greatly exceeds that of Markowitz: a fairly small shift in predicted
+ mean can cause the entire portfolio to be rebalanced.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align left
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Turnover_AR1_SP_smallDelta.jpg
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+Two-Factor Model With Rolling Windows:
+\end_layout
+
+\begin_layout Standard
+Finally, we include the turnover results for the two-factor model with five-
+ and one-year windows, both using 
+\begin_inset Formula $\delta=10.$
+\end_inset
+
+ As we can see, portfolio turnover rate is high on average, especially for
+ the five-year window.
+ It is also volatile over time.
+ Interestingly, Black-Litterman's turnover rate for the five-year window
+ greatly exceeds Markowitz's rates, while Markowitz's average turnover somewhat
+ exceeds Black-Litterman's in the one-year case.
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align left
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Turnover_5yrWindow.jpg
+	scale 45
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Turnover_1yrWindow.jpg
+	scale 45
+
+\end_inset
+
+
 \end_layout
 
 \end_body

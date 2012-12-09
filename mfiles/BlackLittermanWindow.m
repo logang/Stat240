@@ -73,7 +73,7 @@ NPEB_wts = Mkt_cap(NPEB_window,:)./sum(Mkt_cap(NPEB_window,:));
 gamma = 2.5; 
 
 % window = 5 years of monthly returns
-window = 12;
+window = 12*5;
 
 % calculates market-capitalization weights by normalizing mkt cap at
 % current month (end of window)
@@ -248,7 +248,7 @@ plot(excess_returns_M, ':');
 hold on
 plot(excess_returns_BL);
 legend('Markowitz', 'Black-Litterman');
-title ('Cumulative Excess Returns, Two-Factor w/ 1-year Window', 'FontSize', 14);
+title ('Cumulative Excess Returns, Two-Factor w/ 5-year Window', 'FontSize', 14);
 xlabel('Time in months', 'FontSize', 12);
 ylabel('Excess returns over S&P 500 index', 'FontSize', 12);
 
@@ -259,7 +259,7 @@ plot(sharpe_M, ':');
 hold on
 plot(sharpe_BL);
 legend('Markowitz', 'Black-Litterman');
-title ('Sharpe Ratio Over Time, Two-Factor w/ 1-year Window', 'FontSize', 14);
+title ('Sharpe Ratio Over Time, Two-Factor w/ 5-year Window', 'FontSize', 14);
 xlabel('Time in months', 'FontSize', 12);
 ylabel('Sharpe ratio', 'FontSize', 12);
 
@@ -270,6 +270,6 @@ plot(turnover_M, ':');
 hold on
 plot(turnover_BL);
 legend('Markowitz', 'Black-Litterman');
-title ('Portfolio Turnover Rate, Two-Factor w/ 1-year Window', 'FontSize', 14);
+title ('Portfolio Turnover Rate, Two-Factor w/ 5-year Window', 'FontSize', 14);
 xlabel('Time in months', 'FontSize', 12);
 ylabel('Portfolio turnover rate', 'FontSize', 12);
