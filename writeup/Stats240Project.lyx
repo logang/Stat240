@@ -3613,31 +3613,218 @@ Finally, we include the turnover results for the two-factor model with five-
 Appendix
 \end_layout
 
-\begin_layout Standard
-- Insert appendix here.
- Explanation of how we got/processed data; copy-pasted code.
+\begin_layout Subsection*
+Part I
 \end_layout
 
 \begin_layout Standard
-- parsing
+\begin_inset Graphics
+	filename ArGarch_1.png
+	scale 60
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-- converting to returns
+\begin_inset Graphics
+	filename ArGarch_2.png
+	scale 60
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-- converting LIBOR to monthly rate
+\begin_inset Graphics
+	filename ArGarch_3.png
+	scale 60
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-- optimization using cvx
+\begin_inset Graphics
+	filename ArGarch_4.png
+	scale 60
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
+\begin_inset Graphics
+	filename ArGarch_5.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename ArGarch_6.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename ArGarch_7.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename ArGarch_8.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename ArGarch_9.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Part II
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename BlackLitterman1.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset Graphics
+	filename BlackLitterman2.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset Graphics
+	filename BlackLitterman3.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset Graphics
+	filename BlackLitterman5.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset Graphics
+	filename BlackLitterman5.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset Graphics
+	filename BlackLitterman7.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset Graphics
+	filename BlackLitterman7.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset Graphics
+	filename BlackLitterman8.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset Graphics
+	filename BlackLitterman9.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset Graphics
+	filename BlackLitterman10.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
 \begin_inset Graphics
 	filename OptimizePortfolio1.png
-	scale 70
+	scale 55
 
 \end_inset
 
@@ -3645,9 +3832,10 @@ Appendix
 \end_layout
 
 \begin_layout Standard
+\noindent
 \begin_inset Graphics
 	filename OptimizePortfolio2.png
-	scale 70
+	scale 60
 
 \end_inset
 
@@ -3655,9 +3843,10 @@ Appendix
 \end_layout
 
 \begin_layout Standard
+\noindent
 \begin_inset Graphics
 	filename Forecast_AR1.png
-	scale 70
+	scale 60
 
 \end_inset
 
@@ -3665,9 +3854,10 @@ Appendix
 \end_layout
 
 \begin_layout Standard
+\noindent
 \begin_inset Graphics
 	filename Forecast_OneFactor.png
-	scale 70
+	scale 60
 
 \end_inset
 
@@ -3675,9 +3865,46 @@ Appendix
 \end_layout
 
 \begin_layout Standard
+\noindent
 \begin_inset Graphics
 	filename Forecast_Returns.png
-	scale 70
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Utility code
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename PythonCode1.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset Graphics
+	filename PythonCode2.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset Graphics
+	filename PythonCode3.png
+	scale 60
 
 \end_inset
 
