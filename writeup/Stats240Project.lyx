@@ -139,6 +139,10 @@ R
 \end_layout
 
 \begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
 \align center
 \begin_inset Tabular
 <lyxtabular version="3" rows="7" columns="7">
@@ -235,7 +239,7 @@ smlo_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0067 
+-0.0003 
 \end_layout
 
 \end_inset
@@ -244,7 +248,7 @@ smlo_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
--0.1605 
+1.0560 
 \end_layout
 
 \end_inset
@@ -253,7 +257,7 @@ smlo_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.1841 
+1.3373 
 \end_layout
 
 \end_inset
@@ -262,7 +266,7 @@ smlo_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.01 
+1.20 
 \end_layout
 
 \end_inset
@@ -271,7 +275,7 @@ smlo_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
--0.16 
+1.06 
 \end_layout
 
 \end_inset
@@ -280,7 +284,7 @@ smlo_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.18 
+1.34 
 \end_layout
 
 \end_inset
@@ -300,7 +304,7 @@ smme_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0115 
+0.0061 
 \end_layout
 
 \end_inset
@@ -309,7 +313,7 @@ smme_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
--0.1598 
+0.8522 
 \end_layout
 
 \end_inset
@@ -318,7 +322,7 @@ smme_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0981 
+1.0469 
 \end_layout
 
 \end_inset
@@ -327,7 +331,7 @@ smme_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
--0.03 
+0.95 
 \end_layout
 
 \end_inset
@@ -336,7 +340,7 @@ smme_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
--0.16 
+0.85 
 \end_layout
 
 \end_inset
@@ -345,7 +349,7 @@ smme_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.10 
+1.05 
 \end_layout
 
 \end_inset
@@ -365,7 +369,7 @@ smhi_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0127 
+0.0071 
 \end_layout
 
 \end_inset
@@ -374,7 +378,7 @@ smhi_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
--0.1620 
+0.8774 
 \end_layout
 
 \end_inset
@@ -383,7 +387,7 @@ smhi_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.1098 
+1.0880 
 \end_layout
 
 \end_inset
@@ -392,7 +396,7 @@ smhi_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
--0.03 
+0.98 
 \end_layout
 
 \end_inset
@@ -401,7 +405,7 @@ smhi_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
--0.16 
+0.88 
 \end_layout
 
 \end_inset
@@ -410,7 +414,7 @@ smhi_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.11 
+1.09 
 \end_layout
 
 \end_inset
@@ -430,7 +434,7 @@ bilo_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0079 
+0.0019 
 \end_layout
 
 \end_inset
@@ -439,7 +443,7 @@ bilo_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
--0.0585 
+0.9606 
 \end_layout
 
 \end_inset
@@ -448,7 +452,7 @@ bilo_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.1585 
+1.0261 
 \end_layout
 
 \end_inset
@@ -457,7 +461,7 @@ bilo_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.05 
+0.99 
 \end_layout
 
 \end_inset
@@ -466,7 +470,7 @@ bilo_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
--0.06 
+0.96 
 \end_layout
 
 \end_inset
@@ -475,7 +479,7 @@ bilo_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.16 
+1.03 
 \end_layout
 
 \end_inset
@@ -495,7 +499,7 @@ bime_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0089 
+0.0032 
 \end_layout
 
 \end_inset
@@ -504,7 +508,7 @@ bime_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
--0.0673 
+0.8986 
 \end_layout
 
 \end_inset
@@ -513,7 +517,7 @@ bime_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.1520 
+1.0036 
 \end_layout
 
 \end_inset
@@ -522,7 +526,7 @@ bime_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.04 
+0.95 
 \end_layout
 
 \end_inset
@@ -531,7 +535,7 @@ bime_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
--0.07 
+0.90 
 \end_layout
 
 \end_inset
@@ -540,7 +544,7 @@ bime_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.15 
+1.00 
 \end_layout
 
 \end_inset
@@ -560,7 +564,7 @@ bihi_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0082 
+0.0025 
 \end_layout
 
 \end_inset
@@ -569,7 +573,7 @@ bihi_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
--0.0930 
+0.8868 
 \end_layout
 
 \end_inset
@@ -578,7 +582,7 @@ bihi_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.1464 
+1.0381 
 \end_layout
 
 \end_inset
@@ -587,7 +591,7 @@ bihi_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.03 
+0.96 
 \end_layout
 
 \end_inset
@@ -596,7 +600,7 @@ bihi_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
--0.09 
+0.89 
 \end_layout
 
 \end_inset
@@ -605,7 +609,7 @@ bihi_ret
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.15 
+1.04 
 \end_layout
 
 \end_inset
@@ -2347,8 +2351,8 @@ Black-Litterman
 \end_layout
 
 \begin_layout Standard
-To calculate the equilibrium risk prima, we first find the market-capitalization
- weights.
+To calculate the equilibrium risk premiums, we first find the market-capitalizat
+ion weights.
  Using a sample of 
 \begin_inset Formula $t$
 \end_inset
@@ -2490,8 +2494,7 @@ To obtain the historical risk premiums as of time
  in the chart below.
  The equilibrium premiums are generally lower than the historical ones,
  with the exception of those for assets with a low book-to-market ratio,
- where the equilibrium excess returns match or exceed the historical risk
- premiums.
+ where the equilibrium excess returns match or exceed the historical prices.
 \end_layout
 
 \begin_layout Standard
@@ -2725,13 +2728,6 @@ bihi
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset VSpace medskip
-\end_inset
-
-
-\end_layout
-
 \begin_layout Subsubsection*
 (b) Note that Black-Litterman allocation itself is not an alpha-generating
  process.
@@ -2753,35 +2749,6 @@ bihi
 
  where return forecasts are made.
  
-\end_layout
-
-\begin_layout Subsubsection*
-Similar to problem 1 in this project, you can use a momentum-based factor
- model.
- In addition, you can implement the 
-\begin_inset Formula $AR(1)-GARCH(1,1)$
-\end_inset
-
- model.
- Besides the 
-\begin_inset Formula $AR(1)$
-\end_inset
-
- factor, you are encouraged to research other market factors (e.g., change
- in the VIX index) that help predict the expected return--Yahoo finance
- is a good source for such data, but be careful with the time stamp so as
- not to have look-ahead bias.
- 
-\end_layout
-
-\begin_layout Subsubsection*
-Also, bonus points will be given to teams that attempt other time-series
- methods.
- For example, note that in a factor model, when you fit the returns data
- from a training set, the factor coefficients are assumed to be constant
- during the whole training period.
- Alternatively, you can use a Kalman filter and treat the factor model coefficie
-nts as random states.
 \end_layout
 
 \begin_layout Standard
@@ -2882,6 +2849,11 @@ Two-factor models of the form
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+Our implementation of all these models is included in the appendix, and
+ the results are in the following two sections.
 \end_layout
 
 \begin_layout Standard
@@ -3223,6 +3195,12 @@ One-Factor Model Results (S&P 500):
 We discovered that using the excess returns of the S&P 500 (lagged by one
  month) as the single factor in a one-factor model, as in the Capital Asset
  Pricing model, is not appreciably different from the AR(1) model.
+ This makes a great deal of sense given the high correlation between the
+ S&P rates and the portfolio rate of return at time 
+\begin_inset Formula $t$
+\end_inset
+
+, as shorn in part (1).
  We also tried regressing on the previous month's LIBOR rate, with nearly
  identical results.
 \end_layout
@@ -3456,8 +3434,7 @@ th Fama-French portfolio in period
 .
  Plot and compare the turnover rates for your B-L allocation and the traditional
  M-V portfolio that uses plug-in estimates.
- Bonus points: How would you lower your average turnover rate while not
- losing too much on the Sharpe ratio?
+ 
 \end_layout
 
 \begin_layout Standard
@@ -3496,6 +3473,26 @@ In general, there appears to be a strong relationship between the degree
 \end_inset
 
  toward the model's predictions and away from the more stable equilibrium.
+ To reduce turnover, then, we can add a larger scaling parameter to 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ and tune the parameter to achieve a desirable rate/turnover tradeoff.
+ We could, in fact, incorporate a limit or penalty on portfolio turnover
+ into our optimization problem by adding a penalty on turnover rate, such
+ that we maximize 
+\begin_inset Formula $w^{T}mw-\lambda w^{T}(\Sigma+S)w-\nu\sum_{i=1}^{n}|w_{t}-w_{t-1}|$
+\end_inset
+
+ at every time step.
+ Then we could search a grid for an acceptable 
+\begin_inset Formula $\nu$
+\end_inset
+
+, just as we can search for the optimal 
+\begin_inset Formula $\lambda.$
+\end_inset
+
  
 \end_layout
 
@@ -3618,6 +3615,26 @@ Part I
 \end_layout
 
 \begin_layout Standard
+Note: all the below code (and more) is available at 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+https://github.com/logang/Stat240
+\end_layout
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The following code implements part I, questions (a)--(c), in R.
+\end_layout
+
+\begin_layout Standard
+\noindent
 \begin_inset Graphics
 	filename ArGarch_1.png
 	scale 60
@@ -3628,6 +3645,7 @@ Part I
 \end_layout
 
 \begin_layout Standard
+\noindent
 \begin_inset Graphics
 	filename ArGarch_2.png
 	scale 60
@@ -3638,6 +3656,7 @@ Part I
 \end_layout
 
 \begin_layout Standard
+\noindent
 \begin_inset Graphics
 	filename ArGarch_3.png
 	scale 60
@@ -3648,6 +3667,7 @@ Part I
 \end_layout
 
 \begin_layout Standard
+\noindent
 \begin_inset Graphics
 	filename ArGarch_4.png
 	scale 60
@@ -3658,6 +3678,7 @@ Part I
 \end_layout
 
 \begin_layout Standard
+\noindent
 \begin_inset Graphics
 	filename ArGarch_5.png
 	scale 60
@@ -3668,6 +3689,7 @@ Part I
 \end_layout
 
 \begin_layout Standard
+\noindent
 \begin_inset Graphics
 	filename ArGarch_6.png
 	scale 60
@@ -3678,6 +3700,7 @@ Part I
 \end_layout
 
 \begin_layout Standard
+\noindent
 \begin_inset Graphics
 	filename ArGarch_7.png
 	scale 60
@@ -3688,6 +3711,7 @@ Part I
 \end_layout
 
 \begin_layout Standard
+\noindent
 \begin_inset Graphics
 	filename ArGarch_8.png
 	scale 60
@@ -3698,6 +3722,7 @@ Part I
 \end_layout
 
 \begin_layout Standard
+\noindent
 \begin_inset Graphics
 	filename ArGarch_9.png
 	scale 60
@@ -3712,6 +3737,13 @@ Part II
 \end_layout
 
 \begin_layout Standard
+The following code is a script that implements the Black-Litterman portfolio
+ allocation procedure for an expanding window.
+ It calls functions that are included subsequently in the appendix.
+\end_layout
+
+\begin_layout Standard
+\noindent
 \begin_inset Graphics
 	filename BlackLitterman1.png
 	scale 60
@@ -3821,6 +3853,51 @@ Part II
 \end_layout
 
 \begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The OptimizePortfolio function, below, uses the quadratic programming capability
+ of cvx, a software package for convex programming in Matlab( 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://cvxr.com/cvx/
+\end_layout
+
+\end_inset
+
+).
+ We inititially implemented a grid search over 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ on each optimization, but we eventually settled on a fixed 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ to substantially cut down on running time and facilitate debugging.
+\end_layout
+
+\begin_layout Standard
+One of the outputs of this function is the Sharpe ratio, which is defined
+ as the expected mean over the estimated covariance and not the ratio of
+ observed returns to estimated covariance.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 \noindent
 \begin_inset Graphics
 	filename OptimizePortfolio1.png
@@ -3837,6 +3914,25 @@ Part II
 	filename OptimizePortfolio2.png
 	scale 60
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following three functions all return one-step-ahead forecasts for the
+ different models (AR(1), one-factor, and two-factor (AR(1) and one other).
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace medskip
 \end_inset
 
 
@@ -3880,6 +3976,14 @@ Utility code
 \end_layout
 
 \begin_layout Standard
+The following python code parses data files (mostly downloaded from Yahoo!
+ finance).
+ It outputs files containing historical returns matching the monthly returns
+ in the Fama-French portfolios, having converted them from daily prices.
+\end_layout
+
+\begin_layout Standard
+\noindent
 \begin_inset Graphics
 	filename PythonCode1.png
 	scale 60
