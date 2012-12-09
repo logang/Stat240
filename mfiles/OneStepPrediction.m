@@ -70,6 +70,7 @@ classdef OneStepPrediction
 	   for l = 1:obj.lag
 	     tmpmat = [tmpmat, lagmatrix(x,l)];
 	   end
+	   disp(tmpmat);
     	   design_mat = [design_mat tmpmat];
 	end
 	for i = 1:n_inputs

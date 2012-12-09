@@ -162,7 +162,7 @@ def match_dates_and_save(input_list, target_path, order="chronological",
             print "\t--> Converting", input_path, "to premiums."
 
             # load and subtract risk_free asset
-            matched_input_data = matched_input_data - np.squeeze(np.asarray(RF_data).astype(float))
+            matched_input_data = matched_input_data - (1./(12*100.))*np.squeeze(np.asarray(RF_data).astype(float))
 
         # Save matched returns
         outpath = os.path.join(os.path.abspath('.'),output_type)
