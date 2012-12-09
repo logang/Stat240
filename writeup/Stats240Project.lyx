@@ -2966,6 +2966,10 @@ Here,
 \end_inset
 
  We also tried scaling these error terms -- multiplying by 
+\begin_inset Formula $0.01,$
+\end_inset
+
+ 
 \begin_inset Formula $0.1,$
 \end_inset
 
@@ -2976,7 +2980,8 @@ Here,
 \begin_inset Formula $\Omega,$
 \end_inset
 
- we obtain lower portfolio turnover but do not perceptably change performance.
+ we obtain lower portfolio turnover but do not usually have a large impact
+ on performance, although we noticed a few exceptions.
 \end_layout
 
 \begin_layout Standard
@@ -2986,9 +2991,11 @@ In our final implementation, we set
 
  or a scaled multiple of the error term from the previous prediction.
  After some experimentation, we set 
-\begin_inset Formula $\delta=10.$
+\begin_inset Formula $\delta=10,$
 \end_inset
 
+ but set it to a lower value for some methods when it had a substantive
+ effect on excess returns.
  This approach was just as good as the one previously described, and has
  the advantage of simplicity.
 \end_layout
@@ -3365,7 +3372,8 @@ Two-Factor Model With 1-Year Rolling Window:
 \end_layout
 
 \begin_layout Standard
-Finally, we implemented the two-factor model with a one-year rolling window.
+Next, for comparison, we implemented the two-factor model with a one-year
+ rolling window.
  Interestingly, using a one-year rolling window improved Black-Litterman's
  absolute performance, almost equalling the cumulative excess returns resulting
  from using 
@@ -3389,6 +3397,32 @@ Finally, we implemented the two-factor model with a one-year rolling window.
 
 \begin_inset Graphics
 	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Sharpe_1yrWindow.jpg
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+ARMA Net with 
+\begin_inset Formula $\delta=0.01$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Returns_ARMANet.jpg
+	scale 45
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Sharpe_ARMANet.jpg
 	scale 45
 
 \end_inset
@@ -3606,6 +3640,25 @@ Finally, we include the turnover results for the two-factor model with five-
 
 \end_layout
 
+\begin_layout Paragraph*
+ARMA Net with 
+\begin_inset Formula $\delta=0.01$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\noindent
+\begin_inset Graphics
+	filename /Users/twoodson/Documents/School/Stats240/Project/Stat240/figures/Turnover_ARMANet.jpg
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section*
 Appendix
 \end_layout
@@ -3630,6 +3683,7 @@ https://github.com/logang/Stat240
 \end_layout
 
 \begin_layout Standard
+\noindent
 The following code implements part I, questions (a)--(c), in R.
 \end_layout
 
