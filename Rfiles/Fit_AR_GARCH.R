@@ -10,7 +10,7 @@ library(xtable)
 setwd("/Users/logang/Documents/Code/python/Stat240")
 
 # Load data
-SandP500 = as.matrix(read.csv("data/returns/SandP500_returns.csv",header=F))
+SandP500 = as.matrix(read.csv("data/returns/SP500_Revised_returns.csv",header=F))
 FF = as.matrix(read.csv("data/returns/FF_returns.csv",header=F))
 dates = read.csv("data/raw/dates.csv",header=F)[,1]
 colnames(FF) = c('smlo_ret', 'smme_ret', 'smhi_ret', 'bilo_ret', 'bime_ret', 'bihi_ret')
